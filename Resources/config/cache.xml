@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="sonata.cache.manager" class="Sonata\CacheBundle\Cache\CacheManager" >
+            <argument />
+        </service>
+
+
+        <service id="sonata.cache.recorder" class="Sonata\CacheBundle\Invalidation\Recorder" >
+            <argument type="service" id="sonata.cache.model_identifier"/>
+        </service>
+
+        <service id="sonata.cache.model_identifier" class="Sonata\CacheBundle\Invalidation\ModelCollectionIdentifiers" >
+            <argument type="collection" />
+        </service>
+
+        <service id="sonata.cache.noop" class="Sonata\CacheBundle\Adapter\NoopCache" />
+
+        <service id="sonata.cache.esi" class="Sonata\CacheBundle\Adapter\EsiCache">
+            <tag name="sonata.cache" />
+            <argument type="collection" />
+            <argument type="service" id="router" />
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="sonata.cache.js_sync" class="Sonata\CacheBundle\Adapter\JsCache" >
+            <tag name="sonata.cache" />
+            <argument type="service" id="router" />
+            <argument>true</argument>
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="sonata.cache.js_async" class="Sonata\CacheBundle\Adapter\JsCache" >
+            <tag name="sonata.cache" />
+            <argument type="service" id="router" />
+            <argument>false</argument>
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="sonata.cache.mongo" class="Sonata\CacheBundle\Adapter\MongoCache" >
+            <tag name="sonata.cache" />
+            <argument type="collection" />
+            <argument />
+            <argument />
+        </service>
+
+        <service id="sonata.cache.memcached" class="Sonata\CacheBundle\Adapter\MemcachedCache" >
+            <tag name="sonata.cache" />
+            <argument />
+            <argument type="collection" />
+        </service>
+
+        <service id="sonata.cache.apc" class="Sonata\CacheBundle\Adapter\ApcCache" >
+            <tag name="sonata.cache" />
+            <argument type="service" id="router" />
+            <argument />
+            <argument />
+            <argument type="collection" />
+        </service>
+
+        <service id="sonata.cache.invalidation.simple" class="Sonata\CacheBundle\Invalidation\SimpleCacheInvalidation">
+            <argument type="service" id="logger" />
+        </service>
+    </services>
+</container>
