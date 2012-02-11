@@ -30,7 +30,7 @@ class SimpleCacheInvalidationTest extends \PHPUnit_Framework_TestCase
 
         $caches = array($cache);
 
-        $cacheElement = new CacheElement(array('test' => 1));
+        $cacheElement = new CacheElement(array('test' => 1), 'data');
         $this->assertTrue($cacheInvalidation->invalidate($caches, $cacheElement));
     }
 
@@ -42,12 +42,10 @@ class SimpleCacheInvalidationTest extends \PHPUnit_Framework_TestCase
         $cacheInvalidation = new SimpleCacheInvalidation;
 
         $cache = $this->getMock('Sonata\CacheBundle\Cache\CacheInterface');
-        $cache->expects($this->exactly(1))
-            ->method('flush')
-            ->will($this->throwException(new \Exception));
+        $cache->expects($this->exactly(1))->method('flush')->will($this->throwException(new \Exception));
 
         $caches = array($cache);
-        $cacheElement = new CacheElement(array('page_id' => 1));
+        $cacheElement = new CacheElement(array('page_id' => 1), 'data');
 
         $cacheInvalidation->invalidate($caches, $cacheElement);
     }
@@ -61,12 +59,10 @@ class SimpleCacheInvalidationTest extends \PHPUnit_Framework_TestCase
         $cacheInvalidation = new SimpleCacheInvalidation($logger);
 
         $cache = $this->getMock('Sonata\CacheBundle\Cache\CacheInterface');
-        $cache->expects($this->exactly(1))
-            ->method('flush')
-            ->will($this->throwException(new \Exception));
+        $cache->expects($this->exactly(1))->method('flush')->will($this->throwException(new \Exception));
 
         $caches = array($cache);
-        $cacheElement = new CacheElement(array('page_id' => 1));
+        $cacheElement = new CacheElement(array('page_id' => 1), 'data');
 
         $cacheInvalidation->invalidate($caches, $cacheElement);
     }
@@ -79,7 +75,7 @@ class SimpleCacheInvalidationTest extends \PHPUnit_Framework_TestCase
         $cacheInvalidation = new SimpleCacheInvalidation();
 
         $caches = array(new SimpleCacheInvalidationTest_Cache);
-        $cacheElement = new CacheElement(array('page_id' => 1));
+        $cacheElement = new CacheElement(array('page_id' => 1), 'data');
 
         $cacheInvalidation->invalidate($caches, $cacheElement);
 

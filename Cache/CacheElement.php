@@ -16,17 +16,19 @@ final class CacheElement
 
     protected $keys = array();
 
-    protected $value;
+    protected $data;
 
     protected $createdAt;
 
     protected $contextualKeys = array();
 
-    public function __construct(array $keys, $ttl = 84600)
+    public function __construct(array $keys, $data, $ttl = 84600, array $contextualKeys = array())
     {
         $this->createdAt = new \DateTime;
         $this->keys      = $keys;
         $this->ttl       = $ttl;
+        $this->data      = $data;
+        $this->contextualKeys = $contextualKeys;
     }
 
     public function getKeys()
@@ -34,39 +36,19 @@ final class CacheElement
         return $this->keys;
     }
 
-    public function addKey($name, $value)
-    {
-        $this->keys[$name] = $value;
-    }
-
     public function getTtl()
     {
         return $this->ttl;
     }
 
-    public function getValue()
+    public function getData()
     {
-        return $this->value;
-    }
-
-    public function setValue($value)
-    {
-        return $this->value = $value;
+        return $this->data;
     }
 
     public function isExpired()
     {
         return strtotime('now') > ($this->createdAt->format('U') + $this->ttl);
-    }
-
-    public function addContextualKey($name, $value)
-    {
-        $this->contextualKeys[$name] = $value;
-    }
-
-    public function setContextualKeys(array $contextualKeys)
-    {
-        $this->contextualKeys = $contextualKeys;
     }
 
     public function getContextualKeys()

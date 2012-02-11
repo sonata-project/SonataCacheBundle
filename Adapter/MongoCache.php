@@ -13,12 +13,16 @@ namespace Sonata\CacheBundle\Adapter;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\HttpFoundation\Response;
 
-use Sonata\BlockBundle\Cache\CacheInterface;
+use Sonata\CacheBundle\Cache\CacheInterface;
 use Sonata\CacheBundle\Cache\CacheElement;
 
 class MongoCache implements CacheInterface
 {
-    protected $settings;
+    private $servers;
+
+    private $databaseName;
+
+    private $collectionName;
 
     protected $collection;
 
@@ -29,15 +33,13 @@ class MongoCache implements CacheInterface
      */
     public function __construct(array $servers, $database, $collection)
     {
-        $this->settings = array(
-            'servers'     => $servers,
-            'database'    => $database,
-            'collection'  => $collection
-        );
+        $this->servers        = $servers;
+        $this->databaseName   = $database;
+        $this->collectionName = $collection;
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
     public function flushAll()
     {
@@ -45,8 +47,7 @@ class MongoCache implements CacheInterface
     }
 
     /**
-     * @param array $keys
-     * @return mixed
+     * {@inheritdoc}
      */
     public function flush(array $keys = array())
     {
@@ -54,12 +55,10 @@ class MongoCache implements CacheInterface
     }
 
     /**
-     * @param CacheElement $cacheElement
-     * @return bool
+     * {@inheritdoc}
      */
-    public function has(CacheElement $cacheElement)
+    public function has(array $keys)
     {
-        $keys = $cacheElement->getKeys();
         $keys['_timeout'] = array('$gt' => time());
 
         return $this->getCollection()->count($keys) > 0;
@@ -68,55 +67,54 @@ class MongoCache implements CacheInterface
     /**
      * @return \MongoCollection
      */
-    public function getCollection()
+    private function getCollection()
     {
         if (!$this->collection) {
-            $mongo = new \Mongo(sprintf('mongodb://%s', implode(',', $this->settings['servers'])));
+            $mongo = new \Mongo(sprintf('mongodb://%s', implode(',', $this->servers)));
 
             $this->collection = $mongo
-                ->selectDB($this->settings['database'])
-                ->selectCollection($this->settings['collection']);
+                ->selectDB($this->databaseName)
+                ->selectCollection($this->collectionName);
         }
 
         return $this->collection;
     }
 
     /**
-     * @param CacheElement $cacheElement
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function set(CacheElement $cacheElement)
+    public function set(array $keys, $data, $ttl = 84600, array $contextualKeys = array())
     {
         $time = time();
 
+        $cacheElement = new CacheElement($keys, $data, $ttl, $contextualKeys);
+
         $keys = $cacheElement->getContextualKeys() + $cacheElement->getKeys();
-        $keys['_value']       = new \MongoBinData(serialize($cacheElement->getValue()));
+        $keys['_value']       = new \MongoBinData(serialize($cacheElement));
         $keys['_updated_at']  = $time;
         $keys['_timeout']     = $time + $cacheElement->getTtl();
 
-        $return = $this->getCollection()->save($keys);
+        $this->getCollection()->save($keys);
 
-        return $return;
+        return $cacheElement;
     }
 
     /**
-     * @param CacheElement $cacheElement
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function get(CacheElement $cacheElement)
+    public function get(array $keys)
     {
-        $record = $this->getRecord($cacheElement);
+        $record = $this->getRecord($keys);
 
         return $record ? unserialize($record['_value']->bin) : null;
     }
 
     /**
-     * @param CacheElement $cacheElement
+     * @param array $keys
      * @return array|null
      */
-    public function getRecord(CacheElement $cacheElement)
+    private function getRecord(array $keys)
     {
-        $keys = $cacheElement->getKeys();
         $keys['_timeout'] = array('$gt' => time());
 
         $results =  $this->getCollection()->find($keys);
@@ -129,7 +127,7 @@ class MongoCache implements CacheInterface
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function isContextual()
     {

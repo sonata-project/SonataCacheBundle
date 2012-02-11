@@ -12,15 +12,37 @@ namespace Sonata\CacheBundle\Cache;
 
 interface CacheInterface
 {
-    function get(CacheElement $cacheElement);
+    /**
+     * @param array $key
+     * @return CacheElement
+     */
+    function get(array $keys);
 
-    function has(CacheElement $cacheElement);
+    /**
+     * @param array $key
+     * @return boolean
+     */
+    function has(array $keys);
 
-    function set(CacheElement $cacheElement);
+    /**
+     * @param array $key
+     * @return CacheElement
+     */
+    function set(array $keys, $value, $ttl = 84600);
 
+    /**
+     * @param array $keys
+     * @return void
+     */
     function flush(array $keys = array());
 
+    /**
+     * @return void
+     */
     function flushAll();
 
+    /**
+     * @return void
+     */
     function isContextual();
 }

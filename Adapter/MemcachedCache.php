@@ -13,7 +13,7 @@ namespace Sonata\CacheBundle\Adapter;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\HttpFoundation\Response;
 
-use Sonata\BlockBundle\Cache\CacheInterface;
+use Sonata\CacheBundle\Cache\CacheInterface;
 use Sonata\CacheBundle\Cache\CacheElement;
 
 class MemcachedCache implements CacheInterface
@@ -35,7 +35,7 @@ class MemcachedCache implements CacheInterface
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function flushAll()
     {
@@ -43,25 +43,23 @@ class MemcachedCache implements CacheInterface
     }
 
     /**
-     * @param array $keys
-     * @return bool
+     * {@inheritdoc}
      */
     public function flush(array $keys = array())
     {
-        return $this->getCollection()->delete($this->computeCacheKeys(new CacheElement($keys)));
+        return $this->getCollection()->delete($this->computeCacheKeys($keys));
     }
 
     /**
-     * @param CacheElement $cacheElement
-     * @return bool
+     * {@inheritdoc}
      */
-    public function has(CacheElement $cacheElement)
+    public function has(array $keys)
     {
-        return $this->getCollection()->get($this->computeCacheKeys($cacheElement)) !== false;
+        return $this->getCollection()->get($this->computeCacheKeys($keys)) !== false;
     }
 
     /**
-     * @return \Memcached
+     * {@inheritdoc}
      */
     private function getCollection()
     {
@@ -77,44 +75,41 @@ class MemcachedCache implements CacheInterface
     }
 
     /**
-     * @param CacheElement $cacheElement
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function set(CacheElement $cacheElement)
+    public function set(array $keys, $data, $ttl = 84600, array $contextualKeys = array())
     {
-        $return = $this->getCollection()->set(
-            $this->computeCacheKeys($cacheElement),
-            $cacheElement->getValue(),
+        $cacheElement = new CacheElement($keys, $data, $ttl);
+
+        $this->getCollection()->set(
+            $this->computeCacheKeys($keys),
+            $cacheElement,
             time() + $cacheElement->getTtl()
         );
 
-        return $return;
+        return $cacheElement;
     }
 
     /**
-     * @param CacheElement $cacheElement
-     * @return string
+     * {@inheritdoc}
      */
-    private function computeCacheKeys(CacheElement $cacheElement)
+    private function computeCacheKeys(array $keys)
     {
-        $keys = $cacheElement->getKeys();
-
         ksort($keys);
 
         return md5($this->prefix.serialize($keys));
     }
 
     /**
-     * @param CacheElement $cacheElement
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function get(CacheElement $cacheElement)
+    public function get(array $keys)
     {
-        return $this->getCollection()->get($this->computeCacheKeys($cacheElement));
+        return $this->getCollection()->get($this->computeCacheKeys($keys));
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function isContextual()
     {

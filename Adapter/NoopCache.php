@@ -10,45 +10,56 @@
 
 namespace Sonata\CacheBundle\Adapter;
 
-use Symfony\Component\Routing\Router;
-use Symfony\Component\HttpFoundation\Response;
-
-use Sonata\BlockBundle\Cache\CacheInterface;
+use Sonata\CacheBundle\Cache\CacheInterface;
 use Sonata\CacheBundle\Cache\CacheElement;
 
 class NoopCache implements CacheInterface
 {
+    /**
+     * {@inheritdoc}
+     */
     public function flushAll()
     {
         return true;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function flush(array $keys = array())
     {
         return true;
     }
 
-    public function has(CacheElement $cacheElement)
+    /**
+     * {@inheritdoc}
+     */
+    public function has(array $keys)
     {
         return false;
     }
 
-    public function set(CacheElement $cacheElement)
+    /**
+     * {@inheritdoc}
+     */
+    public function set(array $keys, $data, $ttl = 84600, array $contextualKeys = array())
     {
-        return true;
+        return new CacheElement($keys, $data, $ttl, $contextualKeys);
     }
 
     /**
-     * @param array $parameters
-     * @return string
+     * {@inheritdoc}
      */
-    public function get(CacheElement $cacheElement)
+    public function get(array $keys)
     {
         throw new \RunTimeException('The NoopCache::get() cannot called');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isContextual()
     {
-        return true;
+        return false;
     }
 }

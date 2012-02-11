@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Routing\RouterInterface;
 
-use Sonata\BlockBundle\Cache\CacheInterface;
+use Sonata\CacheBundle\Cache\CacheInterface;
 use Sonata\CacheBundle\Cache\CacheElement;
 
 class ApcCache implements CacheInterface
@@ -43,15 +43,7 @@ class ApcCache implements CacheInterface
     }
 
     /**
-     * @return string
-     */
-    private function getToken()
-    {
-        return $this->token;
-    }
-
-    /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function flushAll()
     {
@@ -87,8 +79,7 @@ class ApcCache implements CacheInterface
     }
 
     /**
-     * @param array $keys
-     * @return bool
+     * {@inheritdoc}
      */
     public function flush(array $keys = array())
     {
@@ -96,49 +87,46 @@ class ApcCache implements CacheInterface
     }
 
     /**
-     * @param CacheElement $cacheElement
-     * @return bool|\string[]
+     * {@inheritdoc}
      */
-    public function has(CacheElement $cacheElement)
+    public function has(array $keys)
     {
-        return apc_exists($this->computeCacheKeys($cacheElement));
+        return apc_exists($this->computeCacheKeys($keys));
     }
 
     /**
-     * @param CacheElement $cacheElement
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function set(CacheElement $cacheElement)
+    public function set(array $keys, $data, $ttl = 84600, array $contextualKeys = array())
     {
-        $return = apc_store(
-            $this->computeCacheKeys($cacheElement),
-            $cacheElement->getValue(),
+        $cacheElement = new CacheElement($keys, $data, $ttl);
+
+        $result = apc_store(
+            $this->computeCacheKeys($keys),
+            $cacheElement,
             $cacheElement->getTtl()
         );
 
-        return $return;
+        return $cacheElement;
     }
 
     /**
      * @param CacheElement $cacheElement
      * @return string
      */
-    private function computeCacheKeys(CacheElement $cacheElement)
+    private function computeCacheKeys($keys)
     {
-        $keys = $cacheElement->getKeys();
-
         ksort($keys);
 
         return md5($this->prefix.serialize($keys));
     }
 
     /**
-     * @param CacheElement $cacheElement
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function get(CacheElement $cacheElement)
+    public function get(array $keys)
     {
-        return apc_fetch($this->computeCacheKeys($cacheElement));
+        return apc_fetch($this->computeCacheKeys($keys));
     }
 
     /**
@@ -148,7 +136,7 @@ class ApcCache implements CacheInterface
      */
     public function cacheAction($token)
     {
-        if ($this->getToken() == $token) {
+        if ($this->token == $token) {
             apc_clear_cache('user');
 
             return new Response('ok', 200, array(
@@ -160,7 +148,7 @@ class ApcCache implements CacheInterface
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
     public function isContextual()
     {
