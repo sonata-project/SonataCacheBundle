@@ -24,9 +24,7 @@ class SimpleCacheInvalidation implements InvalidationInterface
     }
 
     /**
-     * @param array $caches
-     * @param \Sonata\CacheBundle\Cache\CacheElement $cacheElement
-     * @return boolean
+     * {@inheritdoc}
      */
     public function invalidate(array $caches, CacheElement $cacheElement)
     {

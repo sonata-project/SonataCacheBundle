@@ -16,7 +16,6 @@ use Sonata\CacheBundle\Cache\CacheInterface;
 interface InvalidationInterface
 {
   /**
-   * @abstract
    * @param array $caches
    * @param \Sonata\CacheBundle\Cache\CacheElement $cacheElement
    * @return void

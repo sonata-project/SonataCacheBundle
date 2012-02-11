@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonata\CacheBundle\CmsManager;
+namespace Sonata\CacheBundle\Cache;
 
 use Sonata\CacheBundle\Cache\CacheInterface;
 use Sonata\CacheBundle\Cache\CacheElement;

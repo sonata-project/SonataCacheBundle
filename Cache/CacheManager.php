@@ -17,26 +17,24 @@ use Sonata\CacheBundle\Invalidation\Recorder;
 
 class CacheManager implements CacheManagerInterface
 {
-
     protected $cacheInvalidation;
 
     protected $logger;
-
-    protected $debug = false;
 
     protected $cacheServices = array();
 
     protected $recorder;
 
+    /**
+     * @param \Sonata\CacheBundle\Invalidation\InvalidationInterface $cacheInvalidation
+     */
     public function __construct(InvalidationInterface $cacheInvalidation)
     {
         $this->cacheInvalidation  = $cacheInvalidation;
     }
 
     /**
-     * @param $name
-     * @param \Sonata\CacheBundle\Cache\CacheInterface $cacheManager
-     * @return void
+     * {@inheritdoc}
      */
     public function addCacheService($name, CacheInterface $cacheManager)
     {
@@ -44,9 +42,7 @@ class CacheManager implements CacheManagerInterface
     }
 
     /**
-     * @throws \RuntimeException
-     * @param $name
-     * @return
+     * {@inheritdoc}
      */
     public function getCacheService($name)
     {
@@ -68,9 +64,7 @@ class CacheManager implements CacheManagerInterface
     }
 
     /**
-     *
-     * @param sring $id
-     * @return boolean
+     * {@inheritdoc}
      */
     public function hasCacheService($id)
     {
@@ -78,8 +72,7 @@ class CacheManager implements CacheManagerInterface
     }
 
     /**
-     * @param \Sonata\CacheBundle\Cache\CacheElement $cacheElement
-     * @return void
+     * {@inheritdoc}
      */
     public function invalidate(CacheElement $cacheElement)
     {
@@ -87,8 +80,7 @@ class CacheManager implements CacheManagerInterface
     }
 
     /**
-     * @param \Sonata\CacheBundle\Invalidation\Recorder $recorder
-     * @return void
+     * {@inheritdoc}
      */
     public function setRecorder(Recorder $recorder)
     {
@@ -96,7 +88,7 @@ class CacheManager implements CacheManagerInterface
     }
 
     /**
-     * @return
+     * {@inheritdoc}
      */
     public function getRecorder()
     {
