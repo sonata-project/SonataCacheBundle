@@ -20,27 +20,6 @@
 
         <service id="sonata.cache.noop" class="Sonata\CacheBundle\Adapter\NoopCache" />
 
-        <service id="sonata.cache.esi" class="Sonata\CacheBundle\Adapter\EsiCache">
-            <tag name="sonata.cache" />
-            <argument type="collection" />
-            <argument type="service" id="router" />
-            <argument type="service" id="service_container" />
-        </service>
-
-        <service id="sonata.cache.js_sync" class="Sonata\CacheBundle\Adapter\JsCache" >
-            <tag name="sonata.cache" />
-            <argument type="service" id="router" />
-            <argument>true</argument>
-            <argument type="service" id="service_container" />
-        </service>
-
-        <service id="sonata.cache.js_async" class="Sonata\CacheBundle\Adapter\JsCache" >
-            <tag name="sonata.cache" />
-            <argument type="service" id="router" />
-            <argument>false</argument>
-            <argument type="service" id="service_container" />
-        </service>
-
         <service id="sonata.cache.mongo" class="Sonata\CacheBundle\Adapter\MongoCache" >
             <tag name="sonata.cache" />
             <argument type="collection" />

@@ -74,15 +74,6 @@ class SonataCacheExtension extends Extension
      */
     public function configureCache(ContainerBuilder $container, $config)
     {
-        if (isset($config['caches']['esi'])) {
-            $container
-                ->getDefinition('sonata.cache.esi')
-                ->replaceArgument(0, $config['caches']['esi']['servers'])
-            ;
-        } else {
-            $container->removeDefinition('sonata.cache.esi');
-        }
-
         if (isset($config['caches']['mongo'])) {
             if (!class_exists('\Mongo', true)) {
                 throw new \RuntimeException(<<<HELP
