@@ -29,11 +29,11 @@ class MongoCacheTest extends \PHPUnit_Framework_TestCase
 
         $result = @socket_connect($socket, '127.0.0.1', 27017);
 
+        socket_close($socket);
+
         if (!$result) {
             $this->markTestSkipped('MongoDB is not running');
         }
-
-        socket_close($socket);
     }
 
     public function testInitCache()
