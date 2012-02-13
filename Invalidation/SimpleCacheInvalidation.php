@@ -26,14 +26,12 @@ class SimpleCacheInvalidation implements InvalidationInterface
     /**
      * {@inheritdoc}
      */
-    public function invalidate(array $caches, CacheElement $cacheElement)
+    public function invalidate(array $caches, array $keys)
     {
-        $keys = $cacheElement->getKeys();
-
         foreach ($caches as $cache) {
 
             if (!$cache instanceof CacheInterface) {
-                throw new \RunTimeException('The object must implements the CacheInterface interface');
+                throw new \RuntimeException('The object must implements the CacheInterface interface');
             }
 
             try {
@@ -41,7 +39,7 @@ class SimpleCacheInvalidation implements InvalidationInterface
                     $this->logger->info(sprintf('[%s] flushing cache keys : %s', __CLASS__, json_encode($keys)));
                 }
 
-                $cache->flush($cacheElement->getKeys());
+                $cache->flush($keys);
 
             } catch(\Exception $e) {
 

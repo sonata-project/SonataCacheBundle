@@ -54,9 +54,7 @@ class CacheManager implements CacheManagerInterface
     }
 
     /**
-     * Returns related cache services
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getCacheServices()
     {
@@ -74,9 +72,9 @@ class CacheManager implements CacheManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function invalidate(CacheElement $cacheElement)
+    public function invalidate(array $keys)
     {
-        $this->cacheInvalidation->invalidate($this->getCacheServices(), $cacheElement);
+        $this->cacheInvalidation->invalidate($this->getCacheServices(), $keys);
     }
 
     /**

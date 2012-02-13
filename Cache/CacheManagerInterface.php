@@ -45,10 +45,10 @@ interface CacheManagerInterface
     function hasCacheService($id);
 
     /**
-     * @param \Sonata\CacheBundle\Cache\CacheElement $cacheElement
+     * @param array $keys
      * @return void
      */
-    function invalidate(CacheElement $cacheElement);
+    function invalidate(array $keys);
 
     /**
      * @param \Sonata\CacheBundle\Invalidation\Recorder $recorder

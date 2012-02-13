@@ -30,8 +30,7 @@ class SimpleCacheInvalidationTest extends \PHPUnit_Framework_TestCase
 
         $caches = array($cache);
 
-        $cacheElement = new CacheElement(array('test' => 1), 'data');
-        $this->assertTrue($cacheInvalidation->invalidate($caches, $cacheElement));
+        $this->assertTrue($cacheInvalidation->invalidate($caches, array('test' => 1)));
     }
 
     /**
@@ -45,9 +44,8 @@ class SimpleCacheInvalidationTest extends \PHPUnit_Framework_TestCase
         $cache->expects($this->exactly(1))->method('flush')->will($this->throwException(new \Exception));
 
         $caches = array($cache);
-        $cacheElement = new CacheElement(array('page_id' => 1), 'data');
 
-        $cacheInvalidation->invalidate($caches, $cacheElement);
+        $cacheInvalidation->invalidate($caches, array('page_id' => 1));
     }
 
     public function testWithLogger()
@@ -62,9 +60,8 @@ class SimpleCacheInvalidationTest extends \PHPUnit_Framework_TestCase
         $cache->expects($this->exactly(1))->method('flush')->will($this->throwException(new \Exception));
 
         $caches = array($cache);
-        $cacheElement = new CacheElement(array('page_id' => 1), 'data');
 
-        $cacheInvalidation->invalidate($caches, $cacheElement);
+        $cacheInvalidation->invalidate($caches, array('page_id' => 1));
     }
 
     /**
@@ -75,9 +72,7 @@ class SimpleCacheInvalidationTest extends \PHPUnit_Framework_TestCase
         $cacheInvalidation = new SimpleCacheInvalidation();
 
         $caches = array(new SimpleCacheInvalidationTest_Cache);
-        $cacheElement = new CacheElement(array('page_id' => 1), 'data');
 
-        $cacheInvalidation->invalidate($caches, $cacheElement);
-
+        $cacheInvalidation->invalidate($caches, array('page_id' => 1));
     }
 }

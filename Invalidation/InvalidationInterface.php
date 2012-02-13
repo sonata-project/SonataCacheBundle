@@ -15,10 +15,10 @@ use Sonata\CacheBundle\Cache\CacheInterface;
 
 interface InvalidationInterface
 {
-  /**
-   * @param array $caches
-   * @param \Sonata\CacheBundle\Cache\CacheElement $cacheElement
-   * @return void
-   */
-    function invalidate(array $caches, CacheElement $cacheElement);
+    /**
+     * @param array $caches
+     * @param array $array
+     * @return void
+     */
+    function invalidate(array $caches, array $array);
 }
