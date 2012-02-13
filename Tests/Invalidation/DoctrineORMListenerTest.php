@@ -33,7 +33,7 @@ class DoctrineORMListenerTest extends \PHPUnit_Framework_TestCase
     {
         $collection = new ModelCollectionIdentifiers;
 
-        $listener = new DoctrineORMListener($collection);
+        $listener = new DoctrineORMListener($collection, array());
 
         $event = $this->getMock('Doctrine\ORM\Event\LifecycleEventArgs', array(), array(), '', false);
         $event->expects($this->exactly(4))

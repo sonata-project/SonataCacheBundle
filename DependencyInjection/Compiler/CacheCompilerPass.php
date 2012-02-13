@@ -21,22 +21,31 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @author Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
-class TweakCompilerPass implements CompilerPassInterface
+class CacheCompilerPass implements CompilerPassInterface
 {
     /**
      * {@inheritDoc}
      */
     public function process(ContainerBuilder $container)
     {
-        if ($container->hasDefinition('sonata.cache.orm.event_subscriber.default')) {
-            $ormListener = $container->getDefinition('sonata.cache.orm.event_subscriber.default');
-            foreach ($container->findTaggedServiceIds('sonata.cache') as $id => $attributes) {
-                if (!$container->hasDefinition($id)) {
-                    continue;
-                }
+        $caches = array();
 
-                $ormListener->addMethodCall('addCache', array(new Reference($id)));
+        foreach ($container->findTaggedServiceIds('sonata.cache') as $id => $attributes) {
+            if (!$container->hasDefinition($id)) {
+                continue;
             }
+
+            $caches[$id] = new Reference($id);
+        }
+
+        if ($container->hasDefinition('sonata.cache.orm.event_subscriber.default')) {
+            $container->getDefinition('sonata.cache.orm.event_subscriber.default')
+                ->replaceArgument(1, $caches);
+        }
+
+        if ($container->hasDefinition('sonata.cache.manager')) {
+            $container->getDefinition('sonata.cache.manager')
+                ->replaceArgument(1, $caches);
         }
     }
 }

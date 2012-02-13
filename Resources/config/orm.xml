@@ -8,6 +8,7 @@
 
         <service id="sonata.cache.orm.event_subscriber.default" class="Sonata\CacheBundle\Invalidation\DoctrineORMListener" >
             <argument type="service" id="sonata.cache.model_identifier" />
+            <argument />
         </service>
 
         <service id="sonata.cache.orm.event_subscriber" class="Sonata\CacheBundle\Invalidation\DoctrineORMListenerContainerAware">

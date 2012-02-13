@@ -27,10 +27,12 @@ class CacheManager implements CacheManagerInterface
 
     /**
      * @param \Sonata\CacheBundle\Invalidation\InvalidationInterface $cacheInvalidation
+     * @param array $cacheServices
      */
-    public function __construct(InvalidationInterface $cacheInvalidation)
+    public function __construct(InvalidationInterface $cacheInvalidation, array $cacheServices)
     {
         $this->cacheInvalidation  = $cacheInvalidation;
+        $this->cacheServices      = $cacheServices;
     }
 
     /**

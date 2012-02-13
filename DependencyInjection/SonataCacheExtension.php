@@ -114,7 +114,7 @@ HELP
             $container->removeDefinition('sonata.cache.mongo');
         }
 
-        if (isset($configs['caches']['memcached'])) {
+        if (isset($config['caches']['memcached'])) {
 
             if (!class_exists('\Memcached', true)) {
                 throw new \RuntimeException(<<<HELP
@@ -135,7 +135,7 @@ HELP
             $container->removeDefinition('sonata.cache.memcached');
         }
 
-        if (isset($configs['caches']['apc'])) {
+        if (isset($config['caches']['apc'])) {
 
             if (!function_exists('apc_fetch')) {
                 throw new \RuntimeException(<<<HELP

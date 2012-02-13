@@ -12,7 +12,7 @@ namespace Sonata\CacheBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Sonata\CacheBundle\DependencyInjection\Compiler\TweakCompilerPass;
+use Sonata\CacheBundle\DependencyInjection\Compiler\CacheCompilerPass;
 
 class SonataCacheBundle extends Bundle
 {
@@ -20,7 +20,7 @@ class SonataCacheBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new TweakCompilerPass());
+        $container->addCompilerPass(new CacheCompilerPass());
     }
 
     public function boot()

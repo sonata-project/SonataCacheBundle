@@ -111,6 +111,14 @@ class EsiCache implements CacheInterface
      */
     public function get(array $keys)
     {
+        if (!isset($keys['controller'])) {
+            throw new \RuntimeException('Please define a controller key');
+        }
+
+        if (!isset($keys['parameters'])) {
+            throw new \RuntimeException('Please define a parameters key');
+        }
+
         $content = sprintf('<esi:include src="%s"/>', $this->getUrl($keys));
 
         return new CacheElement($keys, new Response($content));
@@ -135,7 +143,7 @@ class EsiCache implements CacheInterface
             'parameters' => $keys
         );
 
-        return $this->router->generate('sonata_page_esi_cache', $parameters, true);
+        return $this->router->generate('sonata_cache_esi', $parameters, true);
     }
 
     /**
@@ -165,10 +173,8 @@ class EsiCache implements CacheInterface
         $parameters = $request->get('parameters', array());
 
         if ($request->get('token') != $this->computeHash($parameters)) {
-            throw new AccessDeniedHttpException('Invalid token'.$this->computeHash($parameters));
+            throw new AccessDeniedHttpException('Invalid token');
         }
-
-        $parameters['_controller'] = $request->get('controller');
 
         $subRequest = Request::create('', 'get', $parameters, $request->cookies->all(), array(), $request->server->all());
 

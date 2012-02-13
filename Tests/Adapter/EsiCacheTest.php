@@ -39,7 +39,7 @@ class EsiCacheTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($cache->has(array('id' => 7)));
 
-        $cacheElement = $cache->get(array('id' => 7));
+        $cacheElement = $cache->get(array('id' => 7, 'controller' => 'foo.service::runAction', 'parameters' => array()));
 
         $this->assertInstanceOf('Sonata\CacheBundle\Cache\CacheElement', $cacheElement);
 

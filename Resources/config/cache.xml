@@ -7,6 +7,7 @@
 
         <service id="sonata.cache.manager" class="Sonata\CacheBundle\Cache\CacheManager" >
             <argument />
+            <argument />
         </service>
 
 
@@ -18,7 +19,9 @@
             <argument type="collection" />
         </service>
 
-        <service id="sonata.cache.noop" class="Sonata\CacheBundle\Adapter\NoopCache" />
+        <service id="sonata.cache.noop" class="Sonata\CacheBundle\Adapter\NoopCache">
+            <tag name="sonata.cache" />
+        </service>
 
         <service id="sonata.cache.mongo" class="Sonata\CacheBundle\Adapter\MongoCache" >
             <tag name="sonata.cache" />
@@ -41,7 +44,7 @@
             <argument type="collection" />
         </service>
 
-        <service id="sonata.cache.esi" class="Sonata\CacheBundle\Cache\EsiCache">
+        <service id="sonata.cache.esi" class="Sonata\CacheBundle\Adapter\EsiCache">
             <tag name="sonata.cache" />
             <argument />
             <argument type="collection" />

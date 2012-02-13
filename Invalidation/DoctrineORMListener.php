@@ -23,9 +23,13 @@ class DoctrineORMListener implements EventSubscriber
 
     protected $collectionIdentifiers;
 
-    public function __construct(ModelCollectionIdentifiers $collectionIdentifiers)
+    public function __construct(ModelCollectionIdentifiers $collectionIdentifiers, $caches)
     {
         $this->collectionIdentifiers = $collectionIdentifiers;
+
+        foreach ($caches as $cache) {
+            $this->addCache($cache);
+        }
     }
 
     public function getSubscribedEvents()
