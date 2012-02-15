@@ -57,7 +57,7 @@ interface CacheManagerInterface
     function setRecorder(Recorder $recorder);
 
     /**
-     * @return Sonata\CacheBundle\Invalidation\Recorder
+     * @return \Sonata\CacheBundle\Invalidation\Recorder
      */
     function getRecorder();
 }
