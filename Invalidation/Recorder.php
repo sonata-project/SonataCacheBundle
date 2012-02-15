@@ -14,13 +14,23 @@ class Recorder
 {
     protected $collectionIdentifiers;
 
-    protected $informations = array();
+    protected $stack = array();
 
+    protected $current = 0;
+
+    /**
+     * @param ModelCollectionIdentifiers $collectionIdentifiers
+     */
     public function __construct(ModelCollectionIdentifiers $collectionIdentifiers)
     {
         $this->collectionIdentifiers = $collectionIdentifiers;
+        $this->stack[$this->current] = array();
     }
 
+    /**
+     * @param $object
+     * @return void
+     */
     public function add($object)
     {
         $class = get_class($object);
@@ -31,28 +41,53 @@ class Recorder
             return;
         }
 
-        if (!isset($this->informations[$class])) {
-            $this->informations[$class] = array();
+        if (!isset($this->stack[$this->current][$class])) {
+            $this->stack[$this->current][$class] = array();
         }
 
-        if (!in_array($identifier, $this->informations[$class])) {
-            $this->informations[$class][] = $identifier;
+        if (!in_array($identifier, $this->stack[$this->current][$class])) {
+            $this->stack[$this->current][$class][] = $identifier;
         }
     }
 
+    /**
+     * Add a new elements into the stack
+     *
+     * @return void
+     */
+    public function push()
+    {
+        $this->stack[$this->current + 1] = $this->stack[$this->current];
+
+        $this->current++;
+    }
+
+    /**
+     * Remove an element from the stack and return it
+     *
+     * @return array
+     */
+    public function pop()
+    {
+        $value = $this->stack[$this->current];
+
+        unset($this->stack[$this->current]);
+
+        $this->current--;
+
+        if ($this->current < 0) {
+            $this->reset();
+        }
+
+        return $value;
+    }
+
+    /**
+     * @return void
+     */
     public function reset()
     {
-        foreach ($this->informations as $class => $identifier) {
-            $this->informations[$class] = array();
-        }
-    }
-
-    public function get($name = null)
-    {
-        if ($name) {
-            return $this->informations[$name];
-        }
-
-        return $this->informations;
+        $this->current = 0;
+        $this->stack = array();
     }
 }
