@@ -45,7 +45,7 @@ interface CacheInterface
     function flushAll();
 
     /**
-     * @return void
+     * @return boolean
      */
-    function isContextual();
+    function isContextual($key);
 }
