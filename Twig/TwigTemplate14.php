@@ -11,7 +11,7 @@
 
 namespace Sonata\CacheBundle\Twig;
 
-use Sonata\CacheBundle\Cache\Invalidation\Recorder;
+use Sonata\CacheBundle\Invalidation\Recorder;
 
 abstract class TwigTemplate14 extends \Twig_Template
 {
@@ -42,7 +42,7 @@ abstract class TwigTemplate14 extends \Twig_Template
 
     /**
      * @static
-     * @param \Sonata\CacheBundle\Cache\Invalidation\Recorder $recorder
+     * @param \Sonata\CacheBundle\Invalidation\Recorder $recorder
      */
     public static function attachRecorder(Recorder $recorder)
     {
