@@ -1,6 +1,6 @@
 {
-    "name": "sonata-project/cache-bundle",
-    "description": "This bundle provides caching for blocks",
+    "name": "sonata/cache-bundle",
+    "description": "This bundle provides caching services",
     "keywords": ["cache block"],
     "homepage": "https://github.com/sonata-project/SonataCacheBundle",
     "type": "symfony-bundle",
@@ -14,7 +14,6 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "sonata-project/block-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": { "Sonata\\CacheBundle": "" }
