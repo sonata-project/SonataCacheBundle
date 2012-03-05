@@ -14,7 +14,7 @@ interface CacheInterface
 {
     /**
      * @param array $keys
-     * @return void
+     * @return \Sonata\CacheBundle\Cache\CacheElement
      */
     function get(array $keys);
 
