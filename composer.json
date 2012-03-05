@@ -1,5 +1,5 @@
 {
-    "name": "sonata/cache-bundle",
+    "name": "sonata-project/cache-bundle",
     "description": "This bundle provides caching services",
     "keywords": ["cache block"],
     "homepage": "https://github.com/sonata-project/SonataCacheBundle",
