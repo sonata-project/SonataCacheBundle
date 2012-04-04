@@ -179,7 +179,11 @@ class EsiCache implements CacheInterface
         $subRequest = Request::create('', 'get', $parameters, $request->cookies->all(), array(), $request->server->all());
 
         $controller = $this->resolver->getController($subRequest);
-        $arguments = $this->resolver->getArguments($request, $controller);
+        
+        $subRequest->attributes->add(array('_controller' => $parameters['controller']));
+        $subRequest->attributes->add($parameters['parameters']);
+        
+        $arguments = $this->resolver->getArguments($subRequest, $controller);
 
         // call controller
         return call_user_func_array($controller, $arguments);
