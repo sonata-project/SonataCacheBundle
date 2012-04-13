@@ -9,7 +9,7 @@ if (!is_dir($vendorDir)) {
 }
 
 $deps = array(
-    array('symfony', 'git://github.com/symfony/symfony.git', isset($_SERVER['SYMFONY_VERSION']) ? $_SERVER['SYMFONY_VERSION'] : 'origin/master'),
+    array('symfony', 'git://github.com/symfony/symfony.git', isset($_SERVER['SYMFONY_VERSION']) ? $_SERVER['SYMFONY_VERSION'] : 'origin/2.0'),
     array('doctrine', 'git://github.com/doctrine/doctrine2.git', 'origin/master'),
     array('doctrine-common', 'git://github.com/doctrine/common.git', 'origin/master'),
     array('doctrine-dbal', 'git://github.com/doctrine/dbal.git', 'origin/master'),

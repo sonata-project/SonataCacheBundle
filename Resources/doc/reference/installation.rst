@@ -6,6 +6,7 @@ To begin, add the dependent bundles to the vendor/bundles directory. Add the fol
     [SonataCacheBundle]
         git=http://github.com/sonata-project/SonataCacheBundle.git
         target=/bundles/Sonata/CacheBundle
+        version=origin/2.0
 
 
 Now, add the new Bundle to the kernel
