@@ -143,7 +143,7 @@ class EsiCache implements CacheInterface
             'parameters' => $keys
         );
 
-        return $this->router->generate('sonata_cache_esi', $parameters, true);
+        return $this->router->generate('sonata_cache_esi', $parameters, false);
     }
 
     /**
