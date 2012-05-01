@@ -137,6 +137,28 @@ HELP
             $container->removeDefinition('sonata.cache.memcached');
         }
 
+
+        if (isset($config['caches']['memcache'])) {
+
+            if (!class_exists('\Memcache', true)) {
+                throw new \RuntimeException(<<<HELP
+The `sonata.cache.memcache` service is configured, however the Memcache class is not available.
+
+To resolve this issue, please install the related library : http://php.net/manual/en/book.memcache.php
+or remove the memcache cache settings from the configuration file.
+HELP
+                );
+            }
+
+            $container
+                ->getDefinition('sonata.cache.memcache')
+                ->replaceArgument(0, $config['caches']['memcache']['prefix'])
+                ->replaceArgument(1, $config['caches']['memcache']['servers'])
+            ;
+        } else {
+            $container->removeDefinition('sonata.cache.memcache');
+        }
+
         if (isset($config['caches']['apc'])) {
 
             if (!function_exists('apc_fetch')) {
