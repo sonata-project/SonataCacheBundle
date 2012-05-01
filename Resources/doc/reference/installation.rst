@@ -61,6 +61,11 @@ file.
                 servers:
                     - {host: 127.0.0.1, port: 11211, weight: 0}
 
+            memcache:
+                prefix: test     # prefix to ensure there is no clash between instances
+                servers:
+                    - {host: 127.0.0.1, port: 11211, weight: 1}
+
             apc:
                 token:  s3cur3   # token used to clear the related cache
                 prefix: test     # prefix to ensure there is no clash between instances
