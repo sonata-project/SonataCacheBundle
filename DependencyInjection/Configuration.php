@@ -92,7 +92,7 @@ class Configuration implements ConfigurationInterface
                                     ->children()
                                         ->scalarNode('port')->defaultValue(11211)->end()
                                         ->scalarNode('host')->end()
-                                        ->scalarNode('weight')->defaultValue(0)->end()
+                                        ->scalarNode('weight')->defaultValue(1)->end()
                                         ->scalarNode('persistent')->defaultValue(true)->end()
                                     ->end()
                                 ->end()
