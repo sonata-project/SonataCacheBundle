@@ -27,12 +27,12 @@ class CacheManager implements CacheManagerInterface
 
     /**
      * @param \Sonata\CacheBundle\Invalidation\InvalidationInterface $cacheInvalidation
-     * @param array $cacheServices
+     * @param array                                                  $cacheServices
      */
     public function __construct(InvalidationInterface $cacheInvalidation, array $cacheServices)
     {
-        $this->cacheInvalidation  = $cacheInvalidation;
-        $this->cacheServices      = $cacheServices;
+        $this->cacheInvalidation = $cacheInvalidation;
+        $this->cacheServices     = $cacheServices;
     }
 
     /**
@@ -49,7 +49,7 @@ class CacheManager implements CacheManagerInterface
     public function getCacheService($name)
     {
         if (!$this->hasCacheService($name)) {
-            throw new \RuntimeException(sprintf('The cache service %s does not exist.',$name));
+            throw new \RuntimeException(sprintf('The cache service %s does not exist.', $name));
         }
 
         return $this->cacheServices[$name];

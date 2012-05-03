@@ -24,16 +24,16 @@ final class CacheElement
 
     /**
      * @param array $keys
-     * @param $data
-     * @param int $ttl
+     * @param mixed $data
+     * @param int   $ttl
      * @param array $contextualKeys
      */
     public function __construct(array $keys, $data, $ttl = 84600, array $contextualKeys = array())
     {
-        $this->createdAt = new \DateTime;
-        $this->keys      = $keys;
-        $this->ttl       = $ttl;
-        $this->data      = $data;
+        $this->createdAt      = new \DateTime;
+        $this->keys           = $keys;
+        $this->ttl            = $ttl;
+        $this->data           = $data;
         $this->contextualKeys = $contextualKeys;
     }
 

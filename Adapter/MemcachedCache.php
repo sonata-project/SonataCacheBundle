@@ -25,8 +25,8 @@ class MemcachedCache implements CacheInterface
     protected $collection;
 
     /**
-     * @param $prefix
-     * @param array $servers
+     * @param string $prefix
+     * @param array  $servers
      */
     public function __construct($prefix, array $servers)
     {

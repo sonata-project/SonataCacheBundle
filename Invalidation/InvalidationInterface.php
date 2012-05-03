@@ -18,6 +18,7 @@ interface InvalidationInterface
     /**
      * @param array $caches
      * @param array $array
+     *
      * @return void
      */
     function invalidate(array $caches, array $array);

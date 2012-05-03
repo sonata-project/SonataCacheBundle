@@ -14,27 +14,31 @@ interface CacheInterface
 {
     /**
      * @param array $keys
+     *
      * @return \Sonata\CacheBundle\Cache\CacheElement
      */
     function get(array $keys);
 
     /**
      * @param array $keys
+     *
      * @return boolean
      */
     function has(array $keys);
 
     /**
      * @param array $keys
-     * @param $value
-     * @param int $ttl
+     * @param mixed $value
+     * @param int   $ttl
      * @param array $contextualKeys
+     *
      * @return void
      */
     function set(array $keys, $value, $ttl = 84600, array $contextualKeys = array());
 
     /**
      * @param array $keys
+     *
      * @return void
      */
     function flush(array $keys = array());

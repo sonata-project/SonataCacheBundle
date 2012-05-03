@@ -16,17 +16,12 @@ use Sonata\CacheBundle\Invalidation\Recorder;
 abstract class TwigTemplate13 extends \Twig_Template
 {
     /**
-     * @var \Sonata\CacheBundle\Cache\Invalidation\Recorder
+     * @var \Sonata\CacheBundle\Invalidation\Recorder
      */
     protected static $recorder;
 
     /**
-     * @param $object
-     * @param $item
-     * @param array $arguments
-     * @param string $type
-     * @param bool $isDefinedTest
-     * @return mixed
+     * {@inheritdoc}
      */
     protected function getAttribute($object, $item, array $arguments = array(), $type = \Twig_TemplateInterface::ANY_CALL, $isDefinedTest = false)
     {
@@ -41,6 +36,7 @@ abstract class TwigTemplate13 extends \Twig_Template
 
     /**
      * @static
+     *
      * @param \Sonata\CacheBundle\Invalidation\Recorder $recorder
      */
     public static function attachRecorder(Recorder $recorder)

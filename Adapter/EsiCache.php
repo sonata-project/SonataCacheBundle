@@ -40,9 +40,9 @@ class EsiCache implements CacheInterface
     protected $token;
 
     /**
-     * @param $token
-     * @param array $servers
-     * @param \Symfony\Component\Routing\RouterInterface $router
+     * @param string                                                                    $token
+     * @param array                                                                     $servers
+     * @param \Symfony\Component\Routing\RouterInterface                                $router
      * @param null|\Symfony\Component\HttpKernel\Controller\ControllerResolverInterface $resolver
      */
     public function __construct($token, array $servers = array(), RouterInterface $router, ControllerResolverInterface $resolver = null)
@@ -64,6 +64,7 @@ class EsiCache implements CacheInterface
     /**
      * @param string $command
      * @param string $expression
+     *
      * @return bool
      */
     private function runCommand($command, $expression)
@@ -134,6 +135,7 @@ class EsiCache implements CacheInterface
 
     /**
      * @param array $keys
+     *
      * @return string
      */
     protected function getUrl(array $keys)
@@ -148,15 +150,17 @@ class EsiCache implements CacheInterface
 
     /**
      * @param array $keys
+     *
      * @return string
      */
     protected function computeHash(array $keys)
     {
-        return hash('sha256', $this->token.serialize($keys));
+        return hash('sha256', $this->token . serialize($keys));
     }
 
     /**
-     * @param $key
+     * @param string $key
+     *
      * @return string
      */
     protected function normalize($key)
@@ -166,6 +170,7 @@ class EsiCache implements CacheInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return mixed
      */
     public function cacheAction(Request $request)
@@ -179,7 +184,7 @@ class EsiCache implements CacheInterface
         $subRequest = Request::create('', 'get', $parameters, $request->cookies->all(), array(), $request->server->all());
 
         $controller = $this->resolver->getController($subRequest);
-        $arguments = $this->resolver->getArguments($request, $controller);
+        $arguments  = $this->resolver->getArguments($request, $controller);
 
         // call controller
         return call_user_func_array($controller, $arguments);

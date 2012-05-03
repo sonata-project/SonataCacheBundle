@@ -27,9 +27,9 @@ class MongoCache implements CacheInterface
     protected $collection;
 
     /**
-     * @param array $servers
-     * @param $database
-     * @param $collection
+     * @param array  $servers
+     * @param string $database
+     * @param string $collection
      */
     public function __construct(array $servers, $database, $collection)
     {
@@ -111,13 +111,14 @@ class MongoCache implements CacheInterface
 
     /**
      * @param array $keys
+     *
      * @return array|null
      */
     private function getRecord(array $keys)
     {
         $keys['_timeout'] = array('$gt' => time());
 
-        $results =  $this->getCollection()->find($keys);
+        $results = $this->getCollection()->find($keys);
 
         if ($results->hasNext()) {
             return $results->getNext();

@@ -30,9 +30,9 @@ class ApcCache implements CacheInterface
 
     /**
      * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param string $token
-     * @param string $prefix
-     * @param array $servers
+     * @param string                                     $token
+     * @param string                                     $prefix
+     * @param array                                      $servers
      */
     public function __construct(RouterInterface $router, $token, $prefix, array $servers)
     {
@@ -131,7 +131,9 @@ class ApcCache implements CacheInterface
 
     /**
      * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @param $token
+     *
+     * @param string $token
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function cacheAction($token)

@@ -41,7 +41,7 @@ class SimpleCacheInvalidation implements InvalidationInterface
 
                 $cache->flush($keys);
 
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
 
                 if ($this->logger) {
                     $this->logger->alert(sprintf('[%s] %s', __CLASS__, $e->getMessage()));

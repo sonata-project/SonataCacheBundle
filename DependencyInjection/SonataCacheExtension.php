@@ -51,10 +51,11 @@ class SonataCacheExtension extends Extension
 
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param $config
+     * @param array                                                   $config
+     *
      * @return void
      */
-    public function configureInvalidation(ContainerBuilder $container, $config)
+    public function configureInvalidation(ContainerBuilder $container, array $config)
     {
         $cacheManager = $container->getDefinition('sonata.cache.manager');
 
@@ -70,18 +71,16 @@ class SonataCacheExtension extends Extension
 
     /**
      * @throws \RuntimeException
+     *
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     * @param $config
+     * @param array                                                   $config
+     *
      * @return void
      */
-    public function configureCache(ContainerBuilder $container, $config)
+    public function configureCache(ContainerBuilder $container, array $config)
     {
         if (isset($config['caches']['esi'])) {
-            $container
-                ->getDefinition('sonata.cache.esi')
-                ->replaceArgument(0, $config['caches']['esi']['token'])
-                ->replaceArgument(1, $config['caches']['esi']['servers'])
-            ;
+            $container->getDefinition('sonata.cache.esi')->replaceArgument(0, $config['caches']['esi']['token'])->replaceArgument(1, $config['caches']['esi']['servers']);
         } else {
             $container->removeDefinition('sonata.cache.esi');
         }

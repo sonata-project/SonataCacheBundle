@@ -25,7 +25,7 @@ class DoctrineORMListenerContainerAware implements EventSubscriber
 
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param $service
+     * @param string                                                    $service
      */
     public function __construct(ContainerInterface $container, $service)
     {
@@ -57,6 +57,7 @@ class DoctrineORMListenerContainerAware implements EventSubscriber
 
     /**
      * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     *
      * @return void
      */
     public function preUpdate(LifecycleEventArgs $args)

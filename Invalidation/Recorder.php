@@ -28,7 +28,8 @@ class Recorder
     }
 
     /**
-     * @param $object
+     * @param mixed $object
+     *
      * @return void
      */
     public function add($object)
@@ -88,6 +89,6 @@ class Recorder
     public function reset()
     {
         $this->current = 0;
-        $this->stack = array();
+        $this->stack   = array();
     }
 }

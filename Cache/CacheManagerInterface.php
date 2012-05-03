@@ -18,14 +18,16 @@ use Sonata\CacheBundle\Invalidation\Recorder;
 interface CacheManagerInterface
 {
     /**
-     * @param $name
+     * @param string                                   $name
      * @param \Sonata\CacheBundle\Cache\CacheInterface $cacheManager
+     *
      * @return void
      */
     function addCacheService($name, CacheInterface $cacheManager);
 
     /**
-     * @param $name
+     * @param string $name
+     *
      * @return \Sonata\CacheBundle\Cache\CacheInterface
      */
     function getCacheService($name);
@@ -40,18 +42,21 @@ interface CacheManagerInterface
     /**
      *
      * @param sring $id
+     *
      * @return boolean
      */
     function hasCacheService($id);
 
     /**
      * @param array $keys
+     *
      * @return void
      */
     function invalidate(array $keys);
 
     /**
      * @param \Sonata\CacheBundle\Invalidation\Recorder $recorder
+     *
      * @return void
      */
     function setRecorder(Recorder $recorder);
