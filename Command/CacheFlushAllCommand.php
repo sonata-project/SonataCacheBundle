@@ -20,12 +20,18 @@ use Symfony\Component\Console\Output\Output;
 
 class CacheFlushAllCommand extends BaseCacheCommand
 {
+    /**
+     * {@inheritdoc}
+     */
     public function configure()
     {
         $this->setName('sonata:cache:flush-all');
         $this->setDescription('Flush all information set in cache managers');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<info>clearing cache information</info>');

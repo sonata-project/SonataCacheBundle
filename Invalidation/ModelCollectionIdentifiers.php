@@ -14,6 +14,9 @@ class ModelCollectionIdentifiers
 {
     protected $classes = array();
 
+    /**
+     * @param array $classes
+     */
     public function __construct(array $classes = array())
     {
         foreach ($classes as $class => $identifier) {
@@ -21,11 +24,20 @@ class ModelCollectionIdentifiers
         }
     }
 
+    /**
+     * @param string $class
+     * @param string $identifier
+     */
     public function addClass($class, $identifier)
     {
         $this->classes[$class] = $identifier;
     }
 
+    /**
+     * @param mixed$object
+     *
+     * @return bool|mixed
+     */
     public function getIdentifier($object)
     {
         $identifier = $this->getMethod($object);
@@ -37,6 +49,11 @@ class ModelCollectionIdentifiers
         return call_user_func(array($object, $identifier));
     }
 
+    /**
+     * @param mixed $object
+     *
+     * @return bool
+     */
     public function getMethod($object)
     {
         if ($object === null) {

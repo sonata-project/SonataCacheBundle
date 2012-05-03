@@ -23,6 +23,10 @@ class DoctrineORMListener implements EventSubscriber
 
     protected $collectionIdentifiers;
 
+    /**
+     * @param ModelCollectionIdentifiers $collectionIdentifiers
+     * @param array                      $caches
+     */
     public function __construct(ModelCollectionIdentifiers $collectionIdentifiers, $caches)
     {
         $this->collectionIdentifiers = $collectionIdentifiers;
@@ -32,6 +36,9 @@ class DoctrineORMListener implements EventSubscriber
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSubscribedEvents()
     {
         return array(
@@ -40,16 +47,27 @@ class DoctrineORMListener implements EventSubscriber
         );
     }
 
+    /**
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     */
     public function preRemove(LifecycleEventArgs $args)
     {
         $this->flush($args);
     }
 
+    /**
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     */
     public function preUpdate(LifecycleEventArgs $args)
     {
         $this->flush($args);
     }
 
+    /**
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     *
+     * @return mixed
+     */
     protected function flush(LifecycleEventArgs $args)
     {
         $identifier = $this->collectionIdentifiers->getIdentifier($args->getEntity());
@@ -67,6 +85,11 @@ class DoctrineORMListener implements EventSubscriber
         }
     }
 
+    /**
+     * @param \Sonata\CacheBundle\Cache\CacheInterface $cache
+     *
+     * @return mixed
+     */
     public function addCache(CacheInterface $cache)
     {
         if (!$cache->isContextual()) {

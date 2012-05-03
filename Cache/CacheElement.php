@@ -54,7 +54,7 @@ final class CacheElement
     }
 
     /**
-     * @return
+     * @return mixed
      */
     public function getData()
     {

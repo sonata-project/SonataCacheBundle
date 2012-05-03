@@ -16,6 +16,9 @@ use Sonata\CacheBundle\DependencyInjection\Compiler\CacheCompilerPass;
 
 class SonataCacheBundle extends Bundle
 {
+    /**
+     * {@inheritdoc}
+     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
@@ -23,6 +26,9 @@ class SonataCacheBundle extends Bundle
         $container->addCompilerPass(new CacheCompilerPass());
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function boot()
     {
         $options = $this->container->getParameter('twig.options');

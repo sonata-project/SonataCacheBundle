@@ -18,6 +18,9 @@ class SimpleCacheInvalidation implements InvalidationInterface
 {
     protected $logger;
 
+    /**
+     * @param null|\Symfony\Component\HttpKernel\Log\LoggerInterface $logger
+     */
     public function __construct(LoggerInterface $logger = null)
     {
         $this->logger = $logger;

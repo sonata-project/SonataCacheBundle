@@ -101,7 +101,7 @@ class ApcCache implements CacheInterface
     {
         $cacheElement = new CacheElement($keys, $data, $ttl);
 
-        $result = apc_store(
+        apc_store(
             $this->computeCacheKeys($keys),
             $cacheElement,
             $cacheElement->getTtl()
@@ -111,7 +111,8 @@ class ApcCache implements CacheInterface
     }
 
     /**
-     * @param CacheElement $cacheElement
+     * @param array $keys
+     *
      * @return string
      */
     private function computeCacheKeys($keys)

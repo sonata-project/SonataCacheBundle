@@ -20,6 +20,9 @@ use Symfony\Component\Console\Output\Output;
 
 class CacheFlushCommand extends BaseCacheCommand
 {
+    /**
+     * {@inheritdoc}
+     */
     public function configure()
     {
         $this->setName('sonata:cache:flush');
@@ -28,6 +31,9 @@ class CacheFlushCommand extends BaseCacheCommand
         $this->addArgument('keys', InputArgument::REQUIRED, 'Flush all elements matching the providing keys (json format)');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $keys = json_decode($input->getOption('keys'), true);
