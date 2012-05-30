@@ -12,7 +12,6 @@
         </service>
 
         <service id="sonata.cache.orm.event_subscriber" class="Sonata\CacheBundle\Invalidation\DoctrineORMListenerContainerAware">
-            <tag name="doctrine.event_subscriber" connection="default" />
             <argument type="service" id="service_container" />
             <argument>sonata.cache.orm.event_subscriber.default</argument>
         </service>
