@@ -79,8 +79,7 @@ class SonataCacheExtension extends Extension
         $cacheManager = $container->getDefinition('sonata.cache.orm.event_subscriber');
 
         $connections = array_keys($container->getParameter('doctrine.connections'));
-        foreach ($connections as $conn)
-        {
+        foreach ($connections as $conn) {
             $cacheManager->addTag('doctrine.event_subscriber', array('connection' => $conn));
         }
     }
