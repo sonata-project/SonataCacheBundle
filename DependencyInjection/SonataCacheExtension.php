@@ -46,6 +46,7 @@ class SonataCacheExtension extends Extension
         $loader->load('cache.xml');
 
         $this->configureInvalidation($container, $config);
+        $this->configureORM($container, $config);
         $this->configureCache($container, $config);
     }
 
@@ -67,6 +68,21 @@ class SonataCacheExtension extends Extension
         }
 
         $cacheManager->addMethodCall('setRecorder', array(new Reference($config['cache_invalidation']['recorder'])));
+    }
+
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     * @param $config
+     * @return void
+     */
+    public function configureORM(ContainerBuilder $container, $config)
+    {
+        $cacheManager = $container->getDefinition('sonata.cache.orm.event_subscriber');
+
+        $connections = array_keys($container->getParameter('doctrine.connections'));
+        foreach ($connections as $conn) {
+            $cacheManager->addTag('doctrine.event_subscriber', array('connection' => $conn));
+        }
     }
 
     /**
