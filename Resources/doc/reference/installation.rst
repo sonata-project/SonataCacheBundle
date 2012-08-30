@@ -3,10 +3,7 @@ Installation
 
 To begin, add the dependent bundles to the vendor/bundles directory. Add the following lines to the file deps::
 
-    [SonataCacheBundle]
-        git=http://github.com/sonata-project/SonataCacheBundle.git
-        target=/bundles/Sonata/CacheBundle
-
+    php composer.phar require sonata-project/cache-bundle
 
 Now, add the new Bundle to the kernel
 

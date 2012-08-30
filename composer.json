@@ -20,7 +20,9 @@
         "symfony/symfony": "2.1.*"
     },
     "suggest": {
-        "doctrine/orm": ">=2.2.0"
+        "doctrine/orm": ">=2.2.0",
+        "ext-apc": "*",
+        "ext-memcached": "*"
     },
     "autoload": {
         "psr-0": { "Sonata\\CacheBundle": "" }
