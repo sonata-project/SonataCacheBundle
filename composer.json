@@ -16,6 +16,7 @@
             "homepage": "https://github.com/sonata-project/SonataCacheBundle/contributors"
         }
     ],
+    "minimum-stability": "dev",
     "require": {
         "symfony/symfony": "2.1.*"
     },
