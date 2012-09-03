@@ -90,7 +90,7 @@ class MongoCache implements CacheInterface
         $cacheElement = new CacheElement($keys, $data, $ttl, $contextualKeys);
 
         $keys = $cacheElement->getContextualKeys() + $cacheElement->getKeys();
-        $keys['_value']       = new \MongoBinData(serialize($cacheElement));
+        $keys['_value']       = new \MongoBinData(serialize($cacheElement), \MongoBinData::BYTE_ARRAY);
         $keys['_updated_at']  = $time;
         $keys['_timeout']     = $time + $cacheElement->getTtl();
 
