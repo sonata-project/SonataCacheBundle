@@ -32,6 +32,7 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('cache_invalidation')
                 ->addDefaultsIfNotSet()
                 ->children()
+                    ->scalarNode('orm_listener')->defaultValue('auto')->end()
                     ->scalarNode('service')->defaultValue('sonata.cache.invalidation.simple')->end()
                     ->scalarNode('recorder')->defaultValue('sonata.cache.recorder')->end()
                     ->arrayNode('classes')
