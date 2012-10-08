@@ -55,7 +55,7 @@ class SonataCacheExtension extends Extension
 
     /**
      * @param ContainerBuilder $container
-     * @param $config
+     * @param array $config
      *
      * @return void
      */
@@ -75,7 +75,7 @@ class SonataCacheExtension extends Extension
 
     /**
      * @param ContainerBuilder $container
-     * @param $config
+     * @param array $config
      *
      * @return void
      */
@@ -91,7 +91,7 @@ class SonataCacheExtension extends Extension
 
     /**
      * @param ContainerBuilder $container
-     * @param $config
+     * @param array $config
      *
      * @return void
      *
