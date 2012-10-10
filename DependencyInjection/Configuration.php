@@ -98,6 +98,7 @@ class Configuration implements ConfigurationInterface
                                         ->scalarNode('domain')->isRequired()->end()
                                         ->scalarNode('ip')->isRequired()->end()
                                         ->scalarNode('port')->defaultValue(80)->end()
+                                        ->scalarNode('basic')->defaultValue(false)->end()
                                     ->end()
                                 ->end()
                             ->end()
