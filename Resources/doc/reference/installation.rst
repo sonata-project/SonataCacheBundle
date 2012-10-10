@@ -63,6 +63,14 @@ file.
                 servers:
                     - { domain: kooqit.local, ip: 127.0.0.1, port: 80}
 
+For APC you can specify a basic parameter for servers definition (useful to clear cache for staging area behind this kind of protection)
+
+.. code-block:: yaml
+    apc:
+        token:  s3cur3   # token used to clear the related cache
+        prefix: test     # prefix to ensure there is no clash between instances
+        servers:
+            - { domain: kooqit.local, ip: 127.0.0.1, port: 80, basic: 'user:login' }
 
 At the end of your routing file, add the following lines
 
