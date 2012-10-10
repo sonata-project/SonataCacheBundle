@@ -59,7 +59,7 @@ class ApcCache implements CacheInterface
             $command = sprintf("GET %s HTTP/1.1\r\n", $this->router->generate('sonata_cache_apc', array('token' => $this->token)));
             $command .= sprintf("Host: %s\r\n", $server['domain']);
             if ($server['basic']) {
-                $command .= sprintf("Authorization: Basic %s\r\n", base64_encode($server['basic']));
+                $command .= sprintf("Authorization: Basic %s\r\n", $server['basic']);
             }
             $command .= "Connection: Close\r\n\r\n";
 

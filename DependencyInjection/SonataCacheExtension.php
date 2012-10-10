@@ -169,11 +169,29 @@ HELP
                 ->getDefinition('sonata.cache.apc')
                 ->replaceArgument(1, $config['caches']['apc']['token'])
                 ->replaceArgument(2, $config['caches']['apc']['prefix'])
-                ->replaceArgument(3, $config['caches']['apc']['servers'])
+                ->replaceArgument(3, $this->configureApcServers($config['caches']['apc']['servers']))
             ;
         } else {
             $container->removeDefinition('sonata.cache.apc');
         }
     }
 
+    /**
+     * Compute hash for basic auth if provided
+     * @param array $servers
+     * @return array
+     */
+    public function configureApcServers(array $servers)
+    {
+        return array_map(
+            function($item) {
+                if ($item['basic']) {
+                    $item['basic'] = base64_encode($item['basic']);
+                }
+
+                return $item;
+            }, 
+            $servers
+        );
+    }
 }
