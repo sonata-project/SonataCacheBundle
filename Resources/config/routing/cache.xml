@@ -9,7 +9,7 @@
     </route>
 
     <route id="sonata_cache_ssi" pattern="/sonata/cache/ssi/{token}">
-        <default key="_controller">sonata.cache.esi:cacheAction</default>
+        <default key="_controller">sonata.cache.ssi:cacheAction</default>
     </route>
 
     <route id="sonata_cache_js_async" pattern="/sonata/cache/js-async">
