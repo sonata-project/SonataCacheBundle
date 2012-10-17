@@ -64,9 +64,10 @@ class EsiCache implements CacheInterface
     /**
      * @param string $command
      * @param string $expression
+     *
      * @return bool
      */
-    private function runCommand($command, $expression)
+    protected function runCommand($command, $expression)
     {
         $return = true;
         foreach ($this->servers as $server) {
@@ -148,10 +149,13 @@ class EsiCache implements CacheInterface
 
     /**
      * @param array $keys
+     *
      * @return string
      */
     protected function computeHash(array $keys)
     {
+        ksort($keys);
+
         return hash('sha256', $this->token.serialize($keys));
     }
 
@@ -171,7 +175,7 @@ class EsiCache implements CacheInterface
     public function cacheAction(Request $request)
     {
         $parameters = $request->get('parameters', array());
-
+        
         if ($request->get('token') != $this->computeHash($parameters)) {
             throw new AccessDeniedHttpException('Invalid token');
         }
@@ -179,10 +183,10 @@ class EsiCache implements CacheInterface
         $subRequest = Request::create('', 'get', $parameters, $request->cookies->all(), array(), $request->server->all());
 
         $controller = $this->resolver->getController($subRequest);
-        
+
         $subRequest->attributes->add(array('_controller' => $parameters['controller']));
         $subRequest->attributes->add($parameters['parameters']);
-        
+
         $arguments = $this->resolver->getArguments($subRequest, $controller);
 
         // call controller

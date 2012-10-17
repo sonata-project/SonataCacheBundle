@@ -117,6 +117,8 @@ class SsiCache implements CacheInterface
      */
     protected function computeHash(array $keys)
     {
+        ksort($keys);
+
         return hash('sha256', $this->token.serialize($keys));
     }
 
