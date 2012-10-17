@@ -52,6 +52,13 @@
             <argument type="service" id="controller_resolver" />
         </service>
 
+        <service id="sonata.cache.ssi" class="Sonata\CacheBundle\Adapter\SiiCache">
+            <tag name="sonata.cache" />
+            <argument />
+            <argument type="service" id="router" />
+            <argument type="service" id="controller_resolver" />
+        </service>
+
         <service id="sonata.cache.invalidation.simple" class="Sonata\CacheBundle\Invalidation\SimpleCacheInvalidation">
             <argument type="service" id="logger" />
         </service>

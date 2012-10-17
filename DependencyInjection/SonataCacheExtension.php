@@ -111,6 +111,16 @@ class SonataCacheExtension extends Extension
             $container->removeDefinition('sonata.cache.esi');
         }
 
+        if (isset($config['caches']['ssi'])) {
+            $container
+                ->getDefinition('sonata.cache.ssi')
+                ->replaceArgument(0, $config['caches']['ssi']['token'])
+            ;
+        } else {
+            $container->removeDefinition('sonata.cache.ssi');
+        }
+
+
         if (isset($config['caches']['mongo'])) {
             if (!class_exists('\Mongo', true)) {
                 throw new \RuntimeException(<<<HELP
@@ -199,7 +209,7 @@ HELP
                 }
 
                 return $item;
-            }, 
+            },
             $servers
         );
     }

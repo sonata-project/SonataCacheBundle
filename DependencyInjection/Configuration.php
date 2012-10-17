@@ -56,6 +56,12 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
 
+                    ->arrayNode('ssi')
+                        ->children()
+                            ->scalarNode('token')->defaultValue(hash('sha256', uniqid(mt_rand(), true)))->end()
+                        ->end()
+                    ->end()
+
                     ->arrayNode('mongo')
                         ->children()
                             ->scalarNode('database')->isRequired()->end()
