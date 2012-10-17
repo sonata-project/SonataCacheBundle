@@ -52,7 +52,7 @@
             <argument type="service" id="controller_resolver" />
         </service>
 
-        <service id="sonata.cache.ssi" class="Sonata\CacheBundle\Adapter\SiiCache">
+        <service id="sonata.cache.ssi" class="Sonata\CacheBundle\Adapter\SsiCache">
             <tag name="sonata.cache" />
             <argument />
             <argument type="service" id="router" />
