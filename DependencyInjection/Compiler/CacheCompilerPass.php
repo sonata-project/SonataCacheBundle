@@ -43,6 +43,11 @@ class CacheCompilerPass implements CompilerPassInterface
                 ->replaceArgument(1, $caches);
         }
 
+        if ($container->hasDefinition('sonata.cache.phpcr_odm.event_subscriber.default')) {
+            $container->getDefinition('sonata.cache.phpcr_odm.event_subscriber.default')
+                ->replaceArgument(1, $caches);
+        }
+
         if ($container->hasDefinition('sonata.cache.manager')) {
             $container->getDefinition('sonata.cache.manager')
                 ->replaceArgument(1, $caches);

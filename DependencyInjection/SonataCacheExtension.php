@@ -11,10 +11,8 @@
 namespace Sonata\CacheBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Definition\Processor;
@@ -40,17 +38,28 @@ class SonataCacheExtension extends Extension
         $config = $processor->processConfiguration($configuration, $configs);
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('cache.xml');
+
         $useOrm = 'auto' == $config['cache_invalidation']['orm_listener'] ?
             class_exists('Doctrine\\ORM\\Version') :
             $config['cache_invalidation']['orm_listener'];
         if ($useOrm) {
             $loader->load('orm.xml');
         }
-        $loader->load('cache.xml');
+        $usePhpcrOdm = 'auto' == $config['cache_invalidation']['phpcr_odm_listener'] ?
+            class_exists('Doctrine\\PHPCR\\ODM\\Version') :
+            $config['cache_invalidation']['phpcr_odm_listener'];
+        if ($usePhpcrOdm) {
+            $loader->load('phpcr_odm.xml');
+        }
+        $loader->load('phpcr_odm.xml');
 
         $this->configureInvalidation($container, $config);
         if ($useOrm) {
             $this->configureORM($container, $config);
+        }
+        if ($usePhpcrOdm) {
+            $this->configurePHPCRODM($container, $config);
         }
         $this->configureCache($container, $config);
     }
@@ -88,6 +97,22 @@ class SonataCacheExtension extends Extension
         $connections = array_keys($container->getParameter('doctrine.connections'));
         foreach ($connections as $conn) {
             $cacheManager->addTag('doctrine.event_subscriber', array('connection' => $conn));
+        }
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param array $config
+     *
+     * @return void
+     */
+    public function configurePHPCRODM(ContainerBuilder $container, $config)
+    {
+        $cacheManager = $container->getDefinition('sonata.cache.phpcr_odm.event_subscriber');
+
+        $sessions = array_keys($container->getParameter('doctrine_phpcr.odm.sessions'));
+        foreach ($sessions as $session) {
+            $cacheManager->addTag('doctrine_phpcr.event_subscriber', array('connection' => $session));
         }
     }
 
