@@ -52,7 +52,6 @@ class SonataCacheExtension extends Extension
         if ($usePhpcrOdm) {
             $loader->load('phpcr_odm.xml');
         }
-        $loader->load('phpcr_odm.xml');
 
         $this->configureInvalidation($container, $config);
         if ($useOrm) {
