@@ -111,7 +111,7 @@ class SonataCacheExtension extends Extension
 
         $sessions = array_keys($container->getParameter('doctrine_phpcr.odm.sessions'));
         foreach ($sessions as $session) {
-            $cacheManager->addTag('doctrine_phpcr.event_subscriber', array('connection' => $session));
+            $cacheManager->addTag('doctrine_phpcr.event_subscriber', array('session' => $session));
         }
     }
 
