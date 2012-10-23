@@ -18,7 +18,10 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "symfony/symfony": "2.1.*"
+        "symfony/http-foundation": ">=2.1,<2.3-dev",
+        "symfony/routing": ">=2.1,<2.3-dev",
+        "symfony/security": ">=2.1,<2.3-dev",
+        "symfony/process": ">=2.1,<2.3-dev"
     },
     "require-dev": {
         "doctrine/orm": ">=2.2.0"
