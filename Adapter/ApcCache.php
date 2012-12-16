@@ -69,12 +69,16 @@ class ApcCache implements CacheInterface
 
             socket_connect($socket, $server['ip'], $server['port']);
 
-            socket_write($socket, $command);
-
-            $content = socket_read($socket, 1024);
-
+            $content = '';
+            do {
+                $buffer = socket_read($socket, 1024);
+                $content .= $buffer;
+            } while (!empty($buffer));
+            
+            $content = str_replace("\r\n",'', $content);
+            
             if ($result) {
-                $result = substr($content, -2) == 'ok' ? true : false;
+                $result = substr($content, -3, -1) == 'ok' ? true : false;
             }
         }
 
