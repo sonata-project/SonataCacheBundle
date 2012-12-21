@@ -32,10 +32,19 @@ class Recorder_Model_2
     }
 }
 
+class Recorder_Model_3
+{
+
+    public function getId()
+    {
+        return 3;
+    }
+}
+
 class RecorderTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function test()
+    public function testRecorder()
     {
         $collection = new ModelCollectionIdentifiers(array(
             'Sonata\CacheBundle\Tests\Invalidation\Recorder_Model_1' => 'getCacheIdentifier'
@@ -43,17 +52,26 @@ class RecorderTest extends \PHPUnit_Framework_TestCase
 
         $m1 = new Recorder_Model_1();
         $m2 = new Recorder_Model_2();
+        $m3 = new Recorder_Model_3();
         $recorder = new Recorder($collection);
 
         $recorder->push();
 
         $recorder->add($m1);
+
+        $recorder->push();
+        $recorder->add($m1);
         $recorder->add($m2);
+        $recorder->add($m2);
+
+        $innerKeys = $recorder->pop();
+        $recorder->add($m3);
 
         $keys = $recorder->pop();
 
+        $this->assertArrayHasKey('Sonata\CacheBundle\Tests\Invalidation\Recorder_Model_1', $innerKeys);
+        $this->assertArrayHasKey('Sonata\CacheBundle\Tests\Invalidation\Recorder_Model_2', $innerKeys);
         $this->assertArrayHasKey('Sonata\CacheBundle\Tests\Invalidation\Recorder_Model_1', $keys);
-        $this->assertArrayHasKey('Sonata\CacheBundle\Tests\Invalidation\Recorder_Model_2', $keys);
-
+        $this->assertArrayHasKey('Sonata\CacheBundle\Tests\Invalidation\Recorder_Model_3', $keys);
     }
 }
