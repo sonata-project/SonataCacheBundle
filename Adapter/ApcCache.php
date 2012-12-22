@@ -68,7 +68,8 @@ class ApcCache implements CacheInterface
             socket_set_option($socket, SOL_SOCKET, SO_RCVTIMEO, array('sec' => 2, 'usec' => 0));
 
             socket_connect($socket, $server['ip'], $server['port']);
-
+            socket_write($socket, $command);
+            
             $content = '';
             do {
                 $buffer = socket_read($socket, 1024);
