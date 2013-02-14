@@ -25,7 +25,7 @@ class CacheFlushCommand extends BaseCacheCommand
         $this->setName('sonata:cache:flush');
         $this->setDescription('Flush information');
 
-        $this->addArgument('keys', InputArgument::REQUIRED, 'Flush all elements matching the providing keys (json format)');
+        $this->addOption('keys', null, InputOption::VALUE_REQUIRED, 'Flush all elements matching the providing keys (json format)');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
