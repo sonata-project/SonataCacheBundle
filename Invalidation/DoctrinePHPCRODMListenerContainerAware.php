@@ -44,7 +44,7 @@ class DoctrinePHPCRODMListenerContainerAware implements EventSubscriber
     }
 
     /**
-     * @param \Doctrine\ODM\PHPCR\Event\LifecycleEventArgs $args
+     * @param  \Doctrine\ODM\PHPCR\Event\LifecycleEventArgs $args
      * @return void
      */
     public function preRemove(LifecycleEventArgs $args)
@@ -55,7 +55,7 @@ class DoctrinePHPCRODMListenerContainerAware implements EventSubscriber
     }
 
     /**
-     * @param \Doctrine\ODM\PHPCR\Event\LifecycleEventArgs $args
+     * @param  \Doctrine\ODM\PHPCR\Event\LifecycleEventArgs $args
      * @return void
      */
     public function preUpdate(LifecycleEventArgs $args)

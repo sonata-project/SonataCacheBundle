@@ -1,6 +1,5 @@
 <?php
 
-
 /*
  * This file is part of the Sonata package.
  *
@@ -50,7 +49,6 @@ class MongoCacheTest extends \PHPUnit_Framework_TestCase
         $cache->flush(array('id' => 42));
 
         $this->assertFalse($cache->has(array('id' => 42)));
-
 
         $cacheElement = $cache->get(array('id' => 7));
 

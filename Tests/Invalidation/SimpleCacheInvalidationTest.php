@@ -1,6 +1,5 @@
 <?php
 
-
 /*
  * This file is part of the Sonata package.
  *
@@ -12,7 +11,6 @@
 
 namespace Sonata\CacheBundle\Tests\Cache\Invalidation;
 
-use Sonata\CacheBundle\Cache\CacheElement;
 use Sonata\CacheBundle\Invalidation\SimpleCacheInvalidation;
 use Sonata\CacheBundle\Cache\CacheInterface;
 

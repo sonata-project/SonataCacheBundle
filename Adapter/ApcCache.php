@@ -30,9 +30,9 @@ class ApcCache implements CacheInterface
 
     /**
      * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param string $token
-     * @param string $prefix
-     * @param array $servers
+     * @param string                                     $token
+     * @param string                                     $prefix
+     * @param array                                      $servers
      */
     public function __construct(RouterInterface $router, $token, $prefix, array $servers)
     {
@@ -69,15 +69,15 @@ class ApcCache implements CacheInterface
 
             socket_connect($socket, $server['ip'], $server['port']);
             socket_write($socket, $command);
-            
+
             $content = '';
             do {
                 $buffer = socket_read($socket, 1024);
                 $content .= $buffer;
             } while (!empty($buffer));
-            
+
             $content = str_replace("\r\n",'', $content);
-            
+
             if ($result) {
                 $result = substr($content, -3, -1) == 'ok' ? true : false;
             }
@@ -119,7 +119,7 @@ class ApcCache implements CacheInterface
     }
 
     /**
-     * @param CacheElement $cacheElement
+     * @param  CacheElement $cacheElement
      * @return string
      */
     private function computeCacheKeys($keys)

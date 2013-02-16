@@ -53,7 +53,7 @@ class ModelCollectionIdentifiers
 
         if (method_exists($object, 'getCacheIdentifier')) {
             $this->addClass($class, 'getCacheIdentifier');
-        } else if (method_exists($object, 'getId')) {
+        } elseif (method_exists($object, 'getId')) {
             $this->addClass($class, 'getId');
         } else {
             return false;

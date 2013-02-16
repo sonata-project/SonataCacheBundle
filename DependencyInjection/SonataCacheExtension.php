@@ -28,7 +28,7 @@ class SonataCacheExtension extends Extension
     /**
      * Loads the url shortener configuration.
      *
-     * @param array            $configs    An array of configuration settings
+     * @param array            $configs   An array of configuration settings
      * @param ContainerBuilder $container A ContainerBuilder instance
      */
     public function load(array $configs, ContainerBuilder $container)
@@ -65,7 +65,7 @@ class SonataCacheExtension extends Extension
 
     /**
      * @param ContainerBuilder $container
-     * @param array $config
+     * @param array            $config
      *
      * @return void
      */
@@ -85,7 +85,7 @@ class SonataCacheExtension extends Extension
 
     /**
      * @param ContainerBuilder $container
-     * @param array $config
+     * @param array            $config
      *
      * @return void
      */
@@ -101,7 +101,7 @@ class SonataCacheExtension extends Extension
 
     /**
      * @param ContainerBuilder $container
-     * @param array $config
+     * @param array            $config
      *
      * @return void
      */
@@ -117,7 +117,7 @@ class SonataCacheExtension extends Extension
 
     /**
      * @param ContainerBuilder $container
-     * @param array $config
+     * @param array            $config
      *
      * @return void
      *
@@ -143,7 +143,6 @@ class SonataCacheExtension extends Extension
         } else {
             $container->removeDefinition('sonata.cache.ssi');
         }
-
 
         if (isset($config['caches']['mongo'])) {
             if (!class_exists('\Mongo', true)) {
@@ -221,7 +220,7 @@ HELP
 
     /**
      * Compute hash for basic auth if provided
-     * @param array $servers
+     * @param  array $servers
      * @return array
      */
     public function configureApcServers(array $servers)

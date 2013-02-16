@@ -1,6 +1,5 @@
 <?php
 
-
 /*
  * This file is part of the Sonata package.
  *
@@ -13,7 +12,6 @@
 namespace Sonata\CacheBundle\Tests\Cache;
 
 use Sonata\CacheBundle\Adapter\MemcachedCache;
-use Symfony\Component\Routing\RouterInterface;
 use Sonata\CacheBundle\Cache\CacheElement;
 
 class MemcachedCacheTest extends \PHPUnit_Framework_TestCase
@@ -54,7 +52,6 @@ class MemcachedCacheTest extends \PHPUnit_Framework_TestCase
         $cache->flush(array('id' => 42));
 
         $this->assertFalse($cache->has(array('id' => 42)));
-
 
         $cacheElement = $cache->get(array('id' => 7));
 

@@ -11,7 +11,6 @@
 namespace Sonata\CacheBundle\Cache;
 
 use Sonata\CacheBundle\Cache\CacheInterface;
-use Sonata\CacheBundle\Cache\CacheElement;
 use Sonata\CacheBundle\Invalidation\InvalidationInterface;
 use Sonata\CacheBundle\Invalidation\Recorder;
 
@@ -27,7 +26,7 @@ class CacheManager implements CacheManagerInterface
 
     /**
      * @param \Sonata\CacheBundle\Invalidation\InvalidationInterface $cacheInvalidation
-     * @param array $cacheServices
+     * @param array                                                  $cacheServices
      */
     public function __construct(InvalidationInterface $cacheInvalidation, array $cacheServices)
     {

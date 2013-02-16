@@ -23,10 +23,10 @@ abstract class TwigTemplate14 extends \Twig_Template
     /**
      * @param $object
      * @param $item
-     * @param array $arguments
-     * @param string $type
-     * @param bool $isDefinedTest
-     * @param bool $ignoreStrictCheck
+     * @param  array  $arguments
+     * @param  string $type
+     * @param  bool   $isDefinedTest
+     * @param  bool   $ignoreStrictCheck
      * @return mixed
      */
     protected function getAttribute($object, $item, array $arguments = array(), $type = \Twig_TemplateInterface::ANY_CALL, $isDefinedTest = false, $ignoreStrictCheck = false)

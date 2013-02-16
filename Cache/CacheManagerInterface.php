@@ -11,53 +11,51 @@
 namespace Sonata\CacheBundle\Cache;
 
 use Sonata\CacheBundle\Cache\CacheInterface;
-use Sonata\CacheBundle\Cache\CacheElement;
-use Sonata\CacheBundle\Invalidation\InvalidationInterface;
 use Sonata\CacheBundle\Invalidation\Recorder;
 
 interface CacheManagerInterface
 {
     /**
      * @param $name
-     * @param \Sonata\CacheBundle\Cache\CacheInterface $cacheManager
+     * @param  \Sonata\CacheBundle\Cache\CacheInterface $cacheManager
      * @return void
      */
-    function addCacheService($name, CacheInterface $cacheManager);
+    public function addCacheService($name, CacheInterface $cacheManager);
 
     /**
      * @param $name
      * @return \Sonata\CacheBundle\Cache\CacheInterface
      */
-    function getCacheService($name);
+    public function getCacheService($name);
 
     /**
      * Returns related cache services
      *
      * @return array
      */
-    function getCacheServices();
+    public function getCacheServices();
 
     /**
      *
-     * @param sring $id
+     * @param  sring   $id
      * @return boolean
      */
-    function hasCacheService($id);
+    public function hasCacheService($id);
 
     /**
-     * @param array $keys
+     * @param  array $keys
      * @return void
      */
-    function invalidate(array $keys);
+    public function invalidate(array $keys);
 
     /**
-     * @param \Sonata\CacheBundle\Invalidation\Recorder $recorder
+     * @param  \Sonata\CacheBundle\Invalidation\Recorder $recorder
      * @return void
      */
-    function setRecorder(Recorder $recorder);
+    public function setRecorder(Recorder $recorder);
 
     /**
      * @return \Sonata\CacheBundle\Invalidation\Recorder
      */
-    function getRecorder();
+    public function getRecorder();
 }

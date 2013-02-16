@@ -41,8 +41,8 @@ class EsiCache implements CacheInterface
 
     /**
      * @param $token
-     * @param array $servers
-     * @param \Symfony\Component\Routing\RouterInterface $router
+     * @param array                                                                     $servers
+     * @param \Symfony\Component\Routing\RouterInterface                                $router
      * @param null|\Symfony\Component\HttpKernel\Controller\ControllerResolverInterface $resolver
      */
     public function __construct($token, array $servers = array(), RouterInterface $router, ControllerResolverInterface $resolver = null)
@@ -134,7 +134,7 @@ class EsiCache implements CacheInterface
     }
 
     /**
-     * @param array $keys
+     * @param  array  $keys
      * @return string
      */
     protected function getUrl(array $keys)
@@ -169,13 +169,13 @@ class EsiCache implements CacheInterface
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param  \Symfony\Component\HttpFoundation\Request $request
      * @return mixed
      */
     public function cacheAction(Request $request)
     {
         $parameters = $request->get('parameters', array());
-        
+
         if ($request->get('token') != $this->computeHash($parameters)) {
             throw new AccessDeniedHttpException('Invalid token');
         }

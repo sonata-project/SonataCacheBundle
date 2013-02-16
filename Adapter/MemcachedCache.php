@@ -10,9 +10,6 @@
 
 namespace Sonata\CacheBundle\Adapter;
 
-use Symfony\Component\Routing\Router;
-use Symfony\Component\HttpFoundation\Response;
-
 use Sonata\CacheBundle\Cache\CacheInterface;
 use Sonata\CacheBundle\Cache\CacheElement;
 

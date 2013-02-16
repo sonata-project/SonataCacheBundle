@@ -1,6 +1,5 @@
 <?php
 
-
 /*
  * This file is part of the Sonata package.
  *
@@ -14,8 +13,8 @@ namespace Sonata\CacheBundle\Tests\Invalidation;
 
 use Sonata\CacheBundle\Invalidation\ModelCollectionIdentifiers;
 
-
-class Model_1  {
+class Model_1
+{
     public function getCacheIdentifier()
     {
         return 1;

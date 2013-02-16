@@ -10,15 +10,12 @@
 
 namespace Sonata\CacheBundle\Invalidation;
 
-use Sonata\CacheBundle\Cache\CacheElement;
-use Sonata\CacheBundle\Cache\CacheInterface;
-
 interface InvalidationInterface
 {
     /**
-     * @param array $caches
-     * @param array $array
+     * @param  array $caches
+     * @param  array $array
      * @return void
      */
-    function invalidate(array $caches, array $array);
+    public function invalidate(array $caches, array $array);
 }

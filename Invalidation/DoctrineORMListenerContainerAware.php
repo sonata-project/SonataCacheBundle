@@ -12,7 +12,6 @@ namespace Sonata\CacheBundle\Invalidation;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use Sonata\CacheBundle\Cache\CacheInterface;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -45,7 +44,7 @@ class DoctrineORMListenerContainerAware implements EventSubscriber
     }
 
     /**
-     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     * @param  \Doctrine\ORM\Event\LifecycleEventArgs $args
      * @return void
      */
     public function preRemove(LifecycleEventArgs $args)
@@ -56,7 +55,7 @@ class DoctrineORMListenerContainerAware implements EventSubscriber
     }
 
     /**
-     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     * @param  \Doctrine\ORM\Event\LifecycleEventArgs $args
      * @return void
      */
     public function preUpdate(LifecycleEventArgs $args)

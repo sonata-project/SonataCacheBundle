@@ -1,6 +1,5 @@
 <?php
 
-
 /*
  * This file is part of the Sonata package.
  *
@@ -71,7 +70,6 @@ class EsiCacheTest extends \PHPUnit_Framework_TestCase
         $resolver = $this->getMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
         $resolver->expects($this->any())->method('getController')->will($this->returnValue(function() { return new Response(); }));
         $resolver->expects($this->any())->method('getArguments')->will($this->returnValue(array()));
-
 
         $request = Request::create('cache/esi/TOKEN', 'get', array(
             'token' => '44befdbd93f304ea693023aa6587729bed76a206ecdacfd9bbd9b43fcf2e1664',
