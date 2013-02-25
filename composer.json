@@ -16,7 +16,6 @@
             "homepage": "https://github.com/sonata-project/SonataCacheBundle/contributors"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "symfony/http-foundation": ">=2.1,<2.3-dev",
         "symfony/routing": ">=2.1,<2.3-dev",
@@ -37,5 +36,11 @@
     "autoload": {
         "psr-0": { "Sonata\\CacheBundle": "" }
     },
-    "target-dir": "Sonata/CacheBundle"
+    "target-dir": "Sonata/CacheBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-2.0": "2.0.x-dev",
+            "dev-master": "2.1.x-dev"
+        }
+    }
 }
