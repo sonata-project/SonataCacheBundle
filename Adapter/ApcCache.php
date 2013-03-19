@@ -48,6 +48,7 @@ class ApcCache implements CacheInterface
     public function flushAll()
     {
         $result = true;
+
         foreach ($this->servers as $server) {
             if (count(explode('.', $server['ip']) == 3)) {
                 $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
@@ -58,9 +59,11 @@ class ApcCache implements CacheInterface
             // generate the raw http request
             $command = sprintf("GET %s HTTP/1.1\r\n", $this->router->generate('sonata_cache_apc', array('token' => $this->token)));
             $command .= sprintf("Host: %s\r\n", $server['domain']);
+
             if ($server['basic']) {
                 $command .= sprintf("Authorization: Basic %s\r\n", $server['basic']);
             }
+
             $command .= "Connection: Close\r\n\r\n";
 
             // setup the default timeout (avoid max execution time)
@@ -71,15 +74,14 @@ class ApcCache implements CacheInterface
             socket_write($socket, $command);
 
             $content = '';
+
             do {
                 $buffer = socket_read($socket, 1024);
                 $content .= $buffer;
             } while (!empty($buffer));
 
-            $content = str_replace("\r\n",'', $content);
-
             if ($result) {
-                $result = substr($content, -3, -1) == 'ok' ? true : false;
+                $result = substr($content, -2) == 'ok';
             }
         }
 
@@ -138,9 +140,13 @@ class ApcCache implements CacheInterface
     }
 
     /**
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     * @param $token
-     * @return \Symfony\Component\HttpFoundation\Response
+     * Cache action
+     *
+     * @param string $token A configured token
+     *
+     * @return Response
+     *
+     * @throws AccessDeniedException
      */
     public function cacheAction($token)
     {
