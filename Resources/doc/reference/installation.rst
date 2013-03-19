@@ -70,6 +70,7 @@ file.
 For APC you can specify a basic parameter for servers definition (useful to clear cache for staging area behind this kind of protection)
 
 .. code-block:: yaml
+
     apc:
         token:  s3cur3   # token used to clear the related cache
         prefix: test     # prefix to ensure there is no clash between instances
