@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata package.
  *
@@ -27,30 +28,51 @@ use Symfony\Component\HttpFoundation\Request;
  *
  *  in the config.yml file :
  *     echo %s "%s" | varnishadm -T localhost:999 -S /var/db/secret
- *     echo %s "%s" | ssh vhost varnishadm -T localhost:999 -S /var/db/secret
+ *     echo %s "%s" | ssh vhost "varnishadm -T localhost:999 -S /var/db/secret {{ COMMAND }} '{{ EXPRESSION }}'"
  */
-class EsiCache implements CacheInterface
+class VarnishCache implements CacheInterface
 {
-    protected $router;
-
-    protected $servers;
-
-    protected $resolver;
-
+    /**
+     * @var string
+     */
     protected $token;
 
     /**
-     * @param $token
-     * @param array                                                                     $servers
-     * @param \Symfony\Component\Routing\RouterInterface                                $router
-     * @param null|\Symfony\Component\HttpKernel\Controller\ControllerResolverInterface $resolver
+     * @var array
      */
-    public function __construct($token, array $servers = array(), RouterInterface $router, ControllerResolverInterface $resolver = null)
+    protected $servers;
+
+    /**
+     * @var RouterInterface
+     */
+    protected $router;
+
+    /**
+     * @var string
+     */
+    protected $purgeInstruction;
+
+    /**
+     * @var ControllerResolverInterface
+     */
+    protected $resolver;
+
+    /**
+     * Constructor
+     *
+     * @param string                           $token            A token
+     * @param array                            $servers          An array of servers
+     * @param RouterInterface                  $router           A router instance
+     * @param string                           $purgeInstruction The purge instruction (purge in Varnish 2, ban in Varnish 3)
+     * @param null|ControllerResolverInterface $resolver         A controller resolver instance
+     */
+    public function __construct($token, array $servers, RouterInterface $router, $purgeInstruction, ControllerResolverInterface $resolver = null)
     {
-        $this->token    = $token;
-        $this->servers  = $servers;
-        $this->router   = $router;
-        $this->resolver = $resolver;
+        $this->token            = $token;
+        $this->servers          = $servers;
+        $this->router           = $router;
+        $this->purgeInstruction = $purgeInstruction;
+        $this->resolver         = $resolver;
     }
 
     /**
@@ -58,7 +80,7 @@ class EsiCache implements CacheInterface
      */
     public function flushAll()
     {
-        return $this->runCommand('purge', 'req.url ~ .*');
+        return $this->runCommand($this->purgeInstruction, 'req.url ~ .*');
     }
 
     /**
@@ -74,6 +96,7 @@ class EsiCache implements CacheInterface
             $command = str_replace(array('{{ COMMAND }}', '{{ EXPRESSION }}'), array($command, $expression), $server);
 
             $process = new Process($command);
+
             if ($process->run() == 0) {
                 continue;
             }
@@ -96,7 +119,7 @@ class EsiCache implements CacheInterface
 
         $purge = implode(" && ", $parameters);
 
-        return $this->runCommand('purge', $purge);
+        return $this->runCommand($this->purgeInstruction, $purge);
     }
 
     /**
@@ -134,7 +157,10 @@ class EsiCache implements CacheInterface
     }
 
     /**
-     * @param  array  $keys
+     * Gets the URL by the given keys
+     *
+     * @param array $keys
+     *
      * @return string
      */
     protected function getUrl(array $keys)
@@ -148,6 +174,8 @@ class EsiCache implements CacheInterface
     }
 
     /**
+     * Computes the given keys
+     *
      * @param array $keys
      *
      * @return string
@@ -160,7 +188,10 @@ class EsiCache implements CacheInterface
     }
 
     /**
-     * @param $key
+     * Normalizes the given key
+     *
+     * @param string $key
+     *
      * @return string
      */
     protected function normalize($key)
@@ -169,7 +200,10 @@ class EsiCache implements CacheInterface
     }
 
     /**
-     * @param  \Symfony\Component\HttpFoundation\Request $request
+     * Cache action
+     *
+     * @param Request $request
+     *
      * @return mixed
      */
     public function cacheAction(Request $request)

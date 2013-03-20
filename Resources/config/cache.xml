@@ -44,11 +44,12 @@
             <argument type="collection" />
         </service>
 
-        <service id="sonata.cache.esi" class="Sonata\CacheBundle\Adapter\EsiCache">
+        <service id="sonata.cache.esi" class="Sonata\CacheBundle\Adapter\VarnishCache">
             <tag name="sonata.cache" />
             <argument />
             <argument type="collection" />
             <argument type="service" id="router" />
+            <argument />
             <argument type="service" id="controller_resolver" />
         </service>
 
