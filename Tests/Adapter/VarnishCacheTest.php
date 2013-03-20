@@ -11,13 +11,11 @@
 
 namespace Sonata\CacheBundle\Tests\Cache;
 
-use Sonata\CacheBundle\Adapter\EsiCache;
-use Symfony\Component\Routing\RouterInterface;
-use Sonata\CacheBundle\Cache\CacheElement;
+use Sonata\CacheBundle\Adapter\VarnishCache;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EsiCacheTest extends \PHPUnit_Framework_TestCase
+class VarnishCacheTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testInitCache()
@@ -27,7 +25,7 @@ class EsiCacheTest extends \PHPUnit_Framework_TestCase
 
         $resolver = $this->getMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
 
-        $cache = new EsiCache('token', array(), $router, $resolver);
+        $cache = new VarnishCache('token', array(), $router, 'ban', $resolver);
 
         $this->assertTrue($cache->flush(array()));
         $this->assertTrue($cache->flushAll());
@@ -59,7 +57,7 @@ class EsiCacheTest extends \PHPUnit_Framework_TestCase
             'token' => 'wrong'
         ));
 
-        $cache = new EsiCache('token', array(), $router, $resolver);
+        $cache = new VarnishCache('token', array(), $router, 'ban', $resolver);
         $cache->cacheAction($request);
     }
 
@@ -79,7 +77,7 @@ class EsiCacheTest extends \PHPUnit_Framework_TestCase
             )
         ));
 
-        $cache = new EsiCache('token', array(), $router, $resolver);
+        $cache = new VarnishCache('token', array(), $router, 'ban', $resolver);
         $cache->cacheAction($request);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata package.
  *
@@ -10,7 +11,6 @@
 
 namespace Sonata\CacheBundle\Adapter;
 
-use Symfony\Component\Routing\Router;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Routing\RouterInterface;
@@ -20,26 +20,40 @@ use Sonata\CacheBundle\Cache\CacheElement;
 
 class ApcCache implements CacheInterface
 {
-    protected $servers;
-
-    protected $prefix;
-
-    protected $collection;
-
+    /**
+     * @var RouterInterface
+     */
     protected $router;
 
     /**
-     * @param \Symfony\Component\Routing\RouterInterface $router
-     * @param string                                     $token
-     * @param string                                     $prefix
-     * @param array                                      $servers
+     * @var string
+     */
+    protected $token;
+
+    /**
+     * @var string
+     */
+    protected $prefix;
+
+    /**
+     * @var array
+     */
+    protected $servers;
+
+    /**
+     * Constructor
+     *
+     * @param RouterInterface $router  A router instance
+     * @param string          $token   A token to clear the related cache
+     * @param string          $prefix  A prefix to avoid clash between instances
+     * @param array           $servers An array of servers
      */
     public function __construct(RouterInterface $router, $token, $prefix, array $servers)
     {
+        $this->router  = $router;
         $this->token   = $token;
         $this->prefix  = $prefix;
         $this->servers = $servers;
-        $this->router  = $router;
     }
 
     /**
