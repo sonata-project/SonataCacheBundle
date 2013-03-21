@@ -63,39 +63,24 @@ class ApcCache implements CacheInterface
     {
         $result = true;
 
-        foreach ($this->servers as $server) {
-            if (count(explode('.', $server['ip']) == 3)) {
-                $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-            } else {
-                $socket = socket_create(AF_INET6, SOCK_STREAM, SOL_TCP);
-            }
+        $uri = $this->router->generate('sonata_cache_apc', array('token' => $this->token));
 
-            // generate the raw http request
-            $command = sprintf("GET %s HTTP/1.1\r\n", $this->router->generate('sonata_cache_apc', array('token' => $this->token)));
-            $command .= sprintf("Host: %s\r\n", $server['domain']);
+        foreach ($this->servers as $server) {
+            $options = array(
+                'http' => array(
+                    'method'  => 'GET',
+                    'timeout' => 2,
+                ),
+            );
 
             if ($server['basic']) {
-                $command .= sprintf("Authorization: Basic %s\r\n", $server['basic']);
+                $options['http']['header'] = sprintf('Authorization: Basic %s', $server['basic']);
             }
 
-            $command .= "Connection: Close\r\n\r\n";
-
-            // setup the default timeout (avoid max execution time)
-            socket_set_option($socket, SOL_SOCKET, SO_SNDTIMEO, array('sec' => 2, 'usec' => 0));
-            socket_set_option($socket, SOL_SOCKET, SO_RCVTIMEO, array('sec' => 2, 'usec' => 0));
-
-            socket_connect($socket, $server['ip'], $server['port']);
-            socket_write($socket, $command);
-
-            $content = '';
-
-            do {
-                $buffer = socket_read($socket, 1024);
-                $content .= $buffer;
-            } while (!empty($buffer));
+            $content = file_get_contents(sprintf('%s:%s%s', $server['domain'], $server['port'], $uri), false, stream_context_create($options));
 
             if ($result) {
-                $result = substr($content, -2) == 'ok';
+                $result = false !== $content && 'ok' === substr($content, -2);
             }
         }
 

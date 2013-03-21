@@ -107,7 +107,6 @@ class Configuration implements ConfigurationInterface
                                 ->prototype('array')
                                     ->children()
                                         ->scalarNode('domain')->isRequired()->end()
-                                        ->scalarNode('ip')->isRequired()->end()
                                         ->scalarNode('port')->defaultValue(80)->end()
                                         ->scalarNode('basic')->defaultValue(false)->end()
                                     ->end()
