@@ -65,7 +65,7 @@ file.
                 token:  s3cur3   # token used to clear the related cache
                 prefix: test     # prefix to ensure there is no clash between instances
                 servers:
-                    - { domain: kooqit.local, ip: 127.0.0.1, port: 80}
+                    - { domain: http://kooqit.local, ip: 127.0.0.1, port: 80}
 
 For APC you can specify a basic parameter for servers definition (useful to clear cache for staging area behind this kind of protection)
 
@@ -75,7 +75,7 @@ For APC you can specify a basic parameter for servers definition (useful to clea
         token:  s3cur3   # token used to clear the related cache
         prefix: test     # prefix to ensure there is no clash between instances
         servers:
-            - { domain: kooqit.local, ip: 127.0.0.1, port: 80, basic: 'user:login' }
+            - { domain: http://kooqit.local, ip: 127.0.0.1, port: 80, basic: 'user:login' }
 
 At the end of your routing file, add the following lines
 
