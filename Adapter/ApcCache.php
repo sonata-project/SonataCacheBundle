@@ -18,6 +18,9 @@ use Symfony\Component\Routing\RouterInterface;
 use Sonata\CacheBundle\Cache\CacheInterface;
 use Sonata\CacheBundle\Cache\CacheElement;
 
+/**
+ * Handles APC cache
+ */
 class ApcCache implements CacheInterface
 {
     /**
@@ -135,7 +138,10 @@ class ApcCache implements CacheInterface
     }
 
     /**
-     * @param  CacheElement $cacheElement
+     * Computes the given cache keys
+     *
+     * @param CacheElement $cacheElement
+     *
      * @return string
      */
     private function computeCacheKeys($keys)
@@ -168,7 +174,8 @@ class ApcCache implements CacheInterface
             apc_clear_cache('user');
 
             return new Response('ok', 200, array(
-                'Cache-Control' => 'no-cache, must-revalidate'
+                'Cache-Control'  => 'no-cache, must-revalidate',
+                'Content-Length' => 2, // to prevent chunked transfer encoding
             ));
         }
 
