@@ -38,6 +38,8 @@ class CacheFlushCommand extends BaseCacheCommand
 
         if (!is_array($keys)) {
             $output->writeln('<error>the provided keys cannot be decoded, please provide a valid json string</error>');
+
+            return;
         }
 
         foreach ($this->getManager()->getCacheServices() as $name => $cache) {
