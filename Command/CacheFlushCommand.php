@@ -27,6 +27,7 @@ class CacheFlushCommand extends BaseCacheCommand
         $this->setDescription('Flush information');
 
         $this->addOption('keys', null, InputOption::VALUE_REQUIRED, 'Flush all elements matching the providing keys (json format)');
+        $this->addOption('cache', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Flush elements stored in given cache');
     }
 
     /**
@@ -43,6 +44,10 @@ class CacheFlushCommand extends BaseCacheCommand
         }
 
         foreach ($this->getManager()->getCacheServices() as $name => $cache) {
+            if ($input->getOption('cache') && !in_array($name, $input->getOption('cache'))) {
+                continue;
+            }
+
             $output->write(sprintf(' > %s : starting .... ', $name));
             $cache->flush($keys);
             $output->writeln('OK');
