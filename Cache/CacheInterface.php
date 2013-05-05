@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata package.
  *
@@ -13,43 +14,55 @@ namespace Sonata\CacheBundle\Cache;
 interface CacheInterface
 {
     /**
+     * Gets data from cache
+     *
      * @param array $keys
      *
      * @return \Sonata\CacheBundle\Cache\CacheElement
      */
-    public function get(array $keys);
+    function get(array $keys);
 
     /**
+     * Returns TRUE whether cache contains data identified by keys
+     *
      * @param array $keys
      *
      * @return boolean
      */
-    public function has(array $keys);
+    function has(array $keys);
 
     /**
-     * @param array $keys
-     * @param $value
-     * @param int   $ttl
-     * @param array $contextualKeys
+     * Sets value in cache
      *
-     * @return void
+     * @param array   $keys           An array of keys
+     * @param mixed   $value          Value to store
+     * @param integer $ttl            A time to live, default 84600 seconds
+     * @param array   $contextualKeys An array of contextual keys
+     *
+     * @return CacheInterface
      */
-    public function set(array $keys, $value, $ttl = 84600, array $contextualKeys = array());
+    function set(array $keys, $value, $ttl = 84600, array $contextualKeys = array());
 
     /**
+     * Flushes data from cache identified by keys
+     *
      * @param array $keys
      *
      * @return boolean
      */
-    public function flush(array $keys = array());
+    function flush(array $keys = array());
 
     /**
+     * Flushes all data from cache
+     *
      * @return boolean
      */
-    public function flushAll();
+    function flushAll();
 
     /**
+     * Returns TRUE whether cache is contextual
+     *
      * @return boolean
      */
-    public function isContextual();
+    function isContextual();
 }

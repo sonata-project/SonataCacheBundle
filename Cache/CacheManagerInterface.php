@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -16,46 +17,56 @@ use Sonata\CacheBundle\Invalidation\Recorder;
 interface CacheManagerInterface
 {
     /**
-     * @param $name
-     * @param  \Sonata\CacheBundle\Cache\CacheInterface $cacheManager
-     * @return void
+     * Adds a cache service
+     *
+     * @param string         $name         A cache name
+     * @param CacheInterface $cacheManager A cache service
      */
-    public function addCacheService($name, CacheInterface $cacheManager);
+    function addCacheService($name, CacheInterface $cacheManager);
 
     /**
-     * @param $name
-     * @return \Sonata\CacheBundle\Cache\CacheInterface
+     * Gets a cache service by a given name
+     *
+     * @param string $name A cache name
+     *
+     * @return CacheInterface
      */
-    public function getCacheService($name);
+    function getCacheService($name);
 
     /**
      * Returns related cache services
      *
      * @return array
      */
-    public function getCacheServices();
+    function getCacheServices();
 
     /**
+     * Returns TRUE whether a cache service identified by id exists
      *
-     * @param  sring   $id
+     * @param string $id
+     *
      * @return boolean
      */
-    public function hasCacheService($id);
+    function hasCacheService($id);
 
     /**
-     * @param  array $keys
-     * @return void
+     * Invalidates the cache by the given keys
+     *
+     * @param array $keys
      */
-    public function invalidate(array $keys);
+    function invalidate(array $keys);
 
     /**
-     * @param  \Sonata\CacheBundle\Invalidation\Recorder $recorder
-     * @return void
+     * Sets the recorder
+     *
+     * @param Recorder $recorder
      */
-    public function setRecorder(Recorder $recorder);
+    function setRecorder(Recorder $recorder);
 
     /**
-     * @return \Sonata\CacheBundle\Invalidation\Recorder
+     * Gets the recorder
+     *
+     * @return Recorder
      */
-    public function getRecorder();
+    function getRecorder();
 }

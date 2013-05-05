@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -16,22 +17,31 @@ use Sonata\CacheBundle\Invalidation\Recorder;
 
 class CacheManager implements CacheManagerInterface
 {
+    /**
+     * @var InvalidationInterface
+     */
     protected $cacheInvalidation;
 
-    protected $logger;
-
+    /**
+     * @var array
+     */
     protected $cacheServices = array();
 
+    /**
+     * @var Recorder
+     */
     protected $recorder;
 
     /**
-     * @param \Sonata\CacheBundle\Invalidation\InvalidationInterface $cacheInvalidation
-     * @param array                                                  $cacheServices
+     * Constructor
+     *
+     * @param InvalidationInterface $cacheInvalidation A cache invalidation instance
+     * @param array                 $cacheServices     An array of cache services
      */
     public function __construct(InvalidationInterface $cacheInvalidation, array $cacheServices)
     {
-        $this->cacheInvalidation  = $cacheInvalidation;
-        $this->cacheServices      = $cacheServices;
+        $this->cacheInvalidation = $cacheInvalidation;
+        $this->cacheServices     = $cacheServices;
     }
 
     /**
