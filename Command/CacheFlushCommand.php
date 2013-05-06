@@ -18,23 +18,36 @@ use Symfony\Component\Console\Output\Output;
 
 class CacheFlushCommand extends BaseCacheCommand
 {
+    /**
+     * {@inheritdoc}
+     */
     public function configure()
     {
         $this->setName('sonata:cache:flush');
         $this->setDescription('Flush information');
 
         $this->addOption('keys', null, InputOption::VALUE_REQUIRED, 'Flush all elements matching the providing keys (json format)');
+        $this->addOption('cache', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Flush elements stored in given cache');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $keys = json_decode($input->getOption('keys'), true);
 
         if (!is_array($keys)) {
             $output->writeln('<error>the provided keys cannot be decoded, please provide a valid json string</error>');
+
+            return;
         }
 
         foreach ($this->getManager()->getCacheServices() as $name => $cache) {
+            if ($input->getOption('cache') && !in_array($name, $input->getOption('cache'))) {
+                continue;
+            }
+
             $output->write(sprintf(' > %s : starting .... ', $name));
             $cache->flush($keys);
             $output->writeln('OK');

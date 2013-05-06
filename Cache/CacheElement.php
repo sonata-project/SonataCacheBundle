@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata package.
  *
@@ -12,32 +13,51 @@ namespace Sonata\CacheBundle\Cache;
 
 final class CacheElement
 {
+    /**
+     * @var integer
+     */
     protected $ttl;
 
+    /**
+     * @var array
+     */
     protected $keys = array();
 
+    /**
+     * @var mixed
+     */
     protected $data;
 
+    /**
+     * @var \DateTime
+     */
     protected $createdAt;
 
+    /**
+     * @var array
+     */
     protected $contextualKeys = array();
 
     /**
-     * @param array $keys
-     * @param $data
-     * @param int   $ttl
-     * @param array $contextualKeys
+     * Constructor
+     *
+     * @param array   $keys           An array of keys
+     * @param mixed   $data           Data
+     * @param integer $ttl            A time to live, default 84600 seconds
+     * @param array   $contextualKeys An array of contextual keys
      */
     public function __construct(array $keys, $data, $ttl = 84600, array $contextualKeys = array())
     {
-        $this->createdAt = new \DateTime;
-        $this->keys      = $keys;
-        $this->ttl       = $ttl;
-        $this->data      = $data;
+        $this->createdAt      = new \DateTime;
+        $this->keys           = $keys;
+        $this->ttl            = $ttl;
+        $this->data           = $data;
         $this->contextualKeys = $contextualKeys;
     }
 
     /**
+     * Returns the keys
+     *
      * @return array
      */
     public function getKeys()
@@ -46,7 +66,9 @@ final class CacheElement
     }
 
     /**
-     * @return int
+     * Returns the time to live
+     *
+     * @return integer
      */
     public function getTtl()
     {
@@ -54,7 +76,9 @@ final class CacheElement
     }
 
     /**
-     * @return
+     * Returns the data
+     *
+     * @return mixed
      */
     public function getData()
     {
@@ -62,7 +86,9 @@ final class CacheElement
     }
 
     /**
-     * @return bool
+     * Returns TRUE whether the cache is expired
+     *
+     * @return boolean
      */
     public function isExpired()
     {
@@ -70,6 +96,8 @@ final class CacheElement
     }
 
     /**
+     * Returns the contextual keys
+     *
      * @return array
      */
     public function getContextualKeys()
