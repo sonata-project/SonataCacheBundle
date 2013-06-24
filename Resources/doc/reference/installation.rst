@@ -23,11 +23,7 @@ Update the ``autoload.php`` to add new namespaces:
 .. code-block:: php
 
     <?php
-    $loader->registerNamespaces(array(
-        'Sonata'                             => __DIR__,
-
-        // ... other declarations
-    ));
+    $loader->add('Sonata' => __DIR__);
 
 
 Configuration
