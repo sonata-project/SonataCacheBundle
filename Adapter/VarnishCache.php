@@ -80,7 +80,10 @@ class VarnishCache implements CacheInterface
      */
     public function flushAll()
     {
-        return $this->runCommand($this->purgeInstruction, 'req.url ~ .*');
+        return $this->runCommand(
+            $this->purgeInstruction == 'ban' ? 'ban.url' : 'purge',
+            $this->purgeInstruction == 'ban' ? '.*' : 'req.url ~ .*'
+        );
     }
 
     /**
