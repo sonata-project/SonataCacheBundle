@@ -18,7 +18,7 @@ interface CacheInterface
      *
      * @param array $keys
      *
-     * @return \Sonata\CacheBundle\Cache\CacheElement
+     * @return CacheElement
      */
     function get(array $keys);
 
@@ -39,7 +39,7 @@ interface CacheInterface
      * @param integer $ttl            A time to live, default 84600 seconds
      * @param array   $contextualKeys An array of contextual keys
      *
-     * @return CacheInterface
+     * @return CacheElement
      */
     function set(array $keys, $value, $ttl = 84600, array $contextualKeys = array());
 

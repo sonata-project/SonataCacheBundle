@@ -96,6 +96,21 @@ final class CacheElement
     }
 
     /**
+     * @return \DateTime
+     */
+    public function getExpirationDate()
+    {
+        if ($this->isExpired()) {
+            return new \DateTime();
+        }
+
+        $date = clone $this->createdAt;
+        $date = $date->add(new \DateInterval(sprintf('PT%sS', $this->ttl)));
+
+        return $date;
+    }
+
+    /**
      * Returns the contextual keys
      *
      * @return array
