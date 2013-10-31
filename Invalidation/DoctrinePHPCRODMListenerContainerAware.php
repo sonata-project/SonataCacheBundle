@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ODM\PHPCR\Event;
-use Doctrine\ODM\PHPCR\Event\LifecycleEventArgs;
+use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 
 class DoctrinePHPCRODMListenerContainerAware implements EventSubscriber
 {
@@ -23,7 +23,7 @@ class DoctrinePHPCRODMListenerContainerAware implements EventSubscriber
     protected $service;
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param ContainerInterface $container
      * @param $service
      */
     public function __construct(ContainerInterface $container, $service)
@@ -44,7 +44,7 @@ class DoctrinePHPCRODMListenerContainerAware implements EventSubscriber
     }
 
     /**
-     * @param  \Doctrine\ODM\PHPCR\Event\LifecycleEventArgs $args
+     * @param $args
      * @return void
      */
     public function preRemove(LifecycleEventArgs $args)
@@ -55,7 +55,7 @@ class DoctrinePHPCRODMListenerContainerAware implements EventSubscriber
     }
 
     /**
-     * @param  \Doctrine\ODM\PHPCR\Event\LifecycleEventArgs $args
+     * @param LifecycleEventArgs $args
      * @return void
      */
     public function preUpdate(LifecycleEventArgs $args)

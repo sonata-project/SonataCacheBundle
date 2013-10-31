@@ -11,11 +11,10 @@
 namespace Sonata\CacheBundle\Invalidation;
 
 use Sonata\CacheBundle\Cache\CacheInterface;
-use Sonata\CacheBundle\Invalidation\ModelCollectionIdentifiers;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ODM\PHPCR\Event;
-use Doctrine\ODM\PHPCR\Event\LifecycleEventArgs;
+use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 
 class DoctrinePHPCRODMListener implements EventSubscriber
 {
