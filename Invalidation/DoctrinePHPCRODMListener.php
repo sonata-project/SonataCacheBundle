@@ -15,6 +15,7 @@ use Sonata\CacheBundle\Cache\CacheInterface;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ODM\PHPCR\Event;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\Common\Util\ClassUtils;
 
 class DoctrinePHPCRODMListener implements EventSubscriber
 {
@@ -58,7 +59,7 @@ class DoctrinePHPCRODMListener implements EventSubscriber
         }
 
         $parameters = array(
-            get_class($args->getDocument()) => $identifier
+            ClassUtils::getClass($args->getDocument()) => $identifier
         );
 
         foreach ($this->caches as $cache) {

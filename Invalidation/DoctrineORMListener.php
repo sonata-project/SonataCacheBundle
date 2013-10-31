@@ -16,6 +16,7 @@ use Sonata\CacheBundle\Invalidation\ModelCollectionIdentifiers;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\Common\Util\ClassUtils;
 
 class DoctrineORMListener implements EventSubscriber
 {
@@ -59,7 +60,7 @@ class DoctrineORMListener implements EventSubscriber
         }
 
         $parameters = array(
-            get_class($args->getEntity()) => $identifier
+            ClassUtils::getClass($args->getEntity()) => $identifier
         );
 
         foreach ($this->caches as $cache) {
