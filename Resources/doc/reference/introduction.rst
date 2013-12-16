@@ -32,8 +32,7 @@ So with the ``SonataCacheBundle``, you will have :
 
 Now let's see how this cache element will be used with 2 backends: memcached and mongodb (capped collection):
 
- - The memcached adapter will generate a hash from the ``keys`` value, and will not used the ``contextualKeys`` information as
-there is no way to use those values with memcached.
+ - The memcached adapter will generate a hash from the ``keys`` value, and will not used the ``contextualKeys`` information as there is no way to use those values with memcached.
  - The mongodb adapter will store the value as is, mongodb support array! also the ``contextualKeys`` will be stored.
 
 Now, let's try to remove a cache element. This has to be done using the ``flush`` method. The method accepts an array
