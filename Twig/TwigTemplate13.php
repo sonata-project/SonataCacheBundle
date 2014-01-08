@@ -16,7 +16,7 @@ use Sonata\CacheBundle\Invalidation\Recorder;
 abstract class TwigTemplate13 extends \Twig_Template
 {
     /**
-     * @var \Sonata\CacheBundle\Cache\Invalidation\Recorder
+     * @var \Sonata\CacheBundle\Invalidation\Recorder
      */
     protected static $recorder;
 

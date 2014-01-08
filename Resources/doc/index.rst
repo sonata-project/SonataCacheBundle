@@ -11,3 +11,4 @@ Reference Guide
    reference/introduction
    reference/installation
    reference/command_line
+   reference/contextual_cache
