@@ -57,6 +57,10 @@ file.
                 servers:
                     - {host: 127.0.0.1, port: 11211, weight: 0}
 
+            predis:
+                servers:
+                    - {host: 127.0.0.1, port: 6379, database: 42}
+
             apc:
                 token:  s3cur3   # token used to clear the related cache
                 prefix: test     # prefix to ensure there is no clash between instances

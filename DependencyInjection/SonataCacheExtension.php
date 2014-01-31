@@ -195,6 +195,26 @@ HELP
             $container->removeDefinition('sonata.cache.memcached');
         }
 
+        if (isset($config['caches']['predis'])) {
+
+            if (!class_exists('\Predis\Client', true)) {
+                throw new \RuntimeException(<<<HELP
+The `sonata.cache.predis` service is configured, however the Predis\Client class is not available.
+
+Please add the lib in your composer.json file: "predis/predis": "~0.8".
+HELP
+                );
+            }
+
+            $container
+                ->getDefinition('sonata.cache.predis')
+                ->replaceArgument(0, $config['caches']['predis']['servers'])
+            ;
+        } else {
+            $container->removeDefinition('sonata.cache.memcached');
+        }
+
+
         if (isset($config['caches']['apc'])) {
 
             if (!function_exists('apc_fetch')) {

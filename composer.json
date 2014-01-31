@@ -17,13 +17,14 @@
         }
     ],
     "require": {
-        "symfony/http-foundation": "~2.1",
-        "symfony/routing": "~2.1",
-        "symfony/security": "~2.1",
-        "symfony/process": "~2.1"
+        "symfony/http-foundation": "~2.2",
+        "symfony/routing": "~2.2",
+        "symfony/security": "~2.2",
+        "symfony/process": "~2.2"
     },
     "require-dev": {
-        "doctrine/orm": "~2.2"
+        "doctrine/orm": "~2.2",
+        "predis/predis": "~0.8"
     },
     "suggest": {
         "doctrine/doctrine-bundle": "ORM support",
@@ -31,7 +32,8 @@
         "doctrine/phpcr-bundle": "PHPCR ODM support",
         "doctrine/phpcr-odm": "PHPCR ODM support",
         "ext-apc": "Caching with ext/apc",
-        "ext-memcached": "Caching with ext/memcached"
+        "ext-memcached": "Caching with ext/memcached",
+        "predis/predis": "Install redis php"
     },
     "autoload": {
         "psr-0": { "Sonata\\CacheBundle": "" }
@@ -39,7 +41,7 @@
     "target-dir": "Sonata/CacheBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "2.1.x-dev"
+            "dev-master": "2.2.x-dev"
         }
     }
 }
