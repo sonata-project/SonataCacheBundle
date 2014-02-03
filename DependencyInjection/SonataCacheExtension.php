@@ -211,7 +211,7 @@ HELP
                 ->replaceArgument(0, $config['caches']['predis']['servers'])
             ;
         } else {
-            $container->removeDefinition('sonata.cache.memcached');
+            $container->removeDefinition('sonata.cache.predis');
         }
 
 
