@@ -34,6 +34,11 @@ class MemcachedCacheTest extends \PHPUnit_Framework_TestCase
         }
 
         socket_close($socket);
+
+        $memcached = new \Memcached();
+        $memcached->addServer('127.0.0.1', 11211);
+
+        $memcached->fetchAll();
     }
 
     public function testInitCache()

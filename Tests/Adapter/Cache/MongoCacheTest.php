@@ -33,6 +33,13 @@ class MongoCacheTest extends \PHPUnit_Framework_TestCase
         if (!$result) {
             $this->markTestSkipped('MongoDB is not running');
         }
+
+        $mongo = new \Mongo('mongodb://127.0.0.1:27017');
+
+        $mongo
+            ->selectDB('sonata_counter_test')
+            ->selectCollection('counter')
+            ->remove(array());
     }
 
     public function testInitCache()

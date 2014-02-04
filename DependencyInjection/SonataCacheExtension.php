@@ -39,13 +39,16 @@ class SonataCacheExtension extends Extension
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('cache.xml');
+        $loader->load('counter.xml');
 
         $useOrm = 'auto' == $config['cache_invalidation']['orm_listener'] ?
             class_exists('Doctrine\\ORM\\Version') :
             $config['cache_invalidation']['orm_listener'];
+
         if ($useOrm) {
             $loader->load('orm.xml');
         }
+
         $usePhpcrOdm = 'auto' == $config['cache_invalidation']['phpcr_odm_listener'] ?
             class_exists('Doctrine\\PHPCR\\ODM\\Version') :
             $config['cache_invalidation']['phpcr_odm_listener'];
@@ -61,6 +64,7 @@ class SonataCacheExtension extends Extension
             $this->configurePHPCRODM($container, $config);
         }
         $this->configureCache($container, $config);
+        $this->configureCounter($container, $config);
     }
 
     /**
@@ -125,6 +129,10 @@ class SonataCacheExtension extends Extension
      */
     public function configureCache(ContainerBuilder $container, $config)
     {
+        if ($config['default_cache']) {
+            $container->setAlias('sonata.cache', $config['default_cache']);
+        }
+
         if (isset($config['caches']['esi'])) {
             $container
                 ->getDefinition('sonata.cache.esi')
@@ -145,15 +153,7 @@ class SonataCacheExtension extends Extension
         }
 
         if (isset($config['caches']['mongo'])) {
-            if (!class_exists('\Mongo', true)) {
-                throw new \RuntimeException(<<<HELP
-The `sonata.cache.mongo` service is configured, however the Mongo class is not available.
-
-To resolve this issue, please install the related library : http://php.net/manual/en/book.mongo.php
-or remove the mongo cache settings from the configuration file.
-HELP
-                );
-            }
+            $this->checkMongo();
 
             $servers = array();
             foreach ($config['caches']['mongo']['servers'] as $server) {
@@ -176,15 +176,7 @@ HELP
 
         if (isset($config['caches']['memcached'])) {
 
-            if (!class_exists('\Memcached', true)) {
-                throw new \RuntimeException(<<<HELP
-The `sonata.cache.memcached` service is configured, however the Memcached class is not available.
-
-To resolve this issue, please install the related library : http://php.net/manual/en/book.memcached.php
-or remove the memcached cache settings from the configuration file.
-HELP
-                );
-            }
+            $this->checkMemcached();
 
             $container
                 ->getDefinition('sonata.cache.memcached')
@@ -197,14 +189,7 @@ HELP
 
         if (isset($config['caches']['predis'])) {
 
-            if (!class_exists('\Predis\Client', true)) {
-                throw new \RuntimeException(<<<HELP
-The `sonata.cache.predis` service is configured, however the Predis\Client class is not available.
-
-Please add the lib in your composer.json file: "predis/predis": "~0.8".
-HELP
-                );
-            }
+            $this->checkPRedis();
 
             $container
                 ->getDefinition('sonata.cache.predis')
@@ -214,18 +199,9 @@ HELP
             $container->removeDefinition('sonata.cache.predis');
         }
 
-
         if (isset($config['caches']['apc'])) {
 
-            if (!function_exists('apc_fetch')) {
-                throw new \RuntimeException(<<<HELP
-The `sonata.cache.apc` service is configured, however the apc_* functions are not available.
-
-To resolve this issue, please install the related library : http://php.net/manual/en/book.apc.php
-or remove the APC cache settings from the configuration file.
-HELP
-                );
-            }
+            $this->checkApc();
 
             $container
                 ->getDefinition('sonata.cache.apc')
@@ -235,6 +211,131 @@ HELP
             ;
         } else {
             $container->removeDefinition('sonata.cache.apc');
+        }
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param array            $config
+     *
+     * @return void
+     *
+     * @throws \RuntimeException if the Mongo or Memcached library is not installed
+     */
+    public function configureCounter(ContainerBuilder $container, $config)
+    {
+        if ($config['default_counter']) {
+            $container->setAlias('sonata.counter', $config['default_counter']);
+        }
+
+        if (isset($config['counters']['mongo'])) {
+            $this->checkMongo();
+
+            $servers = array();
+            foreach ($config['counters']['mongo']['servers'] as $server) {
+                if ($server['user']) {
+                    $servers[] = sprintf('%s:%s@%s:%s', $server['user'], $server['password'], $server['host'], $server['port']);
+                } else {
+                    $servers[] = sprintf('%s:%s', $server['host'], $server['port']);
+                }
+            }
+
+            $container
+                ->getDefinition('sonata.cache.counter.mongo')
+                ->replaceArgument(0, $servers)
+                ->replaceArgument(1, $config['counters']['mongo']['database'])
+                ->replaceArgument(2, $config['counters']['mongo']['collection'])
+            ;
+        } else {
+            $container->removeDefinition('sonata.cache.counter.mongo');
+        }
+
+        if (isset($config['counters']['memcached'])) {
+
+            $this->checkMemcached();
+
+            $container
+                ->getDefinition('sonata.cache.counter.memcached')
+                ->replaceArgument(0, $config['counters']['memcached']['prefix'])
+                ->replaceArgument(1, $config['counters']['memcached']['servers'])
+            ;
+        } else {
+            $container->removeDefinition('sonata.cache.counter.memcached');
+        }
+
+        if (isset($config['counters']['predis'])) {
+
+            $this->checkPRedis();
+
+            $container
+                ->getDefinition('sonata.cache.counter.predis')
+                ->replaceArgument(0, $config['counters']['predis']['servers'])
+            ;
+        } else {
+            $container->removeDefinition('sonata.cache.counter.predis');
+        }
+
+        if (isset($config['counters']['apc'])) {
+
+            $this->checkApc();
+
+            $container
+                ->getDefinition('sonata.cache.counter.apc')
+                ->replaceArgument(0, $config['counters']['apc']['prefix'])
+            ;
+        } else {
+            $container->removeDefinition('sonata.cache.counter.apc');
+        }
+    }
+
+    protected function checkMemcached()
+    {
+        if (!class_exists('\Memcached', true)) {
+            throw new \RuntimeException(<<<HELP
+The `sonata.cache.memcached` service is configured, however the Memcached class is not available.
+
+To resolve this issue, please install the related library : http://php.net/manual/en/book.memcached.php
+or remove the memcached cache settings from the configuration file.
+HELP
+            );
+        }
+    }
+
+    protected function checkApc()
+    {
+        if (!function_exists('apc_fetch')) {
+            throw new \RuntimeException(<<<HELP
+The `sonata.cache.apc` service is configured, however the apc_* functions are not available.
+
+To resolve this issue, please install the related library : http://php.net/manual/en/book.apc.php
+or remove the APC cache settings from the configuration file.
+HELP
+            );
+        }
+    }
+
+    protected function checkMongo()
+    {
+        if (!class_exists('\Mongo', true)) {
+           throw new \RuntimeException(<<<HELP
+The `sonata.cache.mongo` service is configured, however the Mongo class is not available.
+
+To resolve this issue, please install the related library : http://php.net/manual/en/book.mongo.php
+or remove the mongo cache settings from the configuration file.
+HELP
+           );
+       }
+    }
+
+    protected function checkPRedis()
+    {
+        if (!class_exists('\Predis\Client', true)) {
+            throw new \RuntimeException(<<<HELP
+The `sonata.cache.predis` service is configured, however the Predis\Client class is not available.
+
+Please add the lib in your composer.json file: "predis/predis": "~0.8".
+HELP
+            );
         }
     }
 

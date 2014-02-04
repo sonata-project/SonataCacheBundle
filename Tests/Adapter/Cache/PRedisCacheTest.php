@@ -34,6 +34,14 @@ class PRedisCacheTest extends \PHPUnit_Framework_TestCase
         }
 
         socket_close($socket);
+
+        $client = new Client(array(
+            'host'     => '127.0.0.1',
+            'port'     => 6379,
+            'database' => 42
+        ));
+
+        $client->flushdb();
     }
 
     public function testInitCache()
@@ -41,7 +49,7 @@ class PRedisCacheTest extends \PHPUnit_Framework_TestCase
         $cache = new PRedisCache(array(
             'host'     => '127.0.0.1',
             'port'     => 6379,
-            'database' => 'cache'
+            'database' => 42
         ));
 
         $cache->set(array('id' => 7), 'data');

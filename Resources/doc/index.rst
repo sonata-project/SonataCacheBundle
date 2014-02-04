@@ -12,3 +12,4 @@ Reference Guide
    reference/installation
    reference/command_line
    reference/contextual_cache
+   reference/counter
