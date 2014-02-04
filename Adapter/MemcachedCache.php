@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata package.
  *
@@ -10,106 +11,10 @@
 
 namespace Sonata\CacheBundle\Adapter;
 
-use Sonata\CacheBundle\Cache\CacheInterface;
-use Sonata\CacheBundle\Cache\CacheElement;
-
-class MemcachedCache implements CacheInterface
+/**
+ * @deprecated use \Sonata\CacheBundle\Adapter\Cache\MemcachedCache
+ */
+class MemcachedCache extends \Sonata\CacheBundle\Adapter\Cache\MemcachedCache
 {
-    protected $servers;
 
-    protected $prefix;
-
-    protected $collection;
-
-    /**
-     * @param $prefix
-     * @param array $servers
-     */
-    public function __construct($prefix, array $servers)
-    {
-        $this->prefix  = $prefix;
-        $this->servers = $servers;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function flushAll()
-    {
-        return $this->getCollection()->flush();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function flush(array $keys = array())
-    {
-        return $this->getCollection()->delete($this->computeCacheKeys($keys));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function has(array $keys)
-    {
-        return $this->getCollection()->get($this->computeCacheKeys($keys)) !== false;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    private function getCollection()
-    {
-        if (!$this->collection) {
-            $this->collection = new \Memcached();
-
-            foreach ($this->servers as $server) {
-                $this->collection->addServer($server['host'], $server['port'], $server['weight']);
-            }
-        }
-
-        return $this->collection;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function set(array $keys, $data, $ttl = 84600, array $contextualKeys = array())
-    {
-        $cacheElement = new CacheElement($keys, $data, $ttl);
-
-        $this->getCollection()->set(
-            $this->computeCacheKeys($keys),
-            $cacheElement,
-            time() + $cacheElement->getTtl()
-        );
-
-        return $cacheElement;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    private function computeCacheKeys(array $keys)
-    {
-        ksort($keys);
-
-        return md5($this->prefix.serialize($keys));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function get(array $keys)
-    {
-        return $this->getCollection()->get($this->computeCacheKeys($keys));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isContextual()
-    {
-        return false;
-    }
 }

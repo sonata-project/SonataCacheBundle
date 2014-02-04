@@ -11,58 +11,10 @@
 
 namespace Sonata\CacheBundle\Cache;
 
-interface CacheInterface
+/**
+ * @deprecated use CacheAdapterInterface
+ */
+interface CacheInterface extends CacheAdapterInterface
 {
-    /**
-     * Gets data from cache
-     *
-     * @param array $keys
-     *
-     * @return CacheElement
-     */
-    function get(array $keys);
 
-    /**
-     * Returns TRUE whether cache contains data identified by keys
-     *
-     * @param array $keys
-     *
-     * @return boolean
-     */
-    function has(array $keys);
-
-    /**
-     * Sets value in cache
-     *
-     * @param array   $keys           An array of keys
-     * @param mixed   $value          Value to store
-     * @param integer $ttl            A time to live, default 84600 seconds
-     * @param array   $contextualKeys An array of contextual keys
-     *
-     * @return CacheElement
-     */
-    function set(array $keys, $value, $ttl = 84600, array $contextualKeys = array());
-
-    /**
-     * Flushes data from cache identified by keys
-     *
-     * @param array $keys
-     *
-     * @return boolean
-     */
-    function flush(array $keys = array());
-
-    /**
-     * Flushes all data from cache
-     *
-     * @return boolean
-     */
-    function flushAll();
-
-    /**
-     * Returns TRUE whether cache is contextual
-     *
-     * @return boolean
-     */
-    function isContextual();
 }

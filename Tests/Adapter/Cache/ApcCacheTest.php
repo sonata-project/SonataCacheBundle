@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Sonata\CacheBundle\Tests\Cache;
+namespace Sonata\CacheBundle\Tests\Adapter\Cache;
 
 use Sonata\CacheBundle\Adapter\ApcCache;
 use Symfony\Component\Routing\RouterInterface;

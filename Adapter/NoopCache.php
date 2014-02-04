@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata package.
  *
@@ -10,56 +11,10 @@
 
 namespace Sonata\CacheBundle\Adapter;
 
-use Sonata\CacheBundle\Cache\CacheInterface;
-use Sonata\CacheBundle\Cache\CacheElement;
-
-class NoopCache implements CacheInterface
+/**
+ * @deprecated use \Sonata\CacheBundle\Adapter\Cache\NoopCache
+ */
+class NoopCache extends \Sonata\CacheBundle\Adapter\Cache\NoopCache
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function flushAll()
-    {
-        return true;
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function flush(array $keys = array())
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function has(array $keys)
-    {
-        return false;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function set(array $keys, $data, $ttl = 84600, array $contextualKeys = array())
-    {
-        return new CacheElement($keys, $data, $ttl, $contextualKeys);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function get(array $keys)
-    {
-        throw new \RunTimeException('The NoopCache::get() cannot called');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isContextual()
-    {
-        return false;
-    }
 }
