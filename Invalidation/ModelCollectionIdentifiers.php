@@ -10,55 +10,9 @@
 
 namespace Sonata\CacheBundle\Invalidation;
 
-class ModelCollectionIdentifiers
+/**
+ * @deprecated use Sonata\Cache\Invalidation\ModelCollectionIdentifiers
+ */
+class ModelCollectionIdentifiers extends \Sonata\Cache\Invalidation\ModelCollectionIdentifiers
 {
-    protected $classes = array();
-
-    public function __construct(array $classes = array())
-    {
-        foreach ($classes as $class => $identifier) {
-            $this->addClass($class, $identifier);
-        }
-    }
-
-    public function addClass($class, $identifier)
-    {
-        $this->classes[$class] = $identifier;
-    }
-
-    public function getIdentifier($object)
-    {
-        $identifier = $this->getMethod($object);
-
-        if (!$identifier) {
-            return false;
-        }
-
-        return call_user_func(array($object, $identifier));
-    }
-
-    public function getMethod($object)
-    {
-        if ($object === null) {
-            return false;
-        }
-
-        foreach ($this->classes as $class => $identifier) {
-            if ($object instanceof $class) {
-                return $identifier;
-            }
-        }
-
-        $class = get_class($object);
-
-        if (method_exists($object, 'getCacheIdentifier')) {
-            $this->addClass($class, 'getCacheIdentifier');
-        } elseif (method_exists($object, 'getId')) {
-            $this->addClass($class, 'getId');
-        } else {
-            return false;
-        }
-
-        return $this->classes[$class];
-    }
 }

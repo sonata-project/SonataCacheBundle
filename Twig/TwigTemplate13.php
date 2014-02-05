@@ -11,21 +11,22 @@
 
 namespace Sonata\CacheBundle\Twig;
 
-use Sonata\CacheBundle\Invalidation\Recorder;
+use Sonata\Cache\Invalidation\Recorder;
 
 abstract class TwigTemplate13 extends \Twig_Template
 {
     /**
-     * @var \Sonata\CacheBundle\Invalidation\Recorder
+     * @var \Sonata\Cache\Invalidation\Recorder
      */
     protected static $recorder;
 
     /**
-     * @param $object
-     * @param $item
+     * @param         $object
+     * @param         $item
      * @param  array  $arguments
      * @param  string $type
      * @param  bool   $isDefinedTest
+     *
      * @return mixed
      */
     protected function getAttribute($object, $item, array $arguments = array(), $type = \Twig_TemplateInterface::ANY_CALL, $isDefinedTest = false)
@@ -41,7 +42,8 @@ abstract class TwigTemplate13 extends \Twig_Template
 
     /**
      * @static
-     * @param \Sonata\CacheBundle\Invalidation\Recorder $recorder
+     *
+     * @param \Sonata\Cache\Invalidation\Recorder $recorder
      */
     public static function attachRecorder(Recorder $recorder)
     {

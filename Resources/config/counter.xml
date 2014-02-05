@@ -4,25 +4,25 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="sonata.cache.counter.mongo" class="Sonata\CacheBundle\Adapter\Counter\MongoCounter" >
+        <service id="sonata.cache.counter.mongo" class="Sonata\Cache\Adapter\Counter\MongoCounter" >
             <tag name="sonata.cache.counter" />
             <argument type="collection" />
             <argument />
             <argument />
         </service>
 
-        <service id="sonata.cache.counter.memcached" class="Sonata\CacheBundle\Adapter\Counter\MemcachedCounter" >
+        <service id="sonata.cache.counter.memcached" class="Sonata\Cache\Adapter\Counter\MemcachedCounter" >
             <tag name="sonata.cache.counter" />
             <argument />
             <argument type="collection" />
         </service>
 
-        <service id="sonata.cache.counter.predis" class="Sonata\CacheBundle\Adapter\Counter\PRedisCounter" >
+        <service id="sonata.cache.counter.predis" class="Sonata\Cache\Adapter\Counter\PRedisCounter" >
             <tag name="sonata.cache.counter" />
             <argument type="collection" />
         </service>
 
-        <service id="sonata.cache.counter.apc" class="Sonata\CacheBundle\Adapter\Counter\ApcCounter" >
+        <service id="sonata.cache.counter.apc" class="Sonata\Cache\Adapter\Counter\ApcCounter" >
             <tag name="sonata.cache.counter" />
             <argument />
         </service>

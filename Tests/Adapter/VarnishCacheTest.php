@@ -32,13 +32,13 @@ class VarnishCacheTest extends \PHPUnit_Framework_TestCase
 
         $cacheElement = $cache->set(array('id' => 7), 'data');
 
-        $this->assertInstanceOf('Sonata\CacheBundle\Cache\CacheElement', $cacheElement);
+        $this->assertInstanceOf('Sonata\Cache\CacheElement', $cacheElement);
 
         $this->assertTrue($cache->has(array('id' => 7)));
 
         $cacheElement = $cache->get(array('id' => 7, 'controller' => 'foo.service::runAction', 'parameters' => array()));
 
-        $this->assertInstanceOf('Sonata\CacheBundle\Cache\CacheElement', $cacheElement);
+        $this->assertInstanceOf('Sonata\Cache\CacheElement', $cacheElement);
 
         $this->assertEquals('<esi:include src="http://sonata-project.org/cache/esi/TOKEN?controller=asdsad"/>', $cacheElement->getData()->getContent());
     }

@@ -12,9 +12,9 @@
 namespace Sonata\CacheBundle\Adapter;
 
 /**
- * @deprecated use \Sonata\CacheBundle\Adapter\Cache\NoopCache
+ * @deprecated use \Sonata\Cache\Adapter\Cache\NoopCache
  */
-class NoopCache extends \Sonata\CacheBundle\Adapter\Cache\NoopCache
+class NoopCache extends \Sonata\Cache\Adapter\Cache\NoopCache
 {
 
 }

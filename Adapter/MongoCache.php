@@ -12,9 +12,9 @@
 namespace Sonata\CacheBundle\Adapter;
 
 /**
- * @deprecated use \Sonata\CacheBundle\Adapter\Cache\MongoCache
+ * @deprecated use \Sonata\Cache\Adapter\Cache\MongoCache
  */
-class MongoCache extends \Sonata\CacheBundle\Adapter\Cache\MongoCache
+class MongoCache extends \Sonata\Cache\Adapter\Cache\MongoCache
 {
 
 }

@@ -10,70 +10,10 @@
 
 namespace Sonata\CacheBundle\Invalidation;
 
-use Sonata\CacheBundle\Cache\CacheAdapterInterface;
-use Sonata\CacheBundle\Invalidation\ModelCollectionIdentifiers;
-
-use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Events;
-use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\Common\Util\ClassUtils;
-
-class DoctrineORMListener implements EventSubscriber
+/**
+ * @deprecated use Sonata\Cache\Invalidation\DoctrineORMListener
+ */
+class DoctrineORMListener extends \Sonata\Cache\Invalidation\DoctrineORMListener
 {
-    protected $caches = array();
 
-    protected $collectionIdentifiers;
-
-    public function __construct(ModelCollectionIdentifiers $collectionIdentifiers, $caches)
-    {
-        $this->collectionIdentifiers = $collectionIdentifiers;
-
-        foreach ($caches as $cache) {
-            $this->addCache($cache);
-        }
-    }
-
-    public function getSubscribedEvents()
-    {
-        return array(
-            Events::preRemove,
-            Events::preUpdate
-        );
-    }
-
-    public function preRemove(LifecycleEventArgs $args)
-    {
-        $this->flush($args);
-    }
-
-    public function preUpdate(LifecycleEventArgs $args)
-    {
-        $this->flush($args);
-    }
-
-    protected function flush(LifecycleEventArgs $args)
-    {
-        $identifier = $this->collectionIdentifiers->getIdentifier($args->getEntity());
-
-        if ($identifier === false) {
-            return;
-        }
-
-        $parameters = array(
-            ClassUtils::getClass($args->getEntity()) => $identifier
-        );
-
-        foreach ($this->caches as $cache) {
-            $cache->flush($parameters);
-        }
-    }
-
-    public function addCache(CacheAdapterInterface $cache)
-    {
-        if (!$cache->isContextual()) {
-            return;
-        }
-
-        $this->caches[] = $cache;
-    }
 }
