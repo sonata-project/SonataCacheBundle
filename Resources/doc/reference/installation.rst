@@ -82,6 +82,6 @@ At the end of your routing file, add the following lines
 .. code-block:: yaml
 
     # app/config/routing.yml
-    sonata_page_cache:
+    sonata_cache_cache:
         resource: '@SonataCacheBundle/Resources/config/routing/cache.xml'
         prefix: /
