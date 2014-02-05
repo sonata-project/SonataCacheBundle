@@ -5,44 +5,44 @@
 
     <services>
 
-        <service id="sonata.cache.manager" class="Sonata\CacheBundle\Cache\CacheManager" >
+        <service id="sonata.cache.manager" class="Sonata\Cache\CacheManager" >
             <argument />
             <argument />
         </service>
 
 
-        <service id="sonata.cache.recorder" class="Sonata\CacheBundle\Invalidation\Recorder" >
+        <service id="sonata.cache.recorder" class="Sonata\Cache\Invalidation\Recorder" >
             <argument type="service" id="sonata.cache.model_identifier"/>
         </service>
 
-        <service id="sonata.cache.model_identifier" class="Sonata\CacheBundle\Invalidation\ModelCollectionIdentifiers" >
+        <service id="sonata.cache.model_identifier" class="Sonata\Cache\Invalidation\ModelCollectionIdentifiers" >
             <argument type="collection" />
         </service>
 
-        <service id="sonata.cache.noop" class="Sonata\CacheBundle\Adapter\Cache\NoopCache">
+        <service id="sonata.cache.noop" class="Sonata\Cache\Adapter\Cache\NoopCache">
             <tag name="sonata.cache" />
         </service>
 
-        <service id="sonata.cache.mongo" class="Sonata\CacheBundle\Adapter\Cache\MongoCache" >
+        <service id="sonata.cache.mongo" class="Sonata\Cache\Adapter\Cache\MongoCache" >
             <tag name="sonata.cache" />
             <argument type="collection" />
             <argument />
             <argument />
         </service>
 
-        <service id="sonata.cache.memcached" class="Sonata\CacheBundle\Adapter\Cache\MemcachedCache" >
+        <service id="sonata.cache.memcached" class="Sonata\Cache\Adapter\Cache\MemcachedCache" >
             <tag name="sonata.cache" />
             <argument />
             <argument type="collection" />
         </service>
 
-        <service id="sonata.cache.predis" class="Sonata\CacheBundle\Adapter\Cache\PRedisCache" >
+        <service id="sonata.cache.predis" class="Sonata\Cache\Adapter\Cache\PRedisCache" >
             <tag name="sonata.cache" />
             <argument type="collection" />
         </service>
 
 
-        <service id="sonata.cache.apc" class="Sonata\CacheBundle\Adapter\Cache\ApcCache" >
+        <service id="sonata.cache.apc" class="Sonata\Cache\Adapter\Cache\ApcCache" >
             <tag name="sonata.cache" />
             <argument type="service" id="router" />
             <argument />

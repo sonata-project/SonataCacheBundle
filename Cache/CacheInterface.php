@@ -12,9 +12,9 @@
 namespace Sonata\CacheBundle\Cache;
 
 /**
- * @deprecated use CacheAdapterInterface
+ * @deprecated use Sonata\Cache\CacheAdapterInterface
  */
-interface CacheInterface extends CacheAdapterInterface
+interface CacheInterface extends \Sonata\Cache\CacheAdapterInterface
 {
 
 }

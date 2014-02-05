@@ -12,9 +12,9 @@
 namespace Sonata\CacheBundle\Adapter;
 
 /**
- * @deprecated use \Sonata\CacheBundle\Adapter\Cache\PRedisCache
+ * @deprecated use \Sonata\Cache\Adapter\Cache\PRedisCache
  */
-class PRedisCache extends \Sonata\CacheBundle\Adapter\Cache\PRedisCache
+class PRedisCache extends \Sonata\Cache\Adapter\Cache\PRedisCache
 {
 
 }

@@ -20,7 +20,8 @@
         "symfony/http-foundation": "~2.2",
         "symfony/routing": "~2.2",
         "symfony/security": "~2.2",
-        "symfony/process": "~2.2"
+        "symfony/process": "~2.2",
+        "sonata-project/cache": "~1.0@dev"
     },
     "require-dev": {
         "doctrine/orm": "~2.2",

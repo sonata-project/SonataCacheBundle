@@ -12,9 +12,9 @@
 namespace Sonata\CacheBundle\Adapter;
 
 /**
- * @deprecated use \Sonata\CacheBundle\Adapter\Cache\MemcachedCache
+ * @deprecated use \Sonata\Cache\Adapter\Cache\MemcachedCache
  */
-class MemcachedCache extends \Sonata\CacheBundle\Adapter\Cache\MemcachedCache
+class MemcachedCache extends \Sonata\Cache\Adapter\Cache\MemcachedCache
 {
 
 }
