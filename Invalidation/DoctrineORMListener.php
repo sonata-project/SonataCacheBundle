@@ -10,7 +10,7 @@
 
 namespace Sonata\CacheBundle\Invalidation;
 
-use Sonata\CacheBundle\Cache\CacheInterface;
+use Sonata\CacheBundle\Cache\CacheAdapterInterface;
 use Sonata\CacheBundle\Invalidation\ModelCollectionIdentifiers;
 
 use Doctrine\Common\EventSubscriber;
@@ -68,7 +68,7 @@ class DoctrineORMListener implements EventSubscriber
         }
     }
 
-    public function addCache(CacheInterface $cache)
+    public function addCache(CacheAdapterInterface $cache)
     {
         if (!$cache->isContextual()) {
             return;
