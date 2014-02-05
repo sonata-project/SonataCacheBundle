@@ -12,8 +12,9 @@
 namespace Sonata\CacheBundle\Tests\Adapter;
 
 use Sonata\CacheBundle\Adapter\ApcCache;
+use Sonata\Cache\CacheElement;
+
 use Symfony\Component\Routing\RouterInterface;
-use Sonata\CacheBundle\Cache\CacheElement;
 
 class ApcCacheTest extends \PHPUnit_Framework_TestCase
 {
