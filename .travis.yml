@@ -11,6 +11,11 @@ env:
   - SYMFONY_VERSION=2.4.*
   - SYMFONY_VERSION=dev-master
 
+services:
+  - memcached
+  - mongodb
+  - redis-server
+
 before_script:
   - echo "extension=mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - echo "extension=memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
