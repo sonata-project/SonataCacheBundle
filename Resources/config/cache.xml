@@ -42,7 +42,7 @@
         </service>
 
 
-        <service id="sonata.cache.apc" class="Sonata\Cache\Adapter\Cache\ApcCache" >
+        <service id="sonata.cache.apc" class="Sonata\CacheBundle\Adapter\ApcCache" >
             <tag name="sonata.cache" />
             <argument type="service" id="router" />
             <argument />
@@ -50,7 +50,7 @@
             <argument type="collection" />
         </service>
 
-        <service id="sonata.cache.esi" class="Sonata\CacheBundle\Adapter\Cache\VarnishCache">
+        <service id="sonata.cache.esi" class="Sonata\CacheBundle\Adapter\VarnishCache">
             <tag name="sonata.cache" />
             <argument />
             <argument type="collection" />
@@ -59,7 +59,7 @@
             <argument type="service" id="controller_resolver" />
         </service>
 
-        <service id="sonata.cache.ssi" class="Sonata\CacheBundle\Adapter\Cache\SsiCache">
+        <service id="sonata.cache.ssi" class="Sonata\CacheBundle\Adapter\SsiCache">
             <tag name="sonata.cache" />
             <argument />
             <argument type="service" id="router" />
