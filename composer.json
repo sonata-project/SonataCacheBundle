@@ -38,9 +38,8 @@
         "predis/predis": "Install redis php"
     },
     "autoload": {
-        "psr-0": { "Sonata\\CacheBundle": "" }
+        "psr-4": { "Sonata\\CacheBundle": "" }
     },
-    "target-dir": "Sonata/CacheBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "2.2.x-dev"
