@@ -1,21 +1,30 @@
+.. index::
+    single: Counter
+    single: Adapters
+    single: APC
+    single: Routing
+    single: MongoDB
+    single: MemcacheD
+    single: PRedis
+
 Counter
 =======
 
-The SonataCacheBundle comes with counter adapters to store value.
+The ``SonataCacheBundle`` comes with counter adapters to store value:
 
-- A counter is a simple object with a name and a value.
+- A counter is a simple object with a name and a value
 - An adapter contains methods to increment or decrement a counter
 
 
 Adapters
 --------
 
-- ``sonata.cache.counter.mongo``: use MongoDB to store counters in a dedicated collection
-- ``sonata.cache.counter.predis``: use PRedis to store counters in a Redis database
-- ``sonata.cache.counter.memcached``: use MemcacheD to store counters in a shared and volatile storage
-- ``sonata.cache.counter.apc``: use APC to store counters in the current PHP process shared memory
+- ``sonata.cache.counter.mongo``: use `MongoDB` to store counters in a dedicated collection
+- ``sonata.cache.counter.predis``: use `PRedis` to store counters in a Redis database
+- ``sonata.cache.counter.memcached``: use `MemcacheD` to store counters in a shared and volatile storage
+- ``sonata.cache.counter.apc``: use `APC` to store counters in the current PHP process shared memory
 
-MongoDB or PRedis must be used in production, memcached and apc might be used to solve specifics use cases.
+`MongoDB` or `PRedis` must be used in production, `memcached` and `apc` might be used to solve specifics use cases.
 
 Usage
 -----
@@ -46,8 +55,7 @@ Usage
 Configuration
 -------------
 
-To use the counter feature, add the following lines to your application configuration
-file.
+To use the counter feature, add the following lines to your application configuration file:
 
 .. code-block:: yaml
 

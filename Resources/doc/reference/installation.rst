@@ -1,15 +1,26 @@
+.. index::
+    single: Installation
+    single: Configuration
+    single: APC
+    single: Routing
+
 Installation
 ============
 
-To begin, add the dependent bundles to the vendor/bundles directory. Add the following lines to the file deps::
+To begin, add the dependent bundles to the `vendor/bundles` directory. Add the following lines to the file `deps`:
+
+.. code-block:: bash
 
     php composer.phar require sonata-project/cache-bundle
 
-Now, add the new Bundle to the kernel
+Now, add the new Bundle to the kernel:
 
 .. code-block:: php
 
     <?php
+
+    // app/AppKernel.php
+
     public function registerbundles()
     {
         return array(
@@ -23,14 +34,14 @@ Update the ``autoload.php`` to add new namespaces:
 .. code-block:: php
 
     <?php
+
     $loader->add('Sonata' => __DIR__);
 
 
 Configuration
 -------------
 
-To use the ``CacheBundle``, add the following lines to your application configuration
-file.
+To use the ``CacheBundle``, add the following lines to your application configuration file:
 
 .. code-block:: yaml
 
@@ -67,7 +78,7 @@ file.
                 servers:
                     - { domain: kooqit.local, ip: 127.0.0.1, port: 80}
 
-For APC you can specify a basic parameter for servers definition (useful to clear cache for staging area behind this kind of protection)
+For APC, you can specify a basic parameter for servers definition (useful to clear cache for staging area behind this kind of protection):
 
 .. code-block:: yaml
 
@@ -77,7 +88,7 @@ For APC you can specify a basic parameter for servers definition (useful to clea
         servers:
             - { domain: kooqit.local, ip: 127.0.0.1, port: 80, basic: 'user:login' }
 
-At the end of your routing file, add the following lines
+At the end of your routing file, add the following lines:
 
 .. code-block:: yaml
 
