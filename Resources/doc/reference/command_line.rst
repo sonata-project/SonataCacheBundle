@@ -1,3 +1,6 @@
+.. index::
+    single: Command Lines
+
 Command Line Tools
 ==================
 

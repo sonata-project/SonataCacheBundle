@@ -1,3 +1,7 @@
+.. index::
+    single: Twig Recorder
+    single: Contextual Cache
+
 Contextual Cache
 ================
 
