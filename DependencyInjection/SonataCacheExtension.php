@@ -317,14 +317,14 @@ HELP
     protected function checkMongo()
     {
         if (!class_exists('\Mongo', true)) {
-           throw new \RuntimeException(<<<HELP
+            throw new \RuntimeException(<<<HELP
 The `sonata.cache.mongo` service is configured, however the Mongo class is not available.
 
 To resolve this issue, please install the related library : http://php.net/manual/en/book.mongo.php
 or remove the mongo cache settings from the configuration file.
 HELP
-           );
-       }
+            );
+        }
     }
 
     protected function checkPRedis()
