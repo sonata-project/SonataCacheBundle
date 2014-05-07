@@ -35,7 +35,7 @@ Update the ``autoload.php`` to add new namespaces:
 
     <?php
 
-    $loader->add('Sonata' => __DIR__);
+    $loader->add('Sonata', __DIR__);
 
 
 Configuration
