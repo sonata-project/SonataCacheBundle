@@ -154,7 +154,7 @@ class VarnishCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function set(array $keys, $data, $ttl = 84600, array $contextualKeys = array())
+    public function set(array $keys, $data, $ttl = 86400, array $contextualKeys = array())
     {
         return new CacheElement($keys, $data, $ttl, $contextualKeys);
     }
