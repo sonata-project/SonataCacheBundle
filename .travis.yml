@@ -26,7 +26,7 @@ before_script:
   - echo "apc.enable_cli=On" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - sudo pip install -r Resources/doc/requirements.txt
 
-script: phpunit && cd Resources/doc && sphinx-build -W -b html -d _build/doctrees . _build/html
+script: make test
 
 notifications:
     webhooks: http://sonata-project.org/bundles/cache/master/travis
