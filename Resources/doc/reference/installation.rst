@@ -29,13 +29,13 @@ Now, add the new Bundle to the kernel:
         );
     }
 
-Update the ``autoload.php`` to add new namespaces:
+Update the ``app/autoload.php`` to add new namespaces:
 
 .. code-block:: php
 
     <?php
 
-    $loader->add('Sonata' => __DIR__);
+    $loader->add('Sonata', __DIR__);
 
 
 Configuration
