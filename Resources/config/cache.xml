@@ -41,7 +41,6 @@
             <argument type="collection" />
         </service>
 
-
         <service id="sonata.cache.apc" class="Sonata\CacheBundle\Adapter\ApcCache" >
             <tag name="sonata.cache" />
             <argument type="service" id="router" />
@@ -64,6 +63,17 @@
             <argument />
             <argument type="service" id="router" />
             <argument type="service" id="controller_resolver" />
+        </service>
+
+        <service id="sonata.cache.symfony" class="Sonata\CacheBundle\Adapter\SymfonyCache" >
+            <tag name="sonata.cache" />
+            <argument type="service" id="router" />
+            <argument type="service" id="filesystem" />
+            <argument type="string">%kernel.cache_dir%</argument>
+            <argument />
+            <argument />
+            <argument />
+            <argument type="collection" />
         </service>
 
         <service id="sonata.cache.invalidation.simple" class="Sonata\CacheBundle\Invalidation\SimpleCacheInvalidation">

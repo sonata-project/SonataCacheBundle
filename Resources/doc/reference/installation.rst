@@ -78,7 +78,14 @@ To use the ``CacheBundle``, add the following lines to your application configur
                 servers:
                     - { domain: kooqit.local, ip: 127.0.0.1, port: 80}
 
-For APC, you can specify a basic parameter for servers definition (useful to clear cache for staging area behind this kind of protection):
+            symfony:
+                token: s3cur3 # token used to clear the related cache
+                php_cache_enabled: true # Optional (default: false), clear APC or PHP OPcache
+                types: [mytype1, mycustomtype2] # Optional, you can restrict allowed cache types
+                servers:
+                    - { domain: kooqit.local, ip: 127.0.0.1, port: 80}
+
+For APC and Symfony caches, you can specify a basic parameter for servers definition (useful to clear cache for staging area behind this kind of protection)
 
 .. code-block:: yaml
 
