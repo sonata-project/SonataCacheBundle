@@ -207,10 +207,22 @@ class SonataCacheExtension extends Extension
                 ->getDefinition('sonata.cache.apc')
                 ->replaceArgument(1, $config['caches']['apc']['token'])
                 ->replaceArgument(2, $config['caches']['apc']['prefix'])
-                ->replaceArgument(3, $this->configureApcServers($config['caches']['apc']['servers']))
+                ->replaceArgument(3, $this->configureServers($config['caches']['apc']['servers']))
             ;
         } else {
             $container->removeDefinition('sonata.cache.apc');
+        }
+
+        if (isset($config['caches']['symfony'])) {
+            $container
+                ->getDefinition('sonata.cache.symfony')
+                ->replaceArgument(3, $config['caches']['symfony']['token'])
+                ->replaceArgument(4, $config['caches']['symfony']['php_cache_enabled'])
+                ->replaceArgument(5, $config['caches']['symfony']['types'])
+                ->replaceArgument(6, $this->configureServers($config['caches']['symfony']['servers']))
+            ;
+        } else {
+            $container->removeDefinition('sonata.cache.symfony');
         }
     }
 
@@ -340,11 +352,13 @@ HELP
     }
 
     /**
-     * Compute hash for basic auth if provided
-     * @param  array $servers
+     * Returns servers list with hash for basic auth computed if provided
+     *
+     * @param array $servers
+     *
      * @return array
      */
-    public function configureApcServers(array $servers)
+    public function configureServers(array $servers)
     {
         return array_map(
             function($item) {

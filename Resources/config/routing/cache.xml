@@ -23,4 +23,8 @@
     <route id="sonata_cache_apc" pattern="/sonata/cache/apc/{token}">
         <default key="_controller">sonata.cache.apc:cacheAction</default>
     </route>
+
+    <route id="sonata_cache_symfony" pattern="/sonata/cache/symfony/{token}/{type}">
+        <default key="_controller">sonata.cache.symfony:cacheAction</default>
+    </route>
 </routes>
