@@ -12,12 +12,19 @@
 namespace Sonata\CacheBundle\Tests\Adapter;
 
 use Sonata\CacheBundle\Adapter\ApcCache;
-use Sonata\Cache\CacheElement;
-
-use Symfony\Component\Routing\RouterInterface;
 
 class ApcCacheTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var \Symfony\Component\Routing\RouterInterface
+     */
+    private $router;
+
+    /**
+     * @var ApcCache
+     */
+    private $cache;
+
     public function setUp()
     {
         if (!function_exists('apc_store')) {
@@ -27,27 +34,41 @@ class ApcCacheTest extends \PHPUnit_Framework_TestCase
         if (ini_get('apc.enable_cli') == 0) {
             $this->markTestSkipped('APC is not enabled in cli, please add apc.enable_cli=On into the apc.ini file');
         }
+
+        $this->router = $this->getMock('Symfony\Component\Routing\RouterInterface');
+
+        $this->cache = new ApcCache($this->router, 'token', 'prefix_', array());
     }
 
     public function testInitCache()
     {
-        $router = $this->getMock('Symfony\Component\Routing\RouterInterface');
+        $this->assertTrue($this->cache->flush(array()));
+        $this->assertTrue($this->cache->flushAll());
 
-        $cache = new ApcCache($router, 'token', 'prefix_', array());
-
-        $this->assertTrue($cache->flush(array()));
-        $this->assertTrue($cache->flushAll());
-
-        $cacheElement = $cache->set(array('id' => 7), 'data');
+        $cacheElement = $this->cache->set(array('id' => 7), 'data');
 
         $this->assertInstanceOf('Sonata\Cache\CacheElement', $cacheElement);
 
-        $this->assertTrue($cache->has(array('id' => 7)));
+        $this->assertTrue($this->cache->has(array('id' => 7)));
 
-        $this->assertFalse($cache->has(array('id' => 8)));
+        $this->assertFalse($this->cache->has(array('id' => 8)));
 
-        $cacheElement = $cache->get(array('id' => 7));
+        $cacheElement = $this->cache->get(array('id' => 7));
 
         $this->assertInstanceOf('Sonata\Cache\CacheElement', $cacheElement);
+    }
+
+    public function testGetUrl()
+    {
+        $this->router
+            ->expects($this->once())
+            ->method('generate')
+            ->with($this->equalTo('sonata_cache_apc'), $this->equalTo(array('token' => 'token')))
+            ->will($this->returnValue('/sonata/cache/apc/token'));
+
+        $method = new \ReflectionMethod($this->cache, 'getUrl');
+        $method->setAccessible(true);
+
+        $this->assertEquals('/sonata/cache/apc/token', $method->invoke($this->cache));
     }
 }

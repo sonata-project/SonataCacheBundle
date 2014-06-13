@@ -49,7 +49,7 @@ class ApcCache extends BaseApcCache
      */
     protected function getUrl()
     {
-        $this->router->generate('sonata_cache_apc', array('token' => $this->token));
+        return $this->router->generate('sonata_cache_apc', array('token' => $this->token));
     }
 
     /**
