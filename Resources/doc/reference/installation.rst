@@ -74,6 +74,7 @@ To use the ``CacheBundle``, add the following lines to your application configur
 
             apc:
                 token:  s3cur3   # token used to clear the related cache
+                type:   all      # cache type to clear (could be: all, user or system), default to user
                 prefix: test     # prefix to ensure there is no clash between instances
                 servers:
                     - { domain: kooqit.local, ip: 127.0.0.1, port: 80}

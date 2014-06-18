@@ -37,7 +37,7 @@ class ApcCacheTest extends \PHPUnit_Framework_TestCase
 
         $this->router = $this->getMock('Symfony\Component\Routing\RouterInterface');
 
-        $this->cache = new ApcCache($this->router, 'token', 'prefix_', array());
+        $this->cache = new ApcCache($this->router, 'token', 'prefix_', array(), 'all');
     }
 
     public function testInitCache()
@@ -70,5 +70,18 @@ class ApcCacheTest extends \PHPUnit_Framework_TestCase
         $method->setAccessible(true);
 
         $this->assertEquals('/sonata/cache/apc/token', $method->invoke($this->cache));
+    }
+
+    public function testCacheAction()
+    {
+        // Tests with a valid token
+        $response = $this->cache->cacheAction('token');
+
+        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
+
+        // Tests with an invalid token
+        $this->setExpectedException('Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException', 'invalid token');
+
+        $this->cache->cacheAction('invalid-token');
     }
 }

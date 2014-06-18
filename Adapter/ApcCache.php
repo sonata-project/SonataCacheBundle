@@ -12,10 +12,14 @@
 namespace Sonata\CacheBundle\Adapter;
 
 use Sonata\Cache\Adapter\Cache\ApcCache as BaseApcCache;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\RouterInterface;
 
+/**
+ * Class ApcCache
+ */
 class ApcCache extends BaseApcCache
 {
     /**
@@ -35,10 +39,11 @@ class ApcCache extends BaseApcCache
      * @param string          $token   A token to clear the related cache
      * @param string          $prefix  A prefix to avoid clash between instances
      * @param array           $servers An array of servers
+     * @param string          $type    A cache type to clear
      */
-    public function __construct(RouterInterface $router, $token, $prefix, array $servers)
+    public function __construct(RouterInterface $router, $token, $prefix, array $servers, $type)
     {
-        parent::__construct(null, $prefix, $servers);
+        parent::__construct(null, $prefix, $servers, $type);
 
         $this->router = $router;
         $this->token  = $token;
@@ -64,7 +69,7 @@ class ApcCache extends BaseApcCache
     public function cacheAction($token)
     {
         if ($this->token == $token) {
-            apc_clear_cache('user');
+            $this->clear();
 
             return new Response('ok', 200, array(
                 'Cache-Control'  => 'no-cache, must-revalidate',
