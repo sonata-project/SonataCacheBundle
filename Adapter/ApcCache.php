@@ -65,6 +65,7 @@ class ApcCache extends BaseApcCache
     {
         if ($this->token == $token) {
             apc_clear_cache('user');
+            apc_clear_cache();
 
             return new Response('ok', 200, array(
                 'Cache-Control'  => 'no-cache, must-revalidate',
