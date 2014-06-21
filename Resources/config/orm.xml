@@ -4,14 +4,19 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <parameters>
+        <parameter key="sonata.cache.orm.event_subscriber.default.class">Sonata\CacheBundle\Invalidation\DoctrineORMListener</parameter>
+        <parameter key="sonata.cache.orm.event_subscriber.class">Sonata\CacheBundle\Invalidation\DoctrineORMListenerContainerAware</parameter>
+    </parameters>
+
     <services>
 
-        <service id="sonata.cache.orm.event_subscriber.default" class="Sonata\CacheBundle\Invalidation\DoctrineORMListener" >
+        <service id="sonata.cache.orm.event_subscriber.default" class="sonata.cache.orm.event_subscriber.default.class" >
             <argument type="service" id="sonata.cache.model_identifier" />
             <argument />
         </service>
 
-        <service id="sonata.cache.orm.event_subscriber" class="Sonata\CacheBundle\Invalidation\DoctrineORMListenerContainerAware">
+        <service id="sonata.cache.orm.event_subscriber" class="%sonata.cache.orm.event_subscriber.class%">
             <argument type="service" id="service_container" />
             <argument>sonata.cache.orm.event_subscriber.default</argument>
         </service>

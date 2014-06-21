@@ -4,14 +4,19 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <parameters>
+        <parameter key="sonata.cache.phpcr_odm.event_subscriber.default.class">Sonata\CacheBundle\Invalidation\DoctrinePHPCRODMListener</parameter>
+        <parameter key="sonata.cache.phpcr_odm.event_subscriber.class">Sonata\CacheBundle\Invalidation\DoctrinePHPCRODMListenerContainerAware</parameter>
+    </parameters>
+
     <services>
 
-        <service id="sonata.cache.phpcr_odm.event_subscriber.default" class="Sonata\CacheBundle\Invalidation\DoctrinePHPCRODMListener" >
+        <service id="sonata.cache.phpcr_odm.event_subscriber.default" class="%sonata.cache.phpcr_odm.event_subscriber.default.class%" >
             <argument type="service" id="sonata.cache.model_identifier" />
             <argument />
         </service>
 
-        <service id="sonata.cache.phpcr_odm.event_subscriber" class="Sonata\CacheBundle\Invalidation\DoctrinePHPCRODMListenerContainerAware">
+        <service id="sonata.cache.phpcr_odm.event_subscriber" class="%sonata.cache.phpcr_odm.event_subscriber.class%">
             <tag name="doctrine_phpcr.event_subscriber" session="default" />
             <argument type="service" id="service_container" />
             <argument>sonata.cache.phpcr_odm.event_subscriber.default</argument>
