@@ -37,14 +37,14 @@ So with the ``SonataCacheBundle``, you will have:
 Now, let's see how this cache element will be used with 2 backends, `memcached` and `mongodb` (capped collection):
 
  - The `memcached` adapter will generate a hash from the ``keys`` value, and will not used the ``contextualKeys`` information as there is no way to use those values with memcached.
- - The `mongodb` adapter will store the value as is, mongodb support array! also the ``contextualKeys`` will be stored.
+ - The `mongodb` adapter will store the value as is, mongodb supports array! also the ``contextualKeys`` will be stored.
 
-Now, let's try to remove a cache element. This has to be done using the ``flush`` method. The method accepts an array as elements to remove. If you call the function with ``array('post_id' => 1, 'action' => 'view')`` the method will
+Now, let's try to remove a cache element. This has to be done using the ``flush`` method. The method accepts an array as key to the element to remove (remember, keys are arrays not strings). If you call the function with ``array('post_id' => 1, 'action' => 'view')`` the method will
 delete the previous cache entry.
 
-This will work on all adapters as the array is the main key of the ``CacheElement``. Let's see to push this a bit further with the mongodb adapter.
+This will work on all adapters as the array is the main key of the ``CacheElement``. Let's see how to push this a bit further with the mongodb adapter.
 
-You might want to remove all cache entries when the blog post is saved or when the related image is updated. This actually can be done quite easily just call ``flush``:
+You might want to remove all cache entries when the blog post is saved or when the related image is updated. This can actually be done quite easily. Just call ``flush``:
 
 .. code-block:: php
 
