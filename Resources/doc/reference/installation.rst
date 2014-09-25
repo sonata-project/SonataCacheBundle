@@ -7,7 +7,7 @@
 Installation
 ============
 
-To begin, add the dependent bundles to the `vendor/bundles` directory. Add the following lines to the file `deps`:
+To begin, add the dependent bundles to the `vendor` directory buy running this command:
 
 .. code-block:: bash
 
@@ -28,14 +28,6 @@ Now, add the new Bundle to the kernel:
             new Sonata\CacheBundle\SonataCacheBundle(),
         );
     }
-
-Update the ``app/autoload.php`` to add new namespaces:
-
-.. code-block:: php
-
-    <?php
-
-    $loader->add('Sonata', __DIR__);
 
 
 Configuration
