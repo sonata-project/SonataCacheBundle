@@ -155,10 +155,11 @@ class SonataCacheExtension extends Extension
         if (isset($config['caches']['mongo'])) {
             $this->checkMongo();
 
+            $database = $config['caches']['mongo']['database'];
             $servers = array();
             foreach ($config['caches']['mongo']['servers'] as $server) {
                 if ($server['user']) {
-                    $servers[] = sprintf('%s:%s@%s:%s', $server['user'], $server['password'], $server['host'], $server['port']);
+                    $servers[] = sprintf('%s:%s@%s:%s/%s', $server['user'], $server['password'], $server['host'], $server['port'], $database);
                 } else {
                     $servers[] = sprintf('%s:%s', $server['host'], $server['port']);
                 }
@@ -167,7 +168,7 @@ class SonataCacheExtension extends Extension
             $container
                 ->getDefinition('sonata.cache.mongo')
                 ->replaceArgument(0, $servers)
-                ->replaceArgument(1, $config['caches']['mongo']['database'])
+                ->replaceArgument(1, $database)
                 ->replaceArgument(2, $config['caches']['mongo']['collection'])
             ;
         } else {
