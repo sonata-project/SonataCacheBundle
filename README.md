@@ -3,7 +3,7 @@ Sonata Cache Bundle
 
 [![Build Status](https://secure.travis-ci.org/sonata-project/SonataCacheBundle.png)](https://secure.travis-ci.org/#!/sonata-project/SonataCacheBundle)
 
-Check out the documentation on [http://sonata-project.org/bundles/cache/master/doc/index.html](http://sonata-project.org/bundles/cache/master/doc/index.html)
+Check out the documentation on [https://sonata-project.org/bundles/cache/master/doc/index.html](https://sonata-project.org/bundles/cache/master/doc/index.html)
 
 **Google Groups**: For questions and proposals you can post on this google groups
 
