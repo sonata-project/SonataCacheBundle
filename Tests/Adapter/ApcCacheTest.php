@@ -37,7 +37,7 @@ class ApcCacheTest extends \PHPUnit_Framework_TestCase
 
         $this->router = $this->getMock('Symfony\Component\Routing\RouterInterface');
 
-        $this->cache = new ApcCache($this->router, 'token', 'prefix_', array());
+        $this->cache = new ApcCache($this->router, 'token', 'prefix_', array(), array());
     }
 
     public function testInitCache()

@@ -68,7 +68,10 @@ To use the ``CacheBundle``, add the following lines to your application configur
                 token:  s3cur3   # token used to clear the related cache
                 prefix: test     # prefix to ensure there is no clash between instances
                 servers:
-                    - { domain: kooqit.local, ip: 127.0.0.1, port: 80}
+                    - { domain: kooqit.local, ip: 127.0.0.1, port: 80 }
+                timeout:
+                    RCV: { sec: 5, usec: 0 }
+                    SND: { sec: 5, usec: 0 }
 
             symfony:
                 token: s3cur3 # token used to clear the related cache

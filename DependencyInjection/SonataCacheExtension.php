@@ -209,6 +209,7 @@ class SonataCacheExtension extends Extension
                 ->replaceArgument(1, $config['caches']['apc']['token'])
                 ->replaceArgument(2, $config['caches']['apc']['prefix'])
                 ->replaceArgument(3, $this->configureServers($config['caches']['apc']['servers']))
+                ->replaceArgument(4, $config['caches']['apc']['timeout'])
             ;
         } else {
             $container->removeDefinition('sonata.cache.apc');

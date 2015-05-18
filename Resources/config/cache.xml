@@ -47,6 +47,7 @@
             <argument />
             <argument />
             <argument type="collection" />
+            <argument type="collection" />
         </service>
 
         <service id="sonata.cache.esi" class="Sonata\CacheBundle\Adapter\VarnishCache">
