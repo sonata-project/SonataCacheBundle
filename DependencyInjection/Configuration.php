@@ -131,6 +131,7 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->end()
                             ->arrayNode('timeout')
+                                ->addDefaultsIfNotSet()
                                 ->children()
                                     ->arrayNode('RCV')
                                         ->prototype('scalar')->end()
