@@ -4,27 +4,27 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="sonata_cache_esi" pattern="/sonata/cache/esi/{token}">
+    <route id="sonata_cache_esi" path="/sonata/cache/esi/{token}">
         <default key="_controller">sonata.cache.esi:cacheAction</default>
     </route>
 
-    <route id="sonata_cache_ssi" pattern="/sonata/cache/ssi/{token}">
+    <route id="sonata_cache_ssi" path="/sonata/cache/ssi/{token}">
         <default key="_controller">sonata.cache.ssi:cacheAction</default>
     </route>
 
-    <route id="sonata_cache_js_async" pattern="/sonata/cache/js-async">
+    <route id="sonata_cache_js_async" path="/sonata/cache/js-async">
         <default key="_controller">sonata.cache.js_async:cacheAction</default>
     </route>
 
-    <route id="sonata_cache_js_sync" pattern="/sonata/cache/js-sync">
+    <route id="sonata_cache_js_sync" path="/sonata/cache/js-sync">
         <default key="_controller">sonata.cache.js_sync:cacheAction</default>
     </route>
 
-    <route id="sonata_cache_apc" pattern="/sonata/cache/apc/{token}">
+    <route id="sonata_cache_apc" path="/sonata/cache/apc/{token}">
         <default key="_controller">sonata.cache.apc:cacheAction</default>
     </route>
 
-    <route id="sonata_cache_symfony" pattern="/sonata/cache/symfony/{token}/{type}">
+    <route id="sonata_cache_symfony" path="/sonata/cache/symfony/{token}/{type}">
         <default key="_controller">sonata.cache.symfony:cacheAction</default>
     </route>
 </routes>
