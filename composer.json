@@ -23,12 +23,11 @@
         "symfony/routing": "~2.2",
         "symfony/security": "~2.2",
         "symfony/process": "~2.2",
-        "sonata-project/cache": "~1.0"
+        "sonata-project/cache": "^1.0.3"
     },
     "require-dev": {
         "doctrine/orm": "~2.2",
-        "predis/predis": "~0.8",
-        "sonata-project/cache": "~1.0,>=1.0.2"
+        "predis/predis": "~0.8"
     },
     "suggest": {
         "doctrine/doctrine-bundle": "ORM support",
