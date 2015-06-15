@@ -16,5 +16,4 @@ namespace Sonata\CacheBundle\Cache;
  */
 interface CacheManagerInterface extends \Sonata\Cache\CacheManagerInterface
 {
-
 }

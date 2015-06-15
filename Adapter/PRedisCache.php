@@ -16,5 +16,4 @@ namespace Sonata\CacheBundle\Adapter;
  */
 class PRedisCache extends \Sonata\Cache\Adapter\Cache\PRedisCache
 {
-
 }

@@ -16,5 +16,4 @@ namespace Sonata\CacheBundle\Adapter;
  */
 class NoopCache extends \Sonata\Cache\Adapter\Cache\NoopCache
 {
-
 }

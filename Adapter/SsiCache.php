@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata package.
  *
@@ -10,18 +11,16 @@
 
 namespace Sonata\CacheBundle\Adapter;
 
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
-
 use Sonata\Cache\CacheAdapterInterface;
 use Sonata\Cache\CacheElement;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
- * Not really a cache as it, depends on the reverse proxy feature
- *
+ * Not really a cache as it, depends on the reverse proxy feature.
  */
 class SsiCache implements CacheAdapterInterface
 {
@@ -104,7 +103,7 @@ class SsiCache implements CacheAdapterInterface
     {
         $parameters = array(
             'token'      => $this->computeHash($keys),
-            'parameters' => $keys
+            'parameters' => $keys,
         );
 
         return $this->router->generate('sonata_cache_ssi', $parameters, false);

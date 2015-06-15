@@ -27,7 +27,9 @@
     },
     "require-dev": {
         "doctrine/orm": "~2.2",
-        "predis/predis": "~0.8"
+        "predis/predis": "~0.8",
+        "symfony/phpunit-bridge": "~2.7|~3.0",
+        "fabpot/php-cs-fixer": "~0.5|~1.0"
     },
     "suggest": {
         "doctrine/doctrine-bundle": "ORM support",

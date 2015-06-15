@@ -12,12 +12,11 @@
 namespace Sonata\CacheBundle\Tests\Adapter;
 
 use Sonata\CacheBundle\Adapter\SymfonyCache;
-
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
- * Class SymfonyCacheTest
+ * Class SymfonyCacheTest.
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
@@ -39,7 +38,7 @@ class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
     protected $filesystem;
 
     /**
-     * Sets up cache adapter
+     * Sets up cache adapter.
      */
     public function setUp()
     {
@@ -50,7 +49,7 @@ class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests cache initialization
+     * Tests cache initialization.
      */
     public function testInitCache()
     {
@@ -68,7 +67,7 @@ class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests cacheAction() method
+     * Tests cacheAction() method.
      */
     public function testCacheAction()
     {
@@ -90,7 +89,7 @@ class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests cacheAction() method with an invalid token
+     * Tests cacheAction() method with an invalid token.
      */
     public function testCacheActionWithInvalidToken()
     {
@@ -102,7 +101,7 @@ class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests cacheAction() method with an invalid cache type
+     * Tests cacheAction() method with an invalid cache type.
      */
     public function testCacheActionWithInvalidType()
     {
