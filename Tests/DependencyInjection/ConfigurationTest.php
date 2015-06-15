@@ -12,16 +12,15 @@
 namespace Sonata\CacheBundle\Tests\DependencyInjection\Configuration;
 
 use Sonata\CacheBundle\DependencyInjection\Configuration;
-
 use Symfony\Component\Config\Definition\Processor;
 
 /**
- * Tests the Configuration class
+ * Tests the Configuration class.
  */
 class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Asserts APC has default timeout values
+     * Asserts APC has default timeout values.
      */
     public function testApcDefaultTimeout()
     {
@@ -46,7 +45,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Asserts APC timeout has custom values
+     * Asserts APC timeout has custom values.
      */
     public function testApcCustomTimeout()
     {

@@ -11,20 +11,19 @@
 
 namespace Sonata\CacheBundle\Adapter;
 
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Process\Process;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
-
 use Sonata\Cache\CacheAdapterInterface;
 use Sonata\Cache\CacheElement;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * http://www.varnish-cache.org/docs/2.1/reference/varnishadm.html
  *  echo vcl.use foo | varnishadm -T localhost:999 -S /var/db/secret
- *  echo vcl.use foo | ssh vhost varnishadm -T localhost:999 -S /var/db/secret
+ *  echo vcl.use foo | ssh vhost varnishadm -T localhost:999 -S /var/db/secret.
  *
  *  in the config.yml file :
  *     echo %s "%s" | varnishadm -T localhost:999 -S /var/db/secret
@@ -58,7 +57,7 @@ class VarnishCache implements CacheAdapterInterface
     protected $resolver;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string                           $token            A token
      * @param array                            $servers          An array of servers
@@ -120,7 +119,7 @@ class VarnishCache implements CacheAdapterInterface
             $parameters[] = sprintf('obj.http.%s ~ %s', $this->normalize($key), $value);
         }
 
-        $purge = implode(" && ", $parameters);
+        $purge = implode(' && ', $parameters);
 
         return $this->runCommand($this->purgeInstruction, $purge);
     }
@@ -160,7 +159,7 @@ class VarnishCache implements CacheAdapterInterface
     }
 
     /**
-     * Gets the URL by the given keys
+     * Gets the URL by the given keys.
      *
      * @param array $keys
      *
@@ -170,14 +169,14 @@ class VarnishCache implements CacheAdapterInterface
     {
         $parameters = array(
             'token'      => $this->computeHash($keys),
-            'parameters' => $keys
+            'parameters' => $keys,
         );
 
         return $this->router->generate('sonata_cache_esi', $parameters, false);
     }
 
     /**
-     * Computes the given keys
+     * Computes the given keys.
      *
      * @param array $keys
      *
@@ -191,7 +190,7 @@ class VarnishCache implements CacheAdapterInterface
     }
 
     /**
-     * Normalizes the given key
+     * Normalizes the given key.
      *
      * @param string $key
      *
@@ -203,7 +202,7 @@ class VarnishCache implements CacheAdapterInterface
     }
 
     /**
-     * Cache action
+     * Cache action.
      *
      * @param Request $request
      *

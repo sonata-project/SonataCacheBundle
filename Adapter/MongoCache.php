@@ -16,5 +16,4 @@ namespace Sonata\CacheBundle\Adapter;
  */
 class MongoCache extends \Sonata\Cache\Adapter\Cache\MongoCache
 {
-
 }

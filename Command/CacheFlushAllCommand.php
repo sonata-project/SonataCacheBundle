@@ -14,7 +14,6 @@ namespace Sonata\CacheBundle\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\Output;
 
 class CacheFlushAllCommand extends BaseCacheCommand
 {
@@ -44,9 +43,9 @@ class CacheFlushAllCommand extends BaseCacheCommand
             $output->write(sprintf(' > %s : starting .... ', $name));
 
             if ($cache->flushAll() === true) {
-                $output->writeln("<info>OK</info>");
+                $output->writeln('<info>OK</info>');
             } else {
-                $output->writeln("<error>FAILED!</error>");
+                $output->writeln('<error>FAILED!</error>');
             }
         }
 

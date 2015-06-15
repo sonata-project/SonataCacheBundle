@@ -16,5 +16,4 @@ namespace Sonata\CacheBundle\Adapter;
  */
 class MemcachedCache extends \Sonata\Cache\Adapter\Cache\MemcachedCache
 {
-
 }

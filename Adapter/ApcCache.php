@@ -29,7 +29,7 @@ class ApcCache extends BaseApcCache
     protected $token;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param RouterInterface $router  A router instance
      * @param string          $token   A token to clear the related cache
@@ -46,7 +46,7 @@ class ApcCache extends BaseApcCache
     }
 
     /**
-     * Cache action
+     * Cache action.
      *
      * @param string $token A configured token
      *

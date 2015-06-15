@@ -21,11 +21,11 @@ abstract class TwigTemplate13 extends \Twig_Template
     protected static $recorder;
 
     /**
-     * @param         $object
-     * @param         $item
-     * @param  array  $arguments
-     * @param  string $type
-     * @param  bool   $isDefinedTest
+     * @param        $object
+     * @param        $item
+     * @param array  $arguments
+     * @param string $type
+     * @param bool   $isDefinedTest
      *
      * @return mixed
      */

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata project.
  *
@@ -10,15 +11,15 @@
 
 namespace Sonata\CacheBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Config\Definition\Processor;
 
 /**
- * PageExtension
+ * PageExtension.
  *
  *
  * @author     Thomas Rabaix <thomas.rabaix@sonata-project.org>
@@ -70,8 +71,6 @@ class SonataCacheExtension extends Extension
     /**
      * @param ContainerBuilder $container
      * @param array            $config
-     *
-     * @return void
      */
     public function configureInvalidation(ContainerBuilder $container, $config)
     {
@@ -90,8 +89,6 @@ class SonataCacheExtension extends Extension
     /**
      * @param ContainerBuilder $container
      * @param array            $config
-     *
-     * @return void
      */
     public function configureORM(ContainerBuilder $container, $config)
     {
@@ -106,8 +103,6 @@ class SonataCacheExtension extends Extension
     /**
      * @param ContainerBuilder $container
      * @param array            $config
-     *
-     * @return void
      */
     public function configurePHPCRODM(ContainerBuilder $container, $config)
     {
@@ -122,8 +117,6 @@ class SonataCacheExtension extends Extension
     /**
      * @param ContainerBuilder $container
      * @param array            $config
-     *
-     * @return void
      *
      * @throws \RuntimeException if the Mongo or Memcached library is not installed
      */
@@ -176,7 +169,6 @@ class SonataCacheExtension extends Extension
         }
 
         if (isset($config['caches']['memcached'])) {
-
             $this->checkMemcached();
 
             $container
@@ -189,7 +181,6 @@ class SonataCacheExtension extends Extension
         }
 
         if (isset($config['caches']['predis'])) {
-
             $this->checkPRedis();
 
             $container
@@ -201,7 +192,6 @@ class SonataCacheExtension extends Extension
         }
 
         if (isset($config['caches']['apc'])) {
-
             $this->checkApc();
 
             $container
@@ -231,8 +221,6 @@ class SonataCacheExtension extends Extension
     /**
      * @param ContainerBuilder $container
      * @param array            $config
-     *
-     * @return void
      *
      * @throws \RuntimeException if the Mongo or Memcached library is not installed
      */
@@ -265,7 +253,6 @@ class SonataCacheExtension extends Extension
         }
 
         if (isset($config['counters']['memcached'])) {
-
             $this->checkMemcached();
 
             $container
@@ -278,7 +265,6 @@ class SonataCacheExtension extends Extension
         }
 
         if (isset($config['counters']['predis'])) {
-
             $this->checkPRedis();
 
             $container
@@ -290,7 +276,6 @@ class SonataCacheExtension extends Extension
         }
 
         if (isset($config['counters']['apc'])) {
-
             $this->checkApc();
 
             $container
@@ -354,7 +339,7 @@ HELP
     }
 
     /**
-     * Returns servers list with hash for basic auth computed if provided
+     * Returns servers list with hash for basic auth computed if provided.
      *
      * @param array $servers
      *
@@ -363,7 +348,7 @@ HELP
     public function configureServers(array $servers)
     {
         return array_map(
-            function($item) {
+            function ($item) {
                 if ($item['basic']) {
                     $item['basic'] = base64_encode($item['basic']);
                 }

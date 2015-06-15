@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata package.
  *
@@ -10,11 +11,10 @@
 
 namespace Sonata\CacheBundle\Invalidation;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Events;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Events;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DoctrineORMListenerContainerAware implements EventSubscriber
 {
@@ -39,13 +39,12 @@ class DoctrineORMListenerContainerAware implements EventSubscriber
     {
         return array(
             Events::preRemove,
-            Events::preUpdate
+            Events::preUpdate,
         );
     }
 
     /**
-     * @param  \Doctrine\ORM\Event\LifecycleEventArgs $args
-     * @return void
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
      */
     public function preRemove(LifecycleEventArgs $args)
     {
@@ -55,8 +54,7 @@ class DoctrineORMListenerContainerAware implements EventSubscriber
     }
 
     /**
-     * @param  \Doctrine\ORM\Event\LifecycleEventArgs $args
-     * @return void
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
      */
     public function preUpdate(LifecycleEventArgs $args)
     {

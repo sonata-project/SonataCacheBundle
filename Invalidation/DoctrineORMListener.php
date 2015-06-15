@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of the Sonata package.
  *
@@ -15,5 +16,4 @@ namespace Sonata\CacheBundle\Invalidation;
  */
 class DoctrineORMListener extends \Sonata\Cache\Invalidation\DoctrineORMListener
 {
-
 }

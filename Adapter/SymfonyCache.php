@@ -13,7 +13,6 @@ namespace Sonata\CacheBundle\Adapter;
 
 use Sonata\Cache\CacheAdapterInterface;
 use Sonata\Cache\Exception\UnsupportedException;
-
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +20,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * Handles Symfony cache
+ * Handles Symfony cache.
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
@@ -48,7 +47,7 @@ class SymfonyCache implements CacheAdapterInterface
     protected $types;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $phpCodeCacheEnabled;
 
@@ -58,13 +57,13 @@ class SymfonyCache implements CacheAdapterInterface
     protected $servers;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param RouterInterface $router              A router instance
      * @param Filesystem      $filesystem          A Symfony Filesystem component instance
      * @param string          $cacheDir            A Symfony cache directory
      * @param string          $token               A token to clear the related cache
-     * @param boolean         $phpCodeCacheEnabled If true, will clear APC or PHP OPcache code cache
+     * @param bool            $phpCodeCacheEnabled If true, will clear APC or PHP OPcache code cache
      * @param array           $types               A cache types array
      * @param array           $servers             An array of servers
      */
@@ -138,7 +137,7 @@ class SymfonyCache implements CacheAdapterInterface
     }
 
     /**
-     * Symfony cache action
+     * Symfony cache action.
      *
      * @param string $token A Sonata symfony cache token
      * @param string $type  A cache type to invalidate (doctrine, translations, twig, ...)
@@ -146,7 +145,7 @@ class SymfonyCache implements CacheAdapterInterface
      * @return Response
      *
      * @throws AccessDeniedHttpException if token is invalid
-     * @throws \RuntimeException if specified type is not in allowed types list
+     * @throws \RuntimeException         if specified type is not in allowed types list
      */
     public function cacheAction($token, $type)
     {
@@ -163,7 +162,7 @@ class SymfonyCache implements CacheAdapterInterface
         $path = 'all' == $type ? $this->cacheDir : sprintf('%s/%s', $this->cacheDir, $type);
 
         if ($this->filesystem->exists($path)) {
-            $movedPath = $path . '_old_' . uniqid();
+            $movedPath = $path.'_old_'.uniqid();
 
             $this->filesystem->rename($path, $movedPath);
             $this->filesystem->remove($movedPath);
@@ -178,7 +177,7 @@ class SymfonyCache implements CacheAdapterInterface
     }
 
     /**
-     * Returns URL with given token used for cache invalidation
+     * Returns URL with given token used for cache invalidation.
      *
      * @param string $type
      *
@@ -188,17 +187,15 @@ class SymfonyCache implements CacheAdapterInterface
     {
         return $this->router->generate('sonata_cache_symfony', array(
             'token' => $this->token,
-            'type'  => $type
+            'type'  => $type,
         ));
     }
 
     /**
-     * Clears code cache with:
+     * Clears code cache with:.
      *
      * PHP < 5.5.0: APC
      * PHP >= 5.5.0: PHP OPcache
-     *
-     * @return void
      */
     protected function clearPHPCodeCache()
     {
@@ -208,7 +205,7 @@ class SymfonyCache implements CacheAdapterInterface
 
         if (version_compare(PHP_VERSION, '5.5.0', '>=') && function_exists('opcache_reset')) {
             opcache_reset();
-        } else if (function_exists('apc_fetch')) {
+        } elseif (function_exists('apc_fetch')) {
             apc_clear_cache();
         }
     }
