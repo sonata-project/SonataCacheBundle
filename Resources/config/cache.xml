@@ -3,45 +3,60 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <parameters>
+        <parameter key="sonata.cache.manager.class">Sonata\Cache\CacheManager</parameter>
+        <parameter key="sonata.cache.recorder.class">Sonata\Cache\Invalidation\Recorder</parameter>
+        <parameter key="sonata.cache.model_identifier.class">Sonata\Cache\Invalidation\ModelCollectionIdentifiers</parameter>
+        <parameter key="sonata.cache.noop.class">Sonata\Cache\Adapter\Cache\NoopCache</parameter>
+        <parameter key="sonata.cache.mongo.class">Sonata\Cache\Adapter\Cache\MongoCache</parameter>
+        <parameter key="sonata.cache.memcached.class">Sonata\Cache\Adapter\Cache\MemcachedCache</parameter>
+        <parameter key="sonata.cache.predis.class">Sonata\Cache\Adapter\Cache\PRedisCache</parameter>
+        <parameter key="sonata.cache.apc.class">Sonata\CacheBundle\Adapter\ApcCache</parameter>
+        <parameter key="sonata.cache.esi.class">Sonata\CacheBundle\Adapter\VarnishCache</parameter>
+        <parameter key="sonata.cache.ssi.class">Sonata\CacheBundle\Adapter\SsiCache</parameter>
+        <parameter key="sonata.cache.symfony.class">Sonata\CacheBundle\Adapter\SymfonyCache</parameter>
+        <parameter key="sonata.cache.invalidation.simple.class">Sonata\CacheBundle\Invalidation\SimpleCacheInvalidation</parameter>
+    </parameters>
+
     <services>
 
-        <service id="sonata.cache.manager" class="Sonata\Cache\CacheManager" >
+        <service id="sonata.cache.manager" class="%sonata.cache.manager.class%" >
             <argument />
             <argument />
         </service>
 
 
-        <service id="sonata.cache.recorder" class="Sonata\Cache\Invalidation\Recorder" >
+        <service id="sonata.cache.recorder" class="%sonata.cache.recorder.class%" >
             <argument type="service" id="sonata.cache.model_identifier"/>
         </service>
 
-        <service id="sonata.cache.model_identifier" class="Sonata\Cache\Invalidation\ModelCollectionIdentifiers" >
+        <service id="sonata.cache.model_identifier" class="%sonata.cache.model_identifier.class%" >
             <argument type="collection" />
         </service>
 
-        <service id="sonata.cache.noop" class="Sonata\Cache\Adapter\Cache\NoopCache">
+        <service id="sonata.cache.noop" class="%sonata.cache.noop.class%">
             <tag name="sonata.cache" />
         </service>
 
-        <service id="sonata.cache.mongo" class="Sonata\Cache\Adapter\Cache\MongoCache" >
+        <service id="sonata.cache.mongo" class="%sonata.cache.mongo.class%" >
             <tag name="sonata.cache" />
             <argument type="collection" />
             <argument />
             <argument />
         </service>
 
-        <service id="sonata.cache.memcached" class="Sonata\Cache\Adapter\Cache\MemcachedCache" >
+        <service id="sonata.cache.memcached" class="%sonata.cache.memcached.class%" >
             <tag name="sonata.cache" />
             <argument />
             <argument type="collection" />
         </service>
 
-        <service id="sonata.cache.predis" class="Sonata\Cache\Adapter\Cache\PRedisCache" >
+        <service id="sonata.cache.predis" class="%sonata.cache.predis.class%" >
             <tag name="sonata.cache" />
             <argument type="collection" />
         </service>
 
-        <service id="sonata.cache.apc" class="Sonata\CacheBundle\Adapter\ApcCache" >
+        <service id="sonata.cache.apc" class="%sonata.cache.apc.class%" >
             <tag name="sonata.cache" />
             <argument type="service" id="router" />
             <argument />
@@ -50,7 +65,7 @@
             <argument type="collection" />
         </service>
 
-        <service id="sonata.cache.esi" class="Sonata\CacheBundle\Adapter\VarnishCache">
+        <service id="sonata.cache.esi" class="%sonata.cache.esi.class%">
             <tag name="sonata.cache" />
             <argument />
             <argument type="collection" />
@@ -59,14 +74,14 @@
             <argument type="service" id="controller_resolver" />
         </service>
 
-        <service id="sonata.cache.ssi" class="Sonata\CacheBundle\Adapter\SsiCache">
+        <service id="sonata.cache.ssi" class="%sonata.cache.ssi.class%">
             <tag name="sonata.cache" />
             <argument />
             <argument type="service" id="router" />
             <argument type="service" id="controller_resolver" />
         </service>
 
-        <service id="sonata.cache.symfony" class="Sonata\CacheBundle\Adapter\SymfonyCache" >
+        <service id="sonata.cache.symfony" class="%sonata.cache.symfony.class%" >
             <tag name="sonata.cache" />
             <argument type="service" id="router" />
             <argument type="service" id="filesystem" />
@@ -77,7 +92,7 @@
             <argument type="collection" />
         </service>
 
-        <service id="sonata.cache.invalidation.simple" class="Sonata\CacheBundle\Invalidation\SimpleCacheInvalidation">
+        <service id="sonata.cache.invalidation.simple" class="%sonata.cache.invalidation.simple.class%">
             <argument type="service" id="logger" />
         </service>
     </services>
