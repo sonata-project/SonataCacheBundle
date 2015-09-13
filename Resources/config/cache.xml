@@ -41,7 +41,7 @@
             <argument type="collection" />
         </service>
 
-        <service id="sonata.cache.apc" class="Sonata\CacheBundle\Adapter\ApcCache" >
+        <service id="sonata.cache.opcode" class="Sonata\CacheBundle\Adapter\OpCodeCache" >
             <tag name="sonata.cache" />
             <argument type="service" id="router" />
             <argument />

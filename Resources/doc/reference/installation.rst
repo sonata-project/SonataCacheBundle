@@ -73,6 +73,15 @@ To use the ``CacheBundle``, add the following lines to your application configur
                     RCV: { sec: 5, usec: 0 }
                     SND: { sec: 5, usec: 0 }
 
+            opcache:
+                token:  s3cur3   # token used to clear the related cache
+                prefix: test     # prefix to ensure there is no clash between instances
+                servers:
+                    - { domain: site.local, ip: 127.0.0.1, port: 80 }
+                timeout:
+                    RCV: { sec: 5, usec: 0 }
+                    SND: { sec: 5, usec: 0 }
+
             symfony:
                 token: s3cur3 # token used to clear the related cache
                 php_cache_enabled: true # Optional (default: false), clear APC or PHP OPcache
@@ -80,7 +89,7 @@ To use the ``CacheBundle``, add the following lines to your application configur
                 servers:
                     - { domain: kooqit.local, ip: 127.0.0.1, port: 80}
 
-For APC and Symfony caches, you can specify a basic parameter for servers definition (useful to clear cache for staging area behind this kind of protection)
+For APC , OPCache and Symfony caches, you can specify a basic parameter for servers definition (useful to clear cache for staging area behind this kind of protection)
 
 .. code-block:: yaml
 
