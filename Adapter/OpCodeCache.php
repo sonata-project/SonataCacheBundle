@@ -11,12 +11,12 @@
 
 namespace Sonata\CacheBundle\Adapter;
 
-use Sonata\Cache\Adapter\Cache\ApcCache as BaseApcCache;
+use Sonata\Cache\Adapter\Cache\OpCodeCache as BaseOpCodeCache;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\RouterInterface;
 
-class ApcCache extends BaseApcCache
+class OpCodeCache extends BaseOpCodeCache
 {
     /**
      * @var RouterInterface
@@ -57,8 +57,11 @@ class ApcCache extends BaseApcCache
     public function cacheAction($token)
     {
         if ($this->token == $token) {
-            apc_clear_cache('user');
-            apc_clear_cache();
+            if (version_compare(PHP_VERSION, '5.5.0', '>=') && function_exists('opcache_reset')) {
+                opcache_reset();
+            } elseif ($this->hasApc()) {
+                apc_clear_cache('user') && apc_clear_cache();
+            }
 
             return new Response('ok', 200, array(
                 'Cache-Control'  => 'no-cache, must-revalidate',
@@ -74,6 +77,6 @@ class ApcCache extends BaseApcCache
      */
     protected function getUrl()
     {
-        return $this->router->generate('sonata_cache_apc', array('token' => $this->token));
+        return $this->router->generate('sonata_cache_opcode', array('token' => $this->token));
     }
 }

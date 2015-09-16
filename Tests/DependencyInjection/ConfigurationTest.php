@@ -71,6 +71,57 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Asserts OPCode has default timeout values.
+     */
+    public function testOpcodeDefaultTimeout()
+    {
+        $expected = array(
+            'RCV' => array(),
+            'SND' => array(),
+        );
+
+        $configs = array(array(
+            'caches' => array(
+                'opcode' => array(
+                    'token'  => '',
+                    'prefix' => '',
+                ),
+            ),
+        ));
+
+        $config = $this->process($configs);
+
+        $this->assertArrayHasKey('timeout', $config['caches']['opcode']);
+        $this->assertEquals($expected, $config['caches']['opcode']['timeout']);
+    }
+
+    /**
+     * Asserts Opcode timeout has custom values.
+     */
+    public function testOpcCustomTimeout()
+    {
+        $expected = array(
+            'RCV' => array('sec' => 10, 'usec' => 0),
+            'SND' => array('sec' => 18, 'usec' => 12),
+        );
+
+        $configs = array(array(
+            'caches' => array(
+                'opcode' => array(
+                    'token'   => '',
+                    'prefix'  => '',
+                    'timeout' => $expected,
+                ),
+            ),
+        ));
+
+        $config = $this->process($configs);
+
+        $this->assertArrayHasKey('timeout', $config['caches']['opcode']);
+        $this->assertEquals($expected, $config['caches']['opcode']['timeout']);
+    }
+
+    /**
      * Processes an array of configurations and returns a compiled version.
      *
      * @param array $configs An array of raw configurations

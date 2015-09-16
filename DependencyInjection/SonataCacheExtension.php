@@ -19,8 +19,7 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * PageExtension.
- *
+ * SonataCacheExtension.
  *
  * @author     Thomas Rabaix <thomas.rabaix@sonata-project.org>
  */
@@ -191,18 +190,29 @@ class SonataCacheExtension extends Extension
             $container->removeDefinition('sonata.cache.predis');
         }
 
+        // To prevent BC Brak
         if (isset($config['caches']['apc'])) {
             $this->checkApc();
 
             $container
-                ->getDefinition('sonata.cache.apc')
+                ->getDefinition('sonata.cache.opcode')
                 ->replaceArgument(1, $config['caches']['apc']['token'])
                 ->replaceArgument(2, $config['caches']['apc']['prefix'])
                 ->replaceArgument(3, $this->configureServers($config['caches']['apc']['servers']))
                 ->replaceArgument(4, $config['caches']['apc']['timeout'])
             ;
+        } elseif (isset($config['caches']['opcode'])) {
+            $this->checkOpCodeCache();
+
+            $container
+                ->getDefinition('sonata.cache.opcode')
+                ->replaceArgument(1, $config['caches']['opcode']['token'])
+                ->replaceArgument(2, $config['caches']['opcode']['prefix'])
+                ->replaceArgument(3, $this->configureServers($config['caches']['opcode']['servers']))
+                ->replaceArgument(4, $config['caches']['opcode']['timeout'])
+            ;
         } else {
-            $container->removeDefinition('sonata.cache.apc');
+            $container->removeDefinition('sonata.cache.opcode');
         }
 
         if (isset($config['caches']['symfony'])) {
@@ -276,8 +286,6 @@ class SonataCacheExtension extends Extension
         }
 
         if (isset($config['counters']['apc'])) {
-            $this->checkApc();
-
             $container
                 ->getDefinition('sonata.cache.counter.apc')
                 ->replaceArgument(0, $config['counters']['apc']['prefix'])
@@ -304,10 +312,23 @@ HELP
     {
         if (!function_exists('apc_fetch')) {
             throw new \RuntimeException(<<<HELP
-The `sonata.cache.apc` service is configured, however the apc_* functions are not available.
+The `sonata.cache.opcode` service is configured, however the apc_* functions are not available.
 
 To resolve this issue, please install the related library : http://php.net/manual/en/book.apc.php
 or remove the APC cache settings from the configuration file.
+HELP
+            );
+        }
+    }
+
+    protected function checkOpCodeCache()
+    {
+        if (!function_exists('apc_fetch') && ((version_compare(PHP_VERSION, '5.5.0', '<') || !function_exists('opcache_reset')))) {
+            throw new \RuntimeException(<<<HELP
+The `sonata.cache.opcode` service is configured, however the apc_* and opcache_* functions are not available.
+
+To resolve this issue, please install one of the related libraries : http://php.net/manual/en/book.apc.php, http://php.net/manual/en/book.opcache.php
+or remove the OpCode cache settings from the configuration file.
 HELP
             );
         }
