@@ -57,8 +57,14 @@ class ApcCache extends BaseApcCache
     public function cacheAction($token)
     {
         if ($this->token == $token) {
-            apc_clear_cache('user');
-            apc_clear_cache();
+            if (version_compare(PHP_VERSION, '5.5.0', '>=') && function_exists('opcache_reset')) {
+                opcache_reset();
+            }
+
+            if (extension_loaded('apc') && ini_get('apc.enabled')) {
+                apc_clear_cache('user');
+                apc_clear_cache();
+            }
 
             return new Response('ok', 200, array(
                 'Cache-Control'  => 'no-cache, must-revalidate',
