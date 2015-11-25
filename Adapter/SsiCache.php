@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -106,7 +107,7 @@ class SsiCache implements CacheAdapterInterface
             'parameters' => $keys,
         );
 
-        return $this->router->generate('sonata_cache_ssi', $parameters, false);
+        return $this->router->generate('sonata_cache_ssi', $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
     }
 
     /**
