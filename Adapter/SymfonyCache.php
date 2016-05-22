@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -69,13 +69,13 @@ class SymfonyCache implements CacheAdapterInterface
      */
     public function __construct(RouterInterface $router, Filesystem $filesystem, $cacheDir, $token, $phpCodeCacheEnabled, array $types, array $servers)
     {
-        $this->router              = $router;
-        $this->filesystem          = $filesystem;
-        $this->cacheDir            = $cacheDir;
-        $this->token               = $token;
-        $this->types               = $types;
+        $this->router = $router;
+        $this->filesystem = $filesystem;
+        $this->cacheDir = $cacheDir;
+        $this->token = $token;
+        $this->types = $types;
         $this->phpCodeCacheEnabled = $phpCodeCacheEnabled;
-        $this->servers             = $servers;
+        $this->servers = $servers;
     }
 
     /**
@@ -171,43 +171,9 @@ class SymfonyCache implements CacheAdapterInterface
         }
 
         return new Response('ok', 200, array(
-            'Cache-Control'  => 'no-cache, must-revalidate',
+            'Cache-Control' => 'no-cache, must-revalidate',
             'Content-Length' => 2, // to prevent chunked transfer encoding
         ));
-    }
-
-    /**
-     * Returns URL with given token used for cache invalidation.
-     *
-     * @param string $type
-     *
-     * @return string
-     */
-    protected function getUrl($type)
-    {
-        return $this->router->generate('sonata_cache_symfony', array(
-            'token' => $this->token,
-            'type'  => $type,
-        ));
-    }
-
-    /**
-     * Clears code cache with:.
-     *
-     * PHP < 5.5.0: APC
-     * PHP >= 5.5.0: PHP OPcache
-     */
-    protected function clearPHPCodeCache()
-    {
-        if (!$this->phpCodeCacheEnabled) {
-            return;
-        }
-
-        if (version_compare(PHP_VERSION, '5.5.0', '>=') && function_exists('opcache_reset')) {
-            opcache_reset();
-        } elseif (function_exists('apc_fetch')) {
-            apc_clear_cache();
-        }
     }
 
     /**
@@ -240,5 +206,39 @@ class SymfonyCache implements CacheAdapterInterface
     public function isContextual()
     {
         return false;
+    }
+
+    /**
+     * Returns URL with given token used for cache invalidation.
+     *
+     * @param string $type
+     *
+     * @return string
+     */
+    protected function getUrl($type)
+    {
+        return $this->router->generate('sonata_cache_symfony', array(
+            'token' => $this->token,
+            'type' => $type,
+        ));
+    }
+
+    /**
+     * Clears code cache with:.
+     *
+     * PHP < 5.5.0: APC
+     * PHP >= 5.5.0: PHP OPcache
+     */
+    protected function clearPHPCodeCache()
+    {
+        if (!$this->phpCodeCacheEnabled) {
+            return;
+        }
+
+        if (version_compare(PHP_VERSION, '5.5.0', '>=') && function_exists('opcache_reset')) {
+            opcache_reset();
+        } elseif (function_exists('apc_fetch')) {
+            apc_clear_cache();
+        }
     }
 }

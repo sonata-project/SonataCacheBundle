@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of sonata-project.
+ * This file is part of the Sonata Project package.
  *
- * (c) 2010 Thomas Rabaix
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -19,6 +19,16 @@ abstract class TwigTemplate13 extends \Twig_Template
      * @var \Sonata\Cache\Invalidation\Recorder
      */
     protected static $recorder;
+
+    /**
+     * @static
+     *
+     * @param \Sonata\Cache\Invalidation\Recorder $recorder
+     */
+    public static function attachRecorder(Recorder $recorder)
+    {
+        self::$recorder = $recorder;
+    }
 
     /**
      * @param        $object
@@ -38,15 +48,5 @@ abstract class TwigTemplate13 extends \Twig_Template
         }
 
         return $attribute;
-    }
-
-    /**
-     * @static
-     *
-     * @param \Sonata\Cache\Invalidation\Recorder $recorder
-     */
-    public static function attachRecorder(Recorder $recorder)
-    {
-        self::$recorder = $recorder;
     }
 }
