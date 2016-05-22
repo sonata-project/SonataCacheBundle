@@ -1,16 +1,28 @@
-Sonata Cache Bundle
-====================
+# Sonata Cache Bundle
 
-[![Build Status](https://secure.travis-ci.org/sonata-project/SonataCacheBundle.png)](https://secure.travis-ci.org/#!/sonata-project/SonataCacheBundle)
+This bundle provides caching services
 
-Check out the documentation on [https://sonata-project.org/bundles/cache/master/doc/index.html](https://sonata-project.org/bundles/cache/master/doc/index.html)
+[![Latest Stable Version](https://poser.pugx.org/sonata-project/cache-bundle/v/stable)](https://packagist.org/packages/sonata-project/cache-bundle)
+[![Latest Unstable Version](https://poser.pugx.org/sonata-project/cache-bundle/v/unstable)](https://packagist.org/packages/sonata-project/cache-bundle)
+[![License](https://poser.pugx.org/sonata-project/cache-bundle/license)](https://packagist.org/packages/sonata-project/cache-bundle)
 
-**Google Groups**: For questions and proposals you can post on this google groups
+[![Total Downloads](https://poser.pugx.org/sonata-project/cache-bundle/downloads)](https://packagist.org/packages/sonata-project/cache-bundle)
+[![Monthly Downloads](https://poser.pugx.org/sonata-project/cache-bundle/d/monthly)](https://packagist.org/packages/sonata-project/cache-bundle)
+[![Daily Downloads](https://poser.pugx.org/sonata-project/cache-bundle/d/daily)](https://packagist.org/packages/sonata-project/cache-bundle)
 
-* [Sonata Users](https://groups.google.com/group/sonata-users): Only for user questions
-* [Sonata Devs](https://groups.google.com/group/sonata-devs): Only for devs
+[![Build Status](https://travis-ci.org/sonata-project/SonataCacheBundle.svg?branch=2.x)](https://travis-ci.org/sonata-project/SonataCacheBundle)
 
-License
--------
+## Documentation
 
-This bundle is available under the [MIT license](Resources/meta/LICENSE).
+Check out the documentation on the [official website](https://sonata-project.org/bundles/cache).
+
+## Support
+
+For general support and questions, please use [StackOverflow](http://stackoverflow.com/questions/tagged/sonata).
+
+If you think you find a bug or you have a feature idea to propose, feel free to open a issue
+**after looking** at the [contributing guide](CONTRIBUTING.md).
+
+## License
+
+This package is available under the [MIT license](LICENSE).
