@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -41,7 +41,7 @@ class SsiCache implements CacheAdapterInterface
     public function __construct($token, RouterInterface $router, ControllerResolverInterface $resolver = null)
     {
         $this->token = $token;
-        $this->router   = $router;
+        $this->router = $router;
         $this->resolver = $resolver;
     }
 
@@ -96,33 +96,6 @@ class SsiCache implements CacheAdapterInterface
     }
 
     /**
-     * @param array $keys
-     *
-     * @return string
-     */
-    protected function getUrl(array $keys)
-    {
-        $parameters = array(
-            'token'      => $this->computeHash($keys),
-            'parameters' => $keys,
-        );
-
-        return $this->router->generate('sonata_cache_ssi', $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
-    }
-
-    /**
-     * @param array $keys
-     *
-     * @return string
-     */
-    protected function computeHash(array $keys)
-    {
-        ksort($keys);
-
-        return hash('sha256', $this->token.serialize($keys));
-    }
-
-    /**
      * @param Request $request
      *
      * @return mixed
@@ -154,5 +127,32 @@ class SsiCache implements CacheAdapterInterface
     public function isContextual()
     {
         return true;
+    }
+
+    /**
+     * @param array $keys
+     *
+     * @return string
+     */
+    protected function getUrl(array $keys)
+    {
+        $parameters = array(
+            'token' => $this->computeHash($keys),
+            'parameters' => $keys,
+        );
+
+        return $this->router->generate('sonata_cache_ssi', $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
+    }
+
+    /**
+     * @param array $keys
+     *
+     * @return string
+     */
+    protected function computeHash(array $keys)
+    {
+        ksort($keys);
+
+        return hash('sha256', $this->token.serialize($keys));
     }
 }
