@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -68,11 +68,11 @@ class VarnishCache implements CacheAdapterInterface
      */
     public function __construct($token, array $servers, RouterInterface $router, $purgeInstruction, ControllerResolverInterface $resolver = null)
     {
-        $this->token            = $token;
-        $this->servers          = $servers;
-        $this->router           = $router;
+        $this->token = $token;
+        $this->servers = $servers;
+        $this->router = $router;
         $this->purgeInstruction = $purgeInstruction;
-        $this->resolver         = $resolver;
+        $this->resolver = $resolver;
     }
 
     /**
@@ -84,30 +84,6 @@ class VarnishCache implements CacheAdapterInterface
             $this->purgeInstruction == 'ban' ? 'ban.url' : 'purge',
             $this->purgeInstruction == 'ban' ? '.*' : 'req.url ~ .*'
         );
-    }
-
-    /**
-     * @param string $command
-     * @param string $expression
-     *
-     * @return bool
-     */
-    protected function runCommand($command, $expression)
-    {
-        $return = true;
-        foreach ($this->servers as $server) {
-            $command = str_replace(array('{{ COMMAND }}', '{{ EXPRESSION }}'), array($command, $expression), $server);
-
-            $process = new Process($command);
-
-            if ($process->run() == 0) {
-                continue;
-            }
-
-            $return = false;
-        }
-
-        return $return;
     }
 
     /**
@@ -160,49 +136,6 @@ class VarnishCache implements CacheAdapterInterface
     }
 
     /**
-     * Gets the URL by the given keys.
-     *
-     * @param array $keys
-     *
-     * @return string
-     */
-    protected function getUrl(array $keys)
-    {
-        $parameters = array(
-            'token'      => $this->computeHash($keys),
-            'parameters' => $keys,
-        );
-
-        return $this->router->generate('sonata_cache_esi', $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
-    }
-
-    /**
-     * Computes the given keys.
-     *
-     * @param array $keys
-     *
-     * @return string
-     */
-    protected function computeHash(array $keys)
-    {
-        ksort($keys);
-
-        return hash('sha256', $this->token.serialize($keys));
-    }
-
-    /**
-     * Normalizes the given key.
-     *
-     * @param string $key
-     *
-     * @return string
-     */
-    protected function normalize($key)
-    {
-        return sprintf('x-sonata-cache-%s', str_replace(array('_', '\\'), '-', strtolower($key)));
-    }
-
-    /**
      * Cache action.
      *
      * @param Request $request
@@ -236,5 +169,72 @@ class VarnishCache implements CacheAdapterInterface
     public function isContextual()
     {
         return true;
+    }
+
+    /**
+     * @param string $command
+     * @param string $expression
+     *
+     * @return bool
+     */
+    protected function runCommand($command, $expression)
+    {
+        $return = true;
+        foreach ($this->servers as $server) {
+            $command = str_replace(array('{{ COMMAND }}', '{{ EXPRESSION }}'), array($command, $expression), $server);
+
+            $process = new Process($command);
+
+            if ($process->run() == 0) {
+                continue;
+            }
+
+            $return = false;
+        }
+
+        return $return;
+    }
+
+    /**
+     * Gets the URL by the given keys.
+     *
+     * @param array $keys
+     *
+     * @return string
+     */
+    protected function getUrl(array $keys)
+    {
+        $parameters = array(
+            'token' => $this->computeHash($keys),
+            'parameters' => $keys,
+        );
+
+        return $this->router->generate('sonata_cache_esi', $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
+    }
+
+    /**
+     * Computes the given keys.
+     *
+     * @param array $keys
+     *
+     * @return string
+     */
+    protected function computeHash(array $keys)
+    {
+        ksort($keys);
+
+        return hash('sha256', $this->token.serialize($keys));
+    }
+
+    /**
+     * Normalizes the given key.
+     *
+     * @param string $key
+     *
+     * @return string
+     */
+    protected function normalize($key)
+    {
+        return sprintf('x-sonata-cache-%s', str_replace(array('_', '\\'), '-', strtolower($key)));
     }
 }
