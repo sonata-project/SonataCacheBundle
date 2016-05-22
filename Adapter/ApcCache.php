@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -42,7 +42,7 @@ class ApcCache extends BaseApcCache
         parent::__construct(null, $prefix, $servers, $timeout);
 
         $this->router = $router;
-        $this->token  = $token;
+        $this->token = $token;
     }
 
     /**
@@ -67,7 +67,7 @@ class ApcCache extends BaseApcCache
             }
 
             return new Response('ok', 200, array(
-                'Cache-Control'  => 'no-cache, must-revalidate',
+                'Cache-Control' => 'no-cache, must-revalidate',
                 'Content-Length' => 2, // to prevent chunked transfer encoding
             ));
         }

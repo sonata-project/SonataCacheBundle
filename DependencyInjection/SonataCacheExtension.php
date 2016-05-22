@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -287,57 +287,6 @@ class SonataCacheExtension extends Extension
         }
     }
 
-    protected function checkMemcached()
-    {
-        if (!class_exists('\Memcached', true)) {
-            throw new \RuntimeException(<<<HELP
-The `sonata.cache.memcached` service is configured, however the Memcached class is not available.
-
-To resolve this issue, please install the related library : http://php.net/manual/en/book.memcached.php
-or remove the memcached cache settings from the configuration file.
-HELP
-            );
-        }
-    }
-
-    protected function checkApc()
-    {
-        if (!function_exists('apc_fetch')) {
-            throw new \RuntimeException(<<<HELP
-The `sonata.cache.apc` service is configured, however the apc_* functions are not available.
-
-To resolve this issue, please install the related library : http://php.net/manual/en/book.apc.php
-or remove the APC cache settings from the configuration file.
-HELP
-            );
-        }
-    }
-
-    protected function checkMongo()
-    {
-        if (!class_exists('\Mongo', true)) {
-            throw new \RuntimeException(<<<HELP
-The `sonata.cache.mongo` service is configured, however the Mongo class is not available.
-
-To resolve this issue, please install the related library : http://php.net/manual/en/book.mongo.php
-or remove the mongo cache settings from the configuration file.
-HELP
-            );
-        }
-    }
-
-    protected function checkPRedis()
-    {
-        if (!class_exists('\Predis\Client', true)) {
-            throw new \RuntimeException(<<<HELP
-The `sonata.cache.predis` service is configured, however the Predis\Client class is not available.
-
-Please add the lib in your composer.json file: "predis/predis": "~0.8".
-HELP
-            );
-        }
-    }
-
     /**
      * Returns servers list with hash for basic auth computed if provided.
      *
@@ -357,5 +306,56 @@ HELP
             },
             $servers
         );
+    }
+
+    protected function checkMemcached()
+    {
+        if (!class_exists('\Memcached', true)) {
+            throw new \RuntimeException(<<<'HELP'
+The `sonata.cache.memcached` service is configured, however the Memcached class is not available.
+
+To resolve this issue, please install the related library : http://php.net/manual/en/book.memcached.php
+or remove the memcached cache settings from the configuration file.
+HELP
+            );
+        }
+    }
+
+    protected function checkApc()
+    {
+        if (!function_exists('apc_fetch')) {
+            throw new \RuntimeException(<<<'HELP'
+The `sonata.cache.apc` service is configured, however the apc_* functions are not available.
+
+To resolve this issue, please install the related library : http://php.net/manual/en/book.apc.php
+or remove the APC cache settings from the configuration file.
+HELP
+            );
+        }
+    }
+
+    protected function checkMongo()
+    {
+        if (!class_exists('\Mongo', true)) {
+            throw new \RuntimeException(<<<'HELP'
+The `sonata.cache.mongo` service is configured, however the Mongo class is not available.
+
+To resolve this issue, please install the related library : http://php.net/manual/en/book.mongo.php
+or remove the mongo cache settings from the configuration file.
+HELP
+            );
+        }
+    }
+
+    protected function checkPRedis()
+    {
+        if (!class_exists('\Predis\Client', true)) {
+            throw new \RuntimeException(<<<HELP
+The `sonata.cache.predis` service is configured, however the Predis\Client class is not available.
+
+Please add the lib in your composer.json file: "predis/predis": "~0.8".
+HELP
+            );
+        }
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -32,7 +32,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $configs = array(array(
             'caches' => array(
                 'apc' => array(
-                    'token'  => '',
+                    'token' => '',
                     'prefix' => '',
                 ),
             ),
@@ -57,8 +57,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $configs = array(array(
             'caches' => array(
                 'apc' => array(
-                    'token'   => '',
-                    'prefix'  => '',
+                    'token' => '',
+                    'prefix' => '',
                     'timeout' => $expected,
                 ),
             ),

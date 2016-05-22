@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * This file is part of the Sonata Project package.
  *
  * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
@@ -69,7 +69,7 @@ class VarnishCacheTest extends \PHPUnit_Framework_TestCase
         $resolver->expects($this->any())->method('getArguments')->will($this->returnValue(array()));
 
         $request = Request::create('cache/esi/TOKEN', 'get', array(
-            'token'      => '44befdbd93f304ea693023aa6587729bed76a206ecdacfd9bbd9b43fcf2e1664',
+            'token' => '44befdbd93f304ea693023aa6587729bed76a206ecdacfd9bbd9b43fcf2e1664',
             'parameters' => array(
                 'controller' => 'asfsat',
                 'parameters' => array(),
