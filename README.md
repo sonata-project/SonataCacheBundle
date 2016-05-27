@@ -10,7 +10,9 @@ This bundle provides caching services
 [![Monthly Downloads](https://poser.pugx.org/sonata-project/cache-bundle/d/monthly)](https://packagist.org/packages/sonata-project/cache-bundle)
 [![Daily Downloads](https://poser.pugx.org/sonata-project/cache-bundle/d/daily)](https://packagist.org/packages/sonata-project/cache-bundle)
 
-[![Build Status](https://travis-ci.org/sonata-project/SonataCacheBundle.svg?branch=2.x)](https://travis-ci.org/sonata-project/SonataCacheBundle)
+2.x status: [![Build Status](https://travis-ci.org/sonata-project/SonataCacheBundle.svg?branch=2.x)](https://travis-ci.org/sonata-project/SonataCacheBundle)
+
+master status: [![Build Status](https://travis-ci.org/sonata-project/SonataCacheBundle.svg?branch=master)](https://travis-ci.org/sonata-project/SonataCacheBundle)
 
 ## Documentation
 
