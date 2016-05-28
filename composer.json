@@ -29,6 +29,7 @@
     "require-dev": {
         "doctrine/orm": "^2.2",
         "predis/predis": "^0.8",
+        "sllh/php-cs-fixer-styleci-bridge": "^2.0",
         "symfony/phpunit-bridge": "^2.7 || ^3.0"
     },
     "suggest": {
