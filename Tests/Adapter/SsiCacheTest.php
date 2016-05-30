@@ -65,7 +65,9 @@ class SsiCacheTest extends \PHPUnit_Framework_TestCase
         $router = $this->getMock('Symfony\Component\Routing\RouterInterface');
 
         $resolver = $this->getMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
-        $resolver->expects($this->any())->method('getController')->will($this->returnValue(function () { return new Response(); }));
+        $resolver->expects($this->any())->method('getController')->will($this->returnValue(function () {
+            return new Response();
+        }));
         $resolver->expects($this->any())->method('getArguments')->will($this->returnValue(array()));
 
         $request = Request::create('cache/esi/TOKEN', 'get', array(
