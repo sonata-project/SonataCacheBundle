@@ -40,7 +40,7 @@ class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
     /**
      * Sets up cache adapter.
      */
-    public function setUp()
+    protected function setUp()
     {
         $this->router = $this->getMock('Symfony\Component\Routing\RouterInterface');
         $this->filesystem = $this->getMock('Symfony\Component\Filesystem\Filesystem');
@@ -110,5 +110,152 @@ class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('\RuntimeException', 'Type "invalid-type" is not defined, allowed types are: "all, translations"');
 
         $this->cache->cacheAction('token', 'invalid-type');
+    }
+
+    /**
+     * Asserts the flush method throws an exception if the IP version of the server cannot be detected.
+     */
+    public function testFlushThrowsExceptionWithWrongIP()
+    {
+        $cache = new SymfonyCache(
+            $this->router,
+            $this->filesystem,
+            '/cache/dir',
+            'token',
+            false,
+            array('all', 'translations'),
+            array(
+                array('ip' => 'wrong ip'),
+            )
+        );
+
+        $this->setExpectedException('\InvalidArgumentException', '"wrong ip" is not a valid ip address');
+
+        $cache->flush();
+    }
+
+    /**
+     * Tests the flush method with IPv4.
+     */
+    public function testFlushWithIPv4()
+    {
+        $mockBuilderClass = $this->getMockBuilderClass();
+
+        $cache = new SymfonyCache(
+            $this->router,
+            $this->filesystem,
+            '/cache/dir',
+            'token',
+            false,
+            array('all', 'translations'),
+            array(
+                array('ip' => '213.186.35.9', 'domain' => 'www.example.com', 'basic' => false, 'port' => 80),
+            )
+        );
+
+        // NEXT_MAJOR: while dropping old versions of php, remove this and simplify the closure below
+        $that = $this;
+
+        $mocks = array();
+
+        $builder = new $mockBuilderClass();
+        $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
+            ->setName('socket_create')
+            ->setFunction(function () use ($that) {
+                $that->assertSame(array(AF_INET, SOCK_STREAM, SOL_TCP), func_get_args());
+            })
+            ->build();
+        $mock->enable();
+
+        $mocks[] = $mock;
+
+        foreach (array('socket_set_option', 'socket_connect', 'socket_write', 'socket_read') as $function) {
+            $builder = new $mockBuilderClass();
+            $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
+                ->setName($function)
+                ->setFunction(function () {
+                })
+                ->build();
+            $mock->enable();
+
+            $mocks[] = $mock;
+        }
+
+        $cache->flush();
+
+        foreach ($mocks as $mock) {
+            $mock->disable();
+        }
+    }
+
+    /**
+     * Tests the flush method with IPv6.
+     */
+    public function testFlushWithIPv6()
+    {
+        $mockBuilderClass = $this->getMockBuilderClass();
+
+        $cache = new SymfonyCache(
+            $this->router,
+            $this->filesystem,
+            '/cache/dir',
+            'token',
+            false,
+            array('all', 'translations'),
+            array(
+                array('ip' => '2001:41d0:1:209:FF:FF:FF:FF', 'domain' => 'www.example.com', 'basic' => false, 'port' => 80),
+            )
+        );
+
+        // NEXT_MAJOR: while dropping old versions of php, remove this and simplify the closure below
+        $that = $this;
+
+        $mocks = array();
+
+        $builder = new $mockBuilderClass();
+        $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
+            ->setName('socket_create')
+            ->setFunction(function () use ($that) {
+                $that->assertSame(array(AF_INET6, SOCK_STREAM, SOL_TCP), func_get_args());
+            })
+            ->build();
+        $mock->enable();
+
+        $mocks[] = $mock;
+
+        foreach (array('socket_set_option', 'socket_connect', 'socket_write', 'socket_read') as $function) {
+            $builder = new $mockBuilderClass();
+            $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
+                ->setName($function)
+                ->setFunction(function () {
+                })
+                ->build();
+            $mock->enable();
+
+            $mocks[] = $mock;
+        }
+
+        $cache->flush();
+
+        foreach ($mocks as $mock) {
+            $mock->disable();
+        }
+    }
+
+    /**
+     * Gets the mock builder class according to the lib version (ie the PHP version).
+     * NEXT_MAJOR: while dropping old versions of php, restrict the library to version ^1.0 and simplify this.
+     *
+     * @return string
+     */
+    private function getMockBuilderClass()
+    {
+        if (class_exists('phpmock\MockBuilder')) {
+            return 'phpmock\MockBuilder';
+        } elseif (class_exists('malkusch\phpmock\MockBuilder')) {
+            return 'malkusch\phpmock\MockBuilder';
+        }
+
+        $this->fail('Unable to find the MockBuilder class to mock built-in PHP functions');
     }
 }
