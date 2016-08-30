@@ -24,11 +24,6 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testApcDefaultTimeout()
     {
-        $expected = array(
-            'RCV' => array(),
-            'SND' => array(),
-        );
-
         $configs = array(array(
             'caches' => array(
                 'apc' => array(
@@ -41,7 +36,13 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $config = $this->process($configs);
 
         $this->assertArrayHasKey('timeout', $config['caches']['apc']);
-        $this->assertEquals($expected, $config['caches']['apc']['timeout']);
+        $this->assertSame(
+            array(
+                'RCV' => array(),
+                'SND' => array(),
+            ),
+            $config['caches']['apc']['timeout']
+        );
     }
 
     /**
@@ -67,7 +68,59 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $config = $this->process($configs);
 
         $this->assertArrayHasKey('timeout', $config['caches']['apc']);
-        $this->assertEquals($expected, $config['caches']['apc']['timeout']);
+        $this->assertSame($expected, $config['caches']['apc']['timeout']);
+    }
+
+    /**
+     * Asserts Symfony has default timeout values.
+     */
+    public function testSymfonyDefaultTimeout()
+    {
+        $configs = array(array(
+            'caches' => array(
+                'symfony' => array(
+                    'token' => '',
+                    'types' => array('all'),
+                ),
+            ),
+        ));
+
+        $config = $this->process($configs);
+
+        $this->assertArrayHasKey('timeout', $config['caches']['symfony']);
+        $this->assertSame(
+            array(
+                'RCV' => array('sec' => 2, 'usec' => 0),
+                'SND' => array('sec' => 2, 'usec' => 0),
+            ),
+            $config['caches']['symfony']['timeout']
+        );
+    }
+
+    /**
+     * Asserts Symfony timeout has custom values.
+     */
+    public function testSymfonyCustomTimeout()
+    {
+        $expected = array(
+            'RCV' => array('sec' => 10, 'usec' => 0),
+            'SND' => array('sec' => 18, 'usec' => 12),
+        );
+
+        $configs = array(array(
+            'caches' => array(
+                'symfony' => array(
+                    'token' => '',
+                    'types' => array('all'),
+                    'timeout' => $expected,
+                ),
+            ),
+        ));
+
+        $config = $this->process($configs);
+
+        $this->assertArrayHasKey('timeout', $config['caches']['symfony']);
+        $this->assertSame($expected, $config['caches']['symfony']['timeout']);
     }
 
     /**

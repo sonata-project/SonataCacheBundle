@@ -56,7 +56,14 @@ class SymfonyCache implements CacheAdapterInterface
     protected $servers;
 
     /**
+     * @var array
+     */
+    protected $timeouts;
+
+    /**
      * Constructor.
+     *
+     * NEXT_MAJOR: make the timeouts argument mandatory
      *
      * @param RouterInterface $router              A router instance
      * @param Filesystem      $filesystem          A Symfony Filesystem component instance
@@ -65,9 +72,19 @@ class SymfonyCache implements CacheAdapterInterface
      * @param bool            $phpCodeCacheEnabled If true, will clear APC or PHP OPcache code cache
      * @param array           $types               A cache types array
      * @param array           $servers             An array of servers
+     * @param array           $timeouts            An array of timeout options
      */
-    public function __construct(RouterInterface $router, Filesystem $filesystem, $cacheDir, $token, $phpCodeCacheEnabled, array $types, array $servers)
+    public function __construct(RouterInterface $router, Filesystem $filesystem, $cacheDir, $token, $phpCodeCacheEnabled, array $types, array $servers, array $timeouts = array())
     {
+        if (!$timeouts) {
+            @trigger_error('The "timeouts" argument is available since 3.x and will become mandatory in 4.0, please provide it.', E_USER_DEPRECATED);
+
+            $timeouts = array(
+                'RCV' => array('sec' => 2, 'usec' => 0),
+                'SND' => array('sec' => 2, 'usec' => 0),
+            );
+        }
+
         $this->router = $router;
         $this->filesystem = $filesystem;
         $this->cacheDir = $cacheDir;
@@ -75,6 +92,7 @@ class SymfonyCache implements CacheAdapterInterface
         $this->types = $types;
         $this->phpCodeCacheEnabled = $phpCodeCacheEnabled;
         $this->servers = $servers;
+        $this->timeouts = $timeouts;
     }
 
     /**
@@ -117,8 +135,8 @@ class SymfonyCache implements CacheAdapterInterface
                 $command .= "Connection: Close\r\n\r\n";
 
                 // setup the default timeout (avoid max execution time)
-                socket_set_option($socket, SOL_SOCKET, SO_SNDTIMEO, array('sec' => 2, 'usec' => 0));
-                socket_set_option($socket, SOL_SOCKET, SO_RCVTIMEO, array('sec' => 2, 'usec' => 0));
+                socket_set_option($socket, SOL_SOCKET, SO_SNDTIMEO, $this->timeouts['SND']);
+                socket_set_option($socket, SOL_SOCKET, SO_RCVTIMEO, $this->timeouts['RCV']);
 
                 socket_connect($socket, $server['ip'], $server['port']);
                 socket_write($socket, $command);

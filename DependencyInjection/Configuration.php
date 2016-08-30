@@ -170,6 +170,45 @@ class Configuration implements ConfigurationInterface
                                     ->end()
                                 ->end()
                             ->end()
+                            ->arrayNode('timeout')
+                                ->addDefaultsIfNotSet()
+                                ->children()
+                                    ->arrayNode('RCV')
+                                        ->addDefaultsIfNotSet()
+                                        ->children()
+                                            ->integerNode('sec')
+                                                ->info('Timeout value specifying the amount of seconds for input operations')
+                                                ->defaultValue(2)
+                                            ->end()
+                                            ->integerNode('usec')
+                                                ->info('Timeout value specifying the amount of microseconds for input operations')
+                                                ->defaultValue(0)
+                                            ->end()
+                                        ->end()
+                                    ->end()
+                                    ->arrayNode('SND')
+                                        ->addDefaultsIfNotSet()
+                                        ->children()
+                                            ->integerNode('sec')
+                                                ->info(<<<'INFO'
+Timeout value specifying the amount of seconds that an output function
+blocks because flow control prevents data from being sent
+INFO
+                                                )
+                                                ->defaultValue(2)
+                                            ->end()
+                                            ->integerNode('usec')
+                                                ->info(<<<'INFO'
+Timeout value specifying the amount of microseconds that an output function
+blocks because flow control prevents data from being sent
+INFO
+                                                )
+                                                ->defaultValue(0)
+                                            ->end()
+                                        ->end()
+                                    ->end()
+                                ->end()
+                            ->end()
                         ->end()
                     ->end()
                 ->end()
