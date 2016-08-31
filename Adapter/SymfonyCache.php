@@ -14,7 +14,6 @@ namespace Sonata\CacheBundle\Adapter;
 use Sonata\Cache\CacheAdapterInterface;
 use Sonata\Cache\Exception\UnsupportedException;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\RouterInterface;
@@ -88,6 +87,8 @@ class SymfonyCache implements CacheAdapterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \InvalidArgumentException
      */
     public function flush(array $keys = array('all'))
     {
@@ -95,10 +96,14 @@ class SymfonyCache implements CacheAdapterInterface
 
         foreach ($this->servers as $server) {
             foreach ($keys as $type) {
-                if (count(explode('.', $server['ip']) == 3)) {
+                $ip = $server['ip'];
+
+                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
                     $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-                } else {
+                } elseif (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
                     $socket = socket_create(AF_INET6, SOCK_STREAM, SOL_TCP);
+                } else {
+                    throw new \InvalidArgumentException(sprintf('"%s" is not a valid ip address', $ip));
                 }
 
                 // generate the raw http request
