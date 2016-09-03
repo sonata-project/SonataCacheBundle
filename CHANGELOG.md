@@ -1,3 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
+
+## [2.3.0](https://github.com/sonata-project/SonataAdminBundle/compare/2.2.5...2.3.0) - 2016-09-02
+### Added
+- Possibility to configure the timeout to clear the Symfony cache
+
+### Fixed
+- IP detection in SymfonyCache

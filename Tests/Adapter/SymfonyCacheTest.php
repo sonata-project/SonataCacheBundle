@@ -45,7 +45,16 @@ class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
         $this->router = $this->getMock('Symfony\Component\Routing\RouterInterface');
         $this->filesystem = $this->getMock('Symfony\Component\Filesystem\Filesystem');
 
-        $this->cache = new SymfonyCache($this->router, $this->filesystem, '/cache/dir', 'token', false, array('all', 'translations'), array());
+        $this->cache = new SymfonyCache(
+            $this->router,
+            $this->filesystem,
+            '/cache/dir',
+            'token',
+            false,
+            array('all', 'translations'),
+            array(),
+            array()
+        );
     }
 
     /**
@@ -126,7 +135,8 @@ class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
             array('all', 'translations'),
             array(
                 array('ip' => 'wrong ip'),
-            )
+            ),
+            array()
         );
 
         $this->setExpectedException('\InvalidArgumentException', '"wrong ip" is not a valid ip address');
@@ -150,6 +160,10 @@ class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
             array('all', 'translations'),
             array(
                 array('ip' => '213.186.35.9', 'domain' => 'www.example.com', 'basic' => false, 'port' => 80),
+            ),
+            array(
+                'RCV' => array('sec' => 2, 'usec' => 0),
+                'SND' => array('sec' => 2, 'usec' => 0),
             )
         );
 
@@ -204,6 +218,10 @@ class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
             array('all', 'translations'),
             array(
                 array('ip' => '2001:41d0:1:209:FF:FF:FF:FF', 'domain' => 'www.example.com', 'basic' => false, 'port' => 80),
+            ),
+            array(
+                'RCV' => array('sec' => 2, 'usec' => 0),
+                'SND' => array('sec' => 2, 'usec' => 0),
             )
         );
 

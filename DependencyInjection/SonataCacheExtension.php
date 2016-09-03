@@ -212,6 +212,7 @@ class SonataCacheExtension extends Extension
                 ->replaceArgument(4, $config['caches']['symfony']['php_cache_enabled'])
                 ->replaceArgument(5, $config['caches']['symfony']['types'])
                 ->replaceArgument(6, $this->configureServers($config['caches']['symfony']['servers']))
+                ->replaceArgument(7, $config['caches']['symfony']['timeout'])
             ;
         } else {
             $container->removeDefinition('sonata.cache.symfony');
