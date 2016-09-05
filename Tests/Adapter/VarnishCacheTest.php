@@ -81,4 +81,33 @@ class VarnishCacheTest extends \PHPUnit_Framework_TestCase
         $cache = new VarnishCache('token', array(), $router, 'ban', $resolver);
         $cache->cacheAction($request);
     }
+
+    public function testRunCommand()
+    {
+        $tmpFile = tempnam(sys_get_temp_dir(), 'sonata-cache');
+
+        $cache = new VarnishCache(
+            'token',
+            array(
+                sprintf("echo \"varnishadm -T 10.4.1.62:6082 -S /etc/varnish/secret {{ COMMAND }} '{{ EXPRESSION }}'\" >> %s", $tmpFile),
+                sprintf("echo \"varnishadm -T 10.4.1.66:6082 -S /etc/varnish/secret {{ COMMAND }} '{{ EXPRESSION }}'\" >> %s", $tmpFile),
+            ),
+            $this->getMock('Symfony\Component\Routing\RouterInterface'),
+            'ban'
+        );
+
+        $method = new \ReflectionMethod($cache, 'runCommand');
+        $method->setAccessible(true);
+
+        $this->assertTrue($method->invoke($cache, 'ban', 'req.url ~ \'.*\''));
+
+        $this->assertSame(<<<'CMD'
+varnishadm -T 10.4.1.62:6082 -S /etc/varnish/secret ban 'req.url ~ '.*''
+varnishadm -T 10.4.1.66:6082 -S /etc/varnish/secret ban 'req.url ~ '.*''
+
+CMD
+        , file_get_contents($tmpFile));
+
+        unlink($tmpFile);
+    }
 }
