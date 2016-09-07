@@ -180,10 +180,13 @@ class VarnishCache implements CacheAdapterInterface
     protected function runCommand($command, $expression)
     {
         $return = true;
-        foreach ($this->servers as $server) {
-            $command = str_replace(array('{{ COMMAND }}', '{{ EXPRESSION }}'), array($command, $expression), $server);
 
-            $process = new Process($command);
+        foreach ($this->servers as $server) {
+            $process = new Process(str_replace(
+                array('{{ COMMAND }}', '{{ EXPRESSION }}'),
+                array($command, $expression),
+                $server
+            ));
 
             if ($process->run() == 0) {
                 continue;
