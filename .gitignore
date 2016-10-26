@@ -1,6 +1,6 @@
-.DS_Store
-coverage
-vendor
-Resources/doc/_build
-composer.lock
+/build
+/Resources/doc/_build
+/vendor
 .php_cs.cache
+composer.lock
+phpunit.xml
