@@ -63,8 +63,6 @@ class SymfonyCache implements CacheAdapterInterface
     /**
      * Constructor.
      *
-     * NEXT_MAJOR: make the timeouts argument mandatory
-     *
      * @param RouterInterface $router              A router instance
      * @param Filesystem      $filesystem          A Symfony Filesystem component instance
      * @param string          $cacheDir            A Symfony cache directory
@@ -74,17 +72,8 @@ class SymfonyCache implements CacheAdapterInterface
      * @param array           $servers             An array of servers
      * @param array           $timeouts            An array of timeout options
      */
-    public function __construct(RouterInterface $router, Filesystem $filesystem, $cacheDir, $token, $phpCodeCacheEnabled, array $types, array $servers, array $timeouts = array())
+    public function __construct(RouterInterface $router, Filesystem $filesystem, $cacheDir, $token, $phpCodeCacheEnabled, array $types, array $servers, array $timeouts)
     {
-        if (!$timeouts) {
-            @trigger_error('The "timeouts" argument is available since 3.x and will become mandatory in 4.0, please provide it.', E_USER_DEPRECATED);
-
-            $timeouts = array(
-                'RCV' => array('sec' => 2, 'usec' => 0),
-                'SND' => array('sec' => 2, 'usec' => 0),
-            );
-        }
-
         $this->router = $router;
         $this->filesystem = $filesystem;
         $this->cacheDir = $cacheDir;
