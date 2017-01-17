@@ -11,8 +11,16 @@
 
 namespace Sonata\CacheBundle\Adapter;
 
+@trigger_error(
+    'The '.__NAMESPACE__.'\MongoCache class is deprecated since version 2.4 and will be removed in 3.0.'
+    .' Use Sonata\Cache\Adapter\Cache\MongoCache instead.',
+    E_USER_DEPRECATED
+);
+
 /**
- * @deprecated use \Sonata\Cache\Adapter\Cache\MongoCache
+ * NEXT_MAJOR: remove this class.
+ *
+ * @deprecated since version 2.4, to be removed in 3.0. Use Sonata\Cache\Adapter\Cache\MongoCache instead.
  */
 class MongoCache extends \Sonata\Cache\Adapter\Cache\MongoCache
 {

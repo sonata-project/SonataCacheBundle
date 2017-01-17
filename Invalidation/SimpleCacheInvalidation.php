@@ -11,8 +11,16 @@
 
 namespace Sonata\CacheBundle\Invalidation;
 
+@trigger_error(
+    'The '.__NAMESPACE__.'\SimpleCacheInvalidation class is deprecated since version 2.4 and will be removed in 3.0.'
+    .' Use Sonata\Cache\Invalidation\SimpleCacheInvalidation instead.',
+    E_USER_DEPRECATED
+);
+
 /**
- * @deprecated use Sonata\Cache\Invalidation\SimpleCacheInvalidation
+ * NEXT_MAJOR: remove this class.
+ *
+ * @deprecated since version 2.4, to be removed in 3.0. Use Sonata\Cache\Invalidation\SimpleCacheInvalidation instead.
  */
 class SimpleCacheInvalidation extends \Sonata\Cache\Invalidation\SimpleCacheInvalidation
 {

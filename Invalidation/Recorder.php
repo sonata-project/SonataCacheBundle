@@ -11,8 +11,16 @@
 
 namespace Sonata\CacheBundle\Invalidation;
 
+@trigger_error(
+    'The '.__NAMESPACE__.'\Recorder class is deprecated since version 2.4 and will be removed in 3.0.'
+    .' Use Sonata\Cache\Invalidation\Recorder instead.',
+    E_USER_DEPRECATED
+);
+
 /**
- * @deprecated use Sonata\Cache\Invalidation\Recorder
+ * NEXT_MAJOR: remove this class.
+ *
+ * @deprecated since version 2.4, to be removed in 3.0. Use Sonata\Cache\Invalidation\Recorder instead.
  */
 class Recorder extends \Sonata\Cache\Invalidation\Recorder
 {
