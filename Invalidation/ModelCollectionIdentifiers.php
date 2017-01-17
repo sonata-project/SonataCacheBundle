@@ -11,8 +11,16 @@
 
 namespace Sonata\CacheBundle\Invalidation;
 
+@trigger_error(
+    'The '.__NAMESPACE__.'\ModelCollectionIdentifiers class is deprecated since version 2.4 and will be removed in 3.0.'
+    .' Use Sonata\Cache\Invalidation\ModelCollectionIdentifiers instead.',
+    E_USER_DEPRECATED
+);
+
 /**
- * @deprecated use Sonata\Cache\Invalidation\ModelCollectionIdentifiers
+ * NEXT_MAJOR: remove this class.
+ *
+ * @deprecated since version 2.4, to be removed in 3.0. Use Sonata\Cache\Invalidation\ModelCollectionIdentifiers instead.
  */
 class ModelCollectionIdentifiers extends \Sonata\Cache\Invalidation\ModelCollectionIdentifiers
 {
