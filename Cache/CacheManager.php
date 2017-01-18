@@ -11,8 +11,16 @@
 
 namespace Sonata\CacheBundle\Cache;
 
+@trigger_error(
+    'The '.__NAMESPACE__.'\CacheManager class is deprecated since version 2.4 and will be removed in 3.0.'
+    .' Use Sonata\Cache\CacheManager instead.',
+    E_USER_DEPRECATED
+);
+
 /**
- * @deprecated use Sonata\Cache\CacheManager
+ * NEXT_MAJOR: remove this class.
+ *
+ * @deprecated since version 2.4, to be removed in 3.0. Use Sonata\Cache\CacheManager instead.
  */
 class CacheManager extends \Sonata\Cache\CacheManager
 {

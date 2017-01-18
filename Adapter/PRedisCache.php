@@ -11,8 +11,16 @@
 
 namespace Sonata\CacheBundle\Adapter;
 
+@trigger_error(
+    'The '.__NAMESPACE__.'\PRedisCache class is deprecated since version 2.4 and will be removed in 3.0.'
+    .' Use Sonata\Cache\Adapter\Cache\PRedisCache instead.',
+    E_USER_DEPRECATED
+);
+
 /**
- * @deprecated use \Sonata\Cache\Adapter\Cache\PRedisCache
+ * NEXT_MAJOR: remove this class.
+ *
+ * @deprecated since version 2.4, to be removed in 3.0. Use Sonata\Cache\Adapter\Cache\PRedisCache instead.
  */
 class PRedisCache extends \Sonata\Cache\Adapter\Cache\PRedisCache
 {
