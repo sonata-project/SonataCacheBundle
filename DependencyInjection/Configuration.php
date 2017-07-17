@@ -256,6 +256,7 @@ INFO
                                         ->integerNode('port')->defaultValue(6379)->end()
                                         ->scalarNode('host')->defaultValue('localhost')->end()
                                         ->integerNode('database')->isRequired()->end()
+                                        ->scalarNode('password')->defaultValue(null)->end()
                                     ->end()
                                 ->end()
                             ->end()
