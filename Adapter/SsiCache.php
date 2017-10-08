@@ -56,7 +56,7 @@ class SsiCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function flush(array $keys = array())
+    public function flush(array $keys = [])
     {
         return true; // still nothing to flush ...
     }
@@ -90,7 +90,7 @@ class SsiCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function set(array $keys, $data, $ttl = CacheElement::DAY, array $contextualKeys = array())
+    public function set(array $keys, $data, $ttl = CacheElement::DAY, array $contextualKeys = [])
     {
         return new CacheElement($keys, $data, $ttl, $contextualKeys);
     }
@@ -102,17 +102,17 @@ class SsiCache implements CacheAdapterInterface
      */
     public function cacheAction(Request $request)
     {
-        $parameters = $request->get('parameters', array());
+        $parameters = $request->get('parameters', []);
 
         if ($request->get('token') != $this->computeHash($parameters)) {
             throw new AccessDeniedHttpException('Invalid token');
         }
 
-        $subRequest = Request::create('', 'get', $parameters, $request->cookies->all(), array(), $request->server->all());
+        $subRequest = Request::create('', 'get', $parameters, $request->cookies->all(), [], $request->server->all());
 
         $controller = $this->resolver->getController($subRequest);
 
-        $subRequest->attributes->add(array('_controller' => $parameters['controller']));
+        $subRequest->attributes->add(['_controller' => $parameters['controller']]);
         $subRequest->attributes->add($parameters['parameters']);
 
         $arguments = $this->resolver->getArguments($subRequest, $controller);
@@ -136,10 +136,10 @@ class SsiCache implements CacheAdapterInterface
      */
     protected function getUrl(array $keys)
     {
-        $parameters = array(
+        $parameters = [
             'token' => $this->computeHash($keys),
             'parameters' => $keys,
-        );
+        ];
 
         return $this->router->generate('sonata_cache_ssi', $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
     }
