@@ -40,7 +40,7 @@ abstract class TwigTemplate14 extends \Twig_Template
      *
      * @return mixed
      */
-    protected function getAttribute($object, $item, array $arguments = array(), $type = \Twig_TemplateInterface::ANY_CALL, $isDefinedTest = false, $ignoreStrictCheck = false)
+    protected function getAttribute($object, $item, array $arguments = [], $type = \Twig_TemplateInterface::ANY_CALL, $isDefinedTest = false, $ignoreStrictCheck = false)
     {
         $attribute = parent::getAttribute($object, $item, $arguments, $type, $isDefinedTest);
 

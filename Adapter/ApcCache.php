@@ -37,7 +37,7 @@ class ApcCache extends BaseApcCache
      * @param array           $servers An array of servers
      * @param array           $timeout An array of timeout options
      */
-    public function __construct(RouterInterface $router, $token, $prefix, array $servers, array $timeout = array())
+    public function __construct(RouterInterface $router, $token, $prefix, array $servers, array $timeout = [])
     {
         parent::__construct(null, $prefix, $servers, $timeout);
 
@@ -66,10 +66,10 @@ class ApcCache extends BaseApcCache
                 apc_clear_cache();
             }
 
-            return new Response('ok', 200, array(
+            return new Response('ok', 200, [
                 'Cache-Control' => 'no-cache, must-revalidate',
                 'Content-Length' => 2, // to prevent chunked transfer encoding.
-            ));
+            ]);
         }
 
         throw new AccessDeniedHttpException('invalid token');
@@ -80,6 +80,6 @@ class ApcCache extends BaseApcCache
      */
     protected function getUrl()
     {
-        return $this->router->generate('sonata_cache_apc', array('token' => $this->token));
+        return $this->router->generate('sonata_cache_apc', ['token' => $this->token]);
     }
 }
