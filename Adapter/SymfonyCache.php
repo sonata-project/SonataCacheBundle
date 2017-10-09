@@ -247,10 +247,7 @@ class SymfonyCache implements CacheAdapterInterface
     }
 
     /**
-     * Clears code cache with:.
-     *
-     * PHP < 5.5.0: APC
-     * PHP >= 5.5.0: PHP OPcache
+     * Clears code cache with PHP OPcache or APC.
      */
     protected function clearPHPCodeCache()
     {
@@ -258,7 +255,7 @@ class SymfonyCache implements CacheAdapterInterface
             return;
         }
 
-        if (version_compare(PHP_VERSION, '5.5.0', '>=') && function_exists('opcache_reset')) {
+        if (function_exists('opcache_reset')) {
             opcache_reset();
         } elseif (function_exists('apc_fetch')) {
             apc_clear_cache();

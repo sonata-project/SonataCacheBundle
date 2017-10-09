@@ -57,7 +57,7 @@ class ApcCache extends BaseApcCache
     public function cacheAction($token)
     {
         if ($this->token == $token) {
-            if (version_compare(PHP_VERSION, '5.5.0', '>=') && function_exists('opcache_reset')) {
+            if (function_exists('opcache_reset')) {
                 opcache_reset();
             }
 
