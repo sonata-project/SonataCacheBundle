@@ -24,23 +24,23 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testApcDefaultTimeout()
     {
-        $configs = array(array(
-            'caches' => array(
-                'apc' => array(
+        $configs = [[
+            'caches' => [
+                'apc' => [
                     'token' => '',
                     'prefix' => '',
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]];
 
         $config = $this->process($configs);
 
         $this->assertArrayHasKey('timeout', $config['caches']['apc']);
         $this->assertSame(
-            array(
-                'RCV' => array(),
-                'SND' => array(),
-            ),
+            [
+                'RCV' => [],
+                'SND' => [],
+            ],
             $config['caches']['apc']['timeout']
         );
     }
@@ -50,20 +50,20 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testApcCustomTimeout()
     {
-        $expected = array(
-            'RCV' => array('sec' => 10, 'usec' => 0),
-            'SND' => array('sec' => 18, 'usec' => 12),
-        );
+        $expected = [
+            'RCV' => ['sec' => 10, 'usec' => 0],
+            'SND' => ['sec' => 18, 'usec' => 12],
+        ];
 
-        $configs = array(array(
-            'caches' => array(
-                'apc' => array(
+        $configs = [[
+            'caches' => [
+                'apc' => [
                     'token' => '',
                     'prefix' => '',
                     'timeout' => $expected,
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]];
 
         $config = $this->process($configs);
 
@@ -76,23 +76,23 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testSymfonyDefaultTimeout()
     {
-        $configs = array(array(
-            'caches' => array(
-                'symfony' => array(
+        $configs = [[
+            'caches' => [
+                'symfony' => [
                     'token' => '',
-                    'types' => array('all'),
-                ),
-            ),
-        ));
+                    'types' => ['all'],
+                ],
+            ],
+        ]];
 
         $config = $this->process($configs);
 
         $this->assertArrayHasKey('timeout', $config['caches']['symfony']);
         $this->assertSame(
-            array(
-                'RCV' => array('sec' => 2, 'usec' => 0),
-                'SND' => array('sec' => 2, 'usec' => 0),
-            ),
+            [
+                'RCV' => ['sec' => 2, 'usec' => 0],
+                'SND' => ['sec' => 2, 'usec' => 0],
+            ],
             $config['caches']['symfony']['timeout']
         );
     }
@@ -102,20 +102,20 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testSymfonyCustomTimeout()
     {
-        $expected = array(
-            'RCV' => array('sec' => 10, 'usec' => 0),
-            'SND' => array('sec' => 18, 'usec' => 12),
-        );
+        $expected = [
+            'RCV' => ['sec' => 10, 'usec' => 0],
+            'SND' => ['sec' => 18, 'usec' => 12],
+        ];
 
-        $configs = array(array(
-            'caches' => array(
-                'symfony' => array(
+        $configs = [[
+            'caches' => [
+                'symfony' => [
                     'token' => '',
-                    'types' => array('all'),
+                    'types' => ['all'],
                     'timeout' => $expected,
-                ),
-            ),
-        ));
+                ],
+            ],
+        ]];
 
         $config = $this->process($configs);
 

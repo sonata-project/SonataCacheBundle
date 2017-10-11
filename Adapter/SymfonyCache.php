@@ -74,15 +74,15 @@ class SymfonyCache implements CacheAdapterInterface
      * @param array           $servers             An array of servers
      * @param array           $timeouts            An array of timeout options
      */
-    public function __construct(RouterInterface $router, Filesystem $filesystem, $cacheDir, $token, $phpCodeCacheEnabled, array $types, array $servers, array $timeouts = array())
+    public function __construct(RouterInterface $router, Filesystem $filesystem, $cacheDir, $token, $phpCodeCacheEnabled, array $types, array $servers, array $timeouts = [])
     {
         if (!$timeouts) {
             @trigger_error('The "timeouts" argument is available since 3.x and will become mandatory in 4.0, please provide it.', E_USER_DEPRECATED);
 
-            $timeouts = array(
-                'RCV' => array('sec' => 2, 'usec' => 0),
-                'SND' => array('sec' => 2, 'usec' => 0),
-            );
+            $timeouts = [
+                'RCV' => ['sec' => 2, 'usec' => 0],
+                'SND' => ['sec' => 2, 'usec' => 0],
+            ];
         }
 
         $this->router = $router;
@@ -100,7 +100,7 @@ class SymfonyCache implements CacheAdapterInterface
      */
     public function flushAll()
     {
-        return $this->flush(array('all'));
+        return $this->flush(['all']);
     }
 
     /**
@@ -108,7 +108,7 @@ class SymfonyCache implements CacheAdapterInterface
      *
      * @throws \InvalidArgumentException
      */
-    public function flush(array $keys = array('all'))
+    public function flush(array $keys = ['all'])
     {
         $result = true;
 
@@ -193,10 +193,10 @@ class SymfonyCache implements CacheAdapterInterface
             $this->clearPHPCodeCache();
         }
 
-        return new Response('ok', 200, array(
+        return new Response('ok', 200, [
             'Cache-Control' => 'no-cache, must-revalidate',
             'Content-Length' => 2, // to prevent chunked transfer encoding
-        ));
+        ]);
     }
 
     /**
@@ -210,7 +210,7 @@ class SymfonyCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function set(array $keys, $data, $ttl = 84600, array $contextualKeys = array())
+    public function set(array $keys, $data, $ttl = 84600, array $contextualKeys = [])
     {
         throw new UnsupportedException('Symfony cache set() method does not exists');
     }
@@ -240,10 +240,10 @@ class SymfonyCache implements CacheAdapterInterface
      */
     protected function getUrl($type)
     {
-        return $this->router->generate('sonata_cache_symfony', array(
+        return $this->router->generate('sonata_cache_symfony', [
             'token' => $this->token,
             'type' => $type,
-        ));
+        ]);
     }
 
     /**

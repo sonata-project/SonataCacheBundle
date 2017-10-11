@@ -33,7 +33,7 @@ class SonataCacheBundle extends Bundle
         }
 
         if (method_exists($baseTemplateClass, 'attachRecorder')) {
-            call_user_func(array($baseTemplateClass, 'attachRecorder'), $this->container->get('sonata.cache.recorder'));
+            call_user_func([$baseTemplateClass, 'attachRecorder'], $this->container->get('sonata.cache.recorder'));
         }
     }
 }
