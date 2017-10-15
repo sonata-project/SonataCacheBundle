@@ -12,6 +12,7 @@
 namespace Sonata\CacheBundle\Adapter;
 
 use Sonata\Cache\CacheAdapterInterface;
+use Sonata\Cache\CacheElementInterface;
 use Sonata\Cache\Exception\UnsupportedException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
@@ -87,7 +88,7 @@ class SymfonyCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function flushAll()
+    public function flushAll(): bool
     {
         return $this->flush(['all']);
     }
@@ -97,7 +98,7 @@ class SymfonyCache implements CacheAdapterInterface
      *
      * @throws \InvalidArgumentException
      */
-    public function flush(array $keys = ['all'])
+    public function flush(array $keys = ['all']): bool
     {
         $result = true;
 
@@ -191,7 +192,7 @@ class SymfonyCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function has(array $keys)
+    public function has(array $keys): bool
     {
         throw new UnsupportedException('Symfony cache has() method does not exist');
     }
@@ -199,7 +200,7 @@ class SymfonyCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function set(array $keys, $data, $ttl = 84600, array $contextualKeys = [])
+    public function set(array $keys, $data, int $ttl = 84600, array $contextualKeys = []): CacheElementInterface
     {
         throw new UnsupportedException('Symfony cache set() method does not exist');
     }
@@ -207,7 +208,7 @@ class SymfonyCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function get(array $keys)
+    public function get(array $keys): CacheElementInterface
     {
         throw new UnsupportedException('Symfony cache get() method does not exist');
     }
@@ -215,7 +216,7 @@ class SymfonyCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function isContextual()
+    public function isContextual(): bool
     {
         return false;
     }
