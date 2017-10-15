@@ -193,7 +193,7 @@ class SymfonyCache implements CacheAdapterInterface
      */
     public function has(array $keys)
     {
-        throw new UnsupportedException('Symfony cache has() method does not exists');
+        throw new UnsupportedException('Symfony cache has() method does not exist');
     }
 
     /**
@@ -201,7 +201,7 @@ class SymfonyCache implements CacheAdapterInterface
      */
     public function set(array $keys, $data, $ttl = 84600, array $contextualKeys = [])
     {
-        throw new UnsupportedException('Symfony cache set() method does not exists');
+        throw new UnsupportedException('Symfony cache set() method does not exist');
     }
 
     /**
@@ -209,7 +209,7 @@ class SymfonyCache implements CacheAdapterInterface
      */
     public function get(array $keys)
     {
-        throw new UnsupportedException('Symfony cache get() method does not exists');
+        throw new UnsupportedException('Symfony cache get() method does not exist');
     }
 
     /**
