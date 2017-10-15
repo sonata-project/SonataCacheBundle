@@ -67,13 +67,13 @@ class SymfonyCacheTest extends TestCase
         $this->assertTrue($this->cache->flush([]));
         $this->assertTrue($this->cache->flushAll());
 
-        $this->setExpectedException('Sonata\Cache\Exception\UnsupportedException', 'Symfony cache set() method does not exists');
+        $this->setExpectedException('Sonata\Cache\Exception\UnsupportedException', 'Symfony cache set() method does not exist');
         $this->cache->set(['id' => 5], 'data');
 
-        $this->setExpectedException('Sonata\Cache\Exception\UnsupportedException', 'Symfony cache get() method does not exists');
+        $this->setExpectedException('Sonata\Cache\Exception\UnsupportedException', 'Symfony cache get() method does not exist');
         $this->cache->get(['id' => 5]);
 
-        $this->setExpectedException('Sonata\Cache\Exception\UnsupportedException', 'Symfony cache has() method does not exists');
+        $this->setExpectedException('Sonata\Cache\Exception\UnsupportedException', 'Symfony cache has() method does not exist');
         $this->cache->has(['id' => 5]);
     }
 

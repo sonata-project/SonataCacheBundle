@@ -24,7 +24,7 @@
         "symfony/routing": "^2.8 || ^3.2",
         "symfony/security": "^2.8 || ^3.2",
         "symfony/process": "^2.8 || ^3.2",
-        "sonata-project/cache": "^1.0.3"
+        "sonata-project/cache": "^2.0.0"
     },
     "require-dev": {
         "doctrine/orm": "^2.2",

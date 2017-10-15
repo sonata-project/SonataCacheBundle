@@ -13,6 +13,7 @@ namespace Sonata\CacheBundle\Adapter;
 
 use Sonata\Cache\CacheAdapterInterface;
 use Sonata\Cache\CacheElement;
+use Sonata\Cache\CacheElementInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
@@ -78,7 +79,7 @@ class VarnishCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function flushAll()
+    public function flushAll(): bool
     {
         return $this->runCommand(
             $this->purgeInstruction == 'ban' ? 'ban.url' : 'purge',
@@ -89,7 +90,7 @@ class VarnishCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function flush(array $keys = [])
+    public function flush(array $keys = []): bool
     {
         $parameters = [];
         foreach ($keys as $key => $value) {
@@ -104,7 +105,7 @@ class VarnishCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function has(array $keys)
+    public function has(array $keys): bool
     {
         return true;
     }
@@ -112,7 +113,7 @@ class VarnishCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function get(array $keys)
+    public function get(array $keys): CacheElementInterface
     {
         if (!isset($keys['controller'])) {
             throw new \RuntimeException('Please define a controller key');
@@ -130,7 +131,7 @@ class VarnishCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function set(array $keys, $data, $ttl = CacheElement::DAY, array $contextualKeys = [])
+    public function set(array $keys, $data, int $ttl = CacheElement::DAY, array $contextualKeys = []): CacheElementInterface
     {
         return new CacheElement($keys, $data, $ttl, $contextualKeys);
     }
@@ -166,7 +167,7 @@ class VarnishCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function isContextual()
+    public function isContextual(): bool
     {
         return true;
     }
