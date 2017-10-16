@@ -11,6 +11,7 @@
 
 namespace Sonata\CacheBundle\Tests\Adapter;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\CacheBundle\Adapter\SymfonyCache;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Routing\RouterInterface;
@@ -20,7 +21,7 @@ use Symfony\Component\Routing\RouterInterface;
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
+class SymfonyCacheTest extends TestCase
 {
     /**
      * @var SymfonyCache
@@ -42,8 +43,8 @@ class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->router = $this->getMock('Symfony\Component\Routing\RouterInterface');
-        $this->filesystem = $this->getMock('Symfony\Component\Filesystem\Filesystem');
+        $this->router = $this->createMock('Symfony\Component\Routing\RouterInterface');
+        $this->filesystem = $this->createMock('Symfony\Component\Filesystem\Filesystem');
 
         $this->cache = new SymfonyCache(
             $this->router,
