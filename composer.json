@@ -38,7 +38,7 @@
         "doctrine/orm": "ORM support",
         "doctrine/phpcr-bundle": "PHPCR ODM support",
         "doctrine/phpcr-odm": "PHPCR ODM support",
-        "ext-apc": "Caching with ext/apc",
+        "ext-apcu": "Caching with ext/apcu",
         "ext-memcached": "Caching with ext/memcached",
         "predis/predis": "Install redis php"
     },

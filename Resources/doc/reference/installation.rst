@@ -75,7 +75,7 @@ To use the ``CacheBundle``, add the following lines to your application configur
 
             symfony:
                 token: s3cur3 # token used to clear the related cache
-                php_cache_enabled: true # Optional (default: false), clear APC or PHP OPcache
+                php_cache_enabled: true # Optional (default: false), clear OPcache
                 types: [mytype1, mycustomtype2] # Optional, you can restrict allowed cache types
                 servers:
                     - { domain: kooqit.local, ip: 127.0.0.1, port: 80 }
