@@ -69,7 +69,7 @@ class SymfonyCache implements CacheAdapterInterface
      * @param Filesystem      $filesystem          A Symfony Filesystem component instance
      * @param string          $cacheDir            A Symfony cache directory
      * @param string          $token               A token to clear the related cache
-     * @param bool            $phpCodeCacheEnabled If true, will clear APC or PHP OPcache code cache
+     * @param bool            $phpCodeCacheEnabled If true, will clear OPcache code cache
      * @param array           $types               A cache types array
      * @param array           $servers             An array of servers
      * @param array           $timeouts            An array of timeout options
@@ -247,7 +247,7 @@ class SymfonyCache implements CacheAdapterInterface
     }
 
     /**
-     * Clears code cache with PHP OPcache or APC.
+     * Clears code cache with PHP OPcache.
      */
     protected function clearPHPCodeCache()
     {
@@ -257,8 +257,6 @@ class SymfonyCache implements CacheAdapterInterface
 
         if (function_exists('opcache_reset')) {
             opcache_reset();
-        } elseif (function_exists('apc_fetch')) {
-            apc_clear_cache();
         }
     }
 }
