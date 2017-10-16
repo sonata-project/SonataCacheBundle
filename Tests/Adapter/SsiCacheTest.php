@@ -11,18 +11,19 @@
 
 namespace Sonata\CacheBundle\Tests\Adapter\Cache;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\CacheBundle\Adapter\SsiCache;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class SsiCacheTest extends \PHPUnit_Framework_TestCase
+class SsiCacheTest extends TestCase
 {
     public function testInitCache()
     {
-        $router = $this->getMock('Symfony\Component\Routing\RouterInterface');
+        $router = $this->createMock('Symfony\Component\Routing\RouterInterface');
         $router->expects($this->any())->method('generate')->will($this->returnValue('/cache/esi/TOKEN?controller=asdsad'));
 
-        $resolver = $this->getMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
+        $resolver = $this->createMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
 
         $cache = new SsiCache('token', $router, $resolver);
 
@@ -47,10 +48,10 @@ class SsiCacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testActionInvalidToken()
     {
-        $router = $this->getMock('Symfony\Component\Routing\RouterInterface');
+        $router = $this->createMock('Symfony\Component\Routing\RouterInterface');
         $router->expects($this->any())->method('generate')->will($this->returnValue('http://sonata-project.orf/cache/esi/TOKEN?controller=asdsad'));
 
-        $resolver = $this->getMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
+        $resolver = $this->createMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
 
         $request = Request::create('cache/esi/TOKEN?controller=asdsad', 'get', [
             'token' => 'wrong',
@@ -62,9 +63,9 @@ class SsiCacheTest extends \PHPUnit_Framework_TestCase
 
     public function testValidToken()
     {
-        $router = $this->getMock('Symfony\Component\Routing\RouterInterface');
+        $router = $this->createMock('Symfony\Component\Routing\RouterInterface');
 
-        $resolver = $this->getMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
+        $resolver = $this->createMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
         $resolver->expects($this->any())->method('getController')->will($this->returnValue(function () {
             return new Response();
         }));

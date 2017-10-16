@@ -11,18 +11,19 @@
 
 namespace Sonata\CacheBundle\Tests\Adapter\Cache;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\CacheBundle\Adapter\VarnishCache;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class VarnishCacheTest extends \PHPUnit_Framework_TestCase
+class VarnishCacheTest extends TestCase
 {
     public function testInitCache()
     {
-        $router = $this->getMock('Symfony\Component\Routing\RouterInterface');
+        $router = $this->createMock('Symfony\Component\Routing\RouterInterface');
         $router->expects($this->any())->method('generate')->will($this->returnValue('https://sonata-project.org/cache/esi/TOKEN?controller=asdsad'));
 
-        $resolver = $this->getMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
+        $resolver = $this->createMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
 
         $cache = new VarnishCache('token', [], $router, 'ban', $resolver);
 
@@ -47,10 +48,10 @@ class VarnishCacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testActionInvalidToken()
     {
-        $router = $this->getMock('Symfony\Component\Routing\RouterInterface');
+        $router = $this->createMock('Symfony\Component\Routing\RouterInterface');
         $router->expects($this->any())->method('generate')->will($this->returnValue('http://sonata-project.orf/cache/esi/TOKEN?controller=asdsad'));
 
-        $resolver = $this->getMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
+        $resolver = $this->createMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
 
         $request = Request::create('cache/esi/TOKEN?controller=asdsad', 'get', [
             'token' => 'wrong',
@@ -62,9 +63,9 @@ class VarnishCacheTest extends \PHPUnit_Framework_TestCase
 
     public function testValidToken()
     {
-        $router = $this->getMock('Symfony\Component\Routing\RouterInterface');
+        $router = $this->createMock('Symfony\Component\Routing\RouterInterface');
 
-        $resolver = $this->getMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
+        $resolver = $this->createMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
         $resolver->expects($this->any())->method('getController')->will($this->returnValue(function () {
             return new Response();
         }));
@@ -92,7 +93,7 @@ class VarnishCacheTest extends \PHPUnit_Framework_TestCase
                 sprintf("echo \"varnishadm -T 10.4.1.62:6082 -S /etc/varnish/secret {{ COMMAND }} '{{ EXPRESSION }}'\" >> %s", $tmpFile),
                 sprintf("echo \"varnishadm -T 10.4.1.66:6082 -S /etc/varnish/secret {{ COMMAND }} '{{ EXPRESSION }}'\" >> %s", $tmpFile),
             ],
-            $this->getMock('Symfony\Component\Routing\RouterInterface'),
+            $this->createMock('Symfony\Component\Routing\RouterInterface'),
             'ban'
         );
 

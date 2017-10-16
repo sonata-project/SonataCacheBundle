@@ -11,9 +11,10 @@
 
 namespace Sonata\CacheBundle\Tests\Adapter;
 
+use PHPUnit\Framework\TestCase;
 use Sonata\CacheBundle\Adapter\ApcCache;
 
-class ApcCacheTest extends \PHPUnit_Framework_TestCase
+class ApcCacheTest extends TestCase
 {
     /**
      * @var \Symfony\Component\Routing\RouterInterface
@@ -35,7 +36,7 @@ class ApcCacheTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('APC is not enabled in cli, please add apcu.enable_cli=On into the apcu.ini file');
         }
 
-        $this->router = $this->getMock('Symfony\Component\Routing\RouterInterface');
+        $this->router = $this->createMock('Symfony\Component\Routing\RouterInterface');
 
         $this->cache = new ApcCache($this->router, 'token', 'prefix_', [], []);
     }
