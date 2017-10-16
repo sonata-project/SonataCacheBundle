@@ -27,12 +27,12 @@ class ApcCacheTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        if (!function_exists('apc_store')) {
+        if (!function_exists('apcu_store')) {
             $this->markTestSkipped('APC is not installed');
         }
 
-        if (ini_get('apc.enable_cli') == 0) {
-            $this->markTestSkipped('APC is not enabled in cli, please add apc.enable_cli=On into the apc.ini file');
+        if (ini_get('apcu.enable_cli') == 0) {
+            $this->markTestSkipped('APC is not enabled in cli, please add apcu.enable_cli=On into the apcu.ini file');
         }
 
         $this->router = $this->getMock('Symfony\Component\Routing\RouterInterface');

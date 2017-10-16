@@ -61,9 +61,8 @@ class ApcCache extends BaseApcCache
                 opcache_reset();
             }
 
-            if (extension_loaded('apc') && ini_get('apc.enabled')) {
-                apc_clear_cache('user');
-                apc_clear_cache();
+            if (extension_loaded('apcu') && ini_get('apcu.enabled')) {
+                apcu_clear_cache();
             }
 
             return new Response('ok', 200, [
