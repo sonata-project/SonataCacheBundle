@@ -37,10 +37,10 @@ class DoctrineORMListenerContainerAware implements EventSubscriber
      */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             Events::preRemove,
             Events::preUpdate,
-        );
+        ];
     }
 
     /**

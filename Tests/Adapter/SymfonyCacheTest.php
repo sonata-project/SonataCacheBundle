@@ -12,6 +12,7 @@
 namespace Sonata\CacheBundle\Tests\Adapter;
 
 use phpmock\MockBuilder;
+use PHPUnit\Framework\TestCase;
 use Sonata\CacheBundle\Adapter\SymfonyCache;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Routing\RouterInterface;
@@ -21,7 +22,7 @@ use Symfony\Component\Routing\RouterInterface;
  *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
-class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
+class SymfonyCacheTest extends TestCase
 {
     /**
      * @var SymfonyCache
@@ -43,8 +44,8 @@ class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->router = $this->getMock('Symfony\Component\Routing\RouterInterface');
-        $this->filesystem = $this->getMock('Symfony\Component\Filesystem\Filesystem');
+        $this->router = $this->createMock('Symfony\Component\Routing\RouterInterface');
+        $this->filesystem = $this->createMock('Symfony\Component\Filesystem\Filesystem');
 
         $this->cache = new SymfonyCache(
             $this->router,
@@ -52,9 +53,9 @@ class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
             '/cache/dir',
             'token',
             false,
-            array('all', 'translations'),
-            array(),
-            array()
+            ['all', 'translations'],
+            [],
+            []
         );
     }
 
@@ -63,17 +64,17 @@ class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
      */
     public function testInitCache()
     {
-        $this->assertTrue($this->cache->flush(array()));
+        $this->assertTrue($this->cache->flush([]));
         $this->assertTrue($this->cache->flushAll());
 
         $this->setExpectedException('Sonata\Cache\Exception\UnsupportedException', 'Symfony cache set() method does not exists');
-        $this->cache->set(array('id' => 5), 'data');
+        $this->cache->set(['id' => 5], 'data');
 
         $this->setExpectedException('Sonata\Cache\Exception\UnsupportedException', 'Symfony cache get() method does not exists');
-        $this->cache->get(array('id' => 5));
+        $this->cache->get(['id' => 5]);
 
         $this->setExpectedException('Sonata\Cache\Exception\UnsupportedException', 'Symfony cache has() method does not exists');
-        $this->cache->has(array('id' => 5));
+        $this->cache->has(['id' => 5]);
     }
 
     /**
@@ -133,11 +134,11 @@ class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
             '/cache/dir',
             'token',
             false,
-            array('all', 'translations'),
-            array(
-                array('ip' => 'wrong ip'),
-            ),
-            array()
+            ['all', 'translations'],
+            [
+                ['ip' => 'wrong ip'],
+            ],
+            []
         );
 
         $this->setExpectedException('\InvalidArgumentException', '"wrong ip" is not a valid ip address');
@@ -156,33 +157,33 @@ class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
             '/cache/dir',
             'token',
             false,
-            array('all', 'translations'),
-            array(
-                array('ip' => '213.186.35.9', 'domain' => 'www.example.com', 'basic' => false, 'port' => 80),
-            ),
-            array(
-                'RCV' => array('sec' => 2, 'usec' => 0),
-                'SND' => array('sec' => 2, 'usec' => 0),
-            )
+            ['all', 'translations'],
+            [
+                ['ip' => '213.186.35.9', 'domain' => 'www.example.com', 'basic' => false, 'port' => 80],
+            ],
+            [
+                'RCV' => ['sec' => 2, 'usec' => 0],
+                'SND' => ['sec' => 2, 'usec' => 0],
+            ]
         );
 
         // NEXT_MAJOR: while dropping old versions of php, remove this and simplify the closure below
         $that = $this;
 
-        $mocks = array();
+        $mocks = [];
 
         $builder = new MockBuilder();
         $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
             ->setName('socket_create')
             ->setFunction(function () use ($that) {
-                $that->assertSame(array(AF_INET, SOCK_STREAM, SOL_TCP), func_get_args());
+                $that->assertSame([AF_INET, SOCK_STREAM, SOL_TCP], func_get_args());
             })
             ->build();
         $mock->enable();
 
         $mocks[] = $mock;
 
-        foreach (array('socket_set_option', 'socket_connect', 'socket_write', 'socket_read') as $function) {
+        foreach (['socket_set_option', 'socket_connect', 'socket_write', 'socket_read'] as $function) {
             $builder = new MockBuilder();
             $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
                 ->setName($function)
@@ -212,33 +213,33 @@ class SymfonyCacheTest extends \PHPUnit_Framework_TestCase
             '/cache/dir',
             'token',
             false,
-            array('all', 'translations'),
-            array(
-                array('ip' => '2001:41d0:1:209:FF:FF:FF:FF', 'domain' => 'www.example.com', 'basic' => false, 'port' => 80),
-            ),
-            array(
-                'RCV' => array('sec' => 2, 'usec' => 0),
-                'SND' => array('sec' => 2, 'usec' => 0),
-            )
+            ['all', 'translations'],
+            [
+                ['ip' => '2001:41d0:1:209:FF:FF:FF:FF', 'domain' => 'www.example.com', 'basic' => false, 'port' => 80],
+            ],
+            [
+                'RCV' => ['sec' => 2, 'usec' => 0],
+                'SND' => ['sec' => 2, 'usec' => 0],
+            ]
         );
 
         // NEXT_MAJOR: while dropping old versions of php, remove this and simplify the closure below
         $that = $this;
 
-        $mocks = array();
+        $mocks = [];
 
         $builder = new MockBuilder();
         $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
             ->setName('socket_create')
             ->setFunction(function () use ($that) {
-                $that->assertSame(array(AF_INET6, SOCK_STREAM, SOL_TCP), func_get_args());
+                $that->assertSame([AF_INET6, SOCK_STREAM, SOL_TCP], func_get_args());
             })
             ->build();
         $mock->enable();
 
         $mocks[] = $mock;
 
-        foreach (array('socket_set_option', 'socket_connect', 'socket_write', 'socket_read') as $function) {
+        foreach (['socket_set_option', 'socket_connect', 'socket_write', 'socket_read'] as $function) {
             $builder = new MockBuilder();
             $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
                 ->setName($function)

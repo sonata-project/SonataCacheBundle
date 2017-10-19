@@ -80,10 +80,10 @@ class SonataCacheExtension extends Extension
 
         $recorder = $container->getDefinition('sonata.cache.model_identifier');
         foreach ($config['cache_invalidation']['classes'] as $class => $method) {
-            $recorder->addMethodCall('addClass', array($class, $method));
+            $recorder->addMethodCall('addClass', [$class, $method]);
         }
 
-        $cacheManager->addMethodCall('setRecorder', array(new Reference($config['cache_invalidation']['recorder'])));
+        $cacheManager->addMethodCall('setRecorder', [new Reference($config['cache_invalidation']['recorder'])]);
     }
 
     /**
@@ -96,7 +96,7 @@ class SonataCacheExtension extends Extension
 
         $connections = array_keys($container->getParameter('doctrine.connections'));
         foreach ($connections as $conn) {
-            $cacheManager->addTag('doctrine.event_subscriber', array('connection' => $conn));
+            $cacheManager->addTag('doctrine.event_subscriber', ['connection' => $conn]);
         }
     }
 
@@ -110,7 +110,7 @@ class SonataCacheExtension extends Extension
 
         $sessions = array_keys($container->getParameter('doctrine_phpcr.odm.sessions'));
         foreach ($sessions as $session) {
-            $cacheManager->addTag('doctrine_phpcr.event_subscriber', array('session' => $session));
+            $cacheManager->addTag('doctrine_phpcr.event_subscriber', ['session' => $session]);
         }
     }
 
@@ -149,7 +149,7 @@ class SonataCacheExtension extends Extension
             $this->checkMongo();
 
             $database = $config['caches']['mongo']['database'];
-            $servers = array();
+            $servers = [];
             foreach ($config['caches']['mongo']['servers'] as $server) {
                 if ($server['user']) {
                     $servers[] = sprintf('%s:%s@%s:%s/%s', $server['user'], $server['password'], $server['host'], $server['port'], $database);
@@ -234,7 +234,7 @@ class SonataCacheExtension extends Extension
         if (isset($config['counters']['mongo'])) {
             $this->checkMongo();
 
-            $servers = array();
+            $servers = [];
             foreach ($config['counters']['mongo']['servers'] as $server) {
                 if ($server['user']) {
                     $servers[] = sprintf('%s:%s@%s:%s', $server['user'], $server['password'], $server['host'], $server['port']);

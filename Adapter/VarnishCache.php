@@ -89,9 +89,9 @@ class VarnishCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function flush(array $keys = array())
+    public function flush(array $keys = [])
     {
-        $parameters = array();
+        $parameters = [];
         foreach ($keys as $key => $value) {
             $parameters[] = sprintf('obj.http.%s ~ %s', $this->normalize($key), $value);
         }
@@ -130,7 +130,7 @@ class VarnishCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function set(array $keys, $data, $ttl = CacheElement::DAY, array $contextualKeys = array())
+    public function set(array $keys, $data, $ttl = CacheElement::DAY, array $contextualKeys = [])
     {
         return new CacheElement($keys, $data, $ttl, $contextualKeys);
     }
@@ -144,17 +144,17 @@ class VarnishCache implements CacheAdapterInterface
      */
     public function cacheAction(Request $request)
     {
-        $parameters = $request->get('parameters', array());
+        $parameters = $request->get('parameters', []);
 
         if ($request->get('token') != $this->computeHash($parameters)) {
             throw new AccessDeniedHttpException('Invalid token');
         }
 
-        $subRequest = Request::create('', 'get', $parameters, $request->cookies->all(), array(), $request->server->all());
+        $subRequest = Request::create('', 'get', $parameters, $request->cookies->all(), [], $request->server->all());
 
         $controller = $this->resolver->getController($subRequest);
 
-        $subRequest->attributes->add(array('_controller' => $parameters['controller']));
+        $subRequest->attributes->add(['_controller' => $parameters['controller']]);
         $subRequest->attributes->add($parameters['parameters']);
 
         $arguments = $this->resolver->getArguments($subRequest, $controller);
@@ -183,8 +183,8 @@ class VarnishCache implements CacheAdapterInterface
 
         foreach ($this->servers as $server) {
             $process = new Process(str_replace(
-                array('{{ COMMAND }}', '{{ EXPRESSION }}'),
-                array($command, $expression),
+                ['{{ COMMAND }}', '{{ EXPRESSION }}'],
+                [$command, $expression],
                 $server
             ));
 
@@ -207,10 +207,10 @@ class VarnishCache implements CacheAdapterInterface
      */
     protected function getUrl(array $keys)
     {
-        $parameters = array(
+        $parameters = [
             'token' => $this->computeHash($keys),
             'parameters' => $keys,
-        );
+        ];
 
         return $this->router->generate('sonata_cache_esi', $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
     }
@@ -238,6 +238,6 @@ class VarnishCache implements CacheAdapterInterface
      */
     protected function normalize($key)
     {
-        return sprintf('x-sonata-cache-%s', str_replace(array('_', '\\'), '-', strtolower($key)));
+        return sprintf('x-sonata-cache-%s', str_replace(['_', '\\'], '-', strtolower($key)));
     }
 }

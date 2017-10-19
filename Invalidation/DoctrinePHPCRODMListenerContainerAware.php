@@ -37,10 +37,10 @@ class DoctrinePHPCRODMListenerContainerAware implements EventSubscriber
      */
     public function getSubscribedEvents()
     {
-        return array(
+        return [
             Event::preRemove,
             Event::preUpdate,
-        );
+        ];
     }
 
     /**

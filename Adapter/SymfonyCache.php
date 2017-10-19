@@ -67,7 +67,7 @@ class SymfonyCache implements CacheAdapterInterface
      * @param Filesystem      $filesystem          A Symfony Filesystem component instance
      * @param string          $cacheDir            A Symfony cache directory
      * @param string          $token               A token to clear the related cache
-     * @param bool            $phpCodeCacheEnabled If true, will clear APC or PHP OPcache code cache
+     * @param bool            $phpCodeCacheEnabled If true, will clear OPcache code cache
      * @param array           $types               A cache types array
      * @param array           $servers             An array of servers
      * @param array           $timeouts            An array of timeout options
@@ -89,7 +89,7 @@ class SymfonyCache implements CacheAdapterInterface
      */
     public function flushAll()
     {
-        return $this->flush(array('all'));
+        return $this->flush(['all']);
     }
 
     /**
@@ -97,7 +97,7 @@ class SymfonyCache implements CacheAdapterInterface
      *
      * @throws \InvalidArgumentException
      */
-    public function flush(array $keys = array('all'))
+    public function flush(array $keys = ['all'])
     {
         $result = true;
 
@@ -182,10 +182,10 @@ class SymfonyCache implements CacheAdapterInterface
             $this->clearPHPCodeCache();
         }
 
-        return new Response('ok', 200, array(
+        return new Response('ok', 200, [
             'Cache-Control' => 'no-cache, must-revalidate',
             'Content-Length' => 2, // to prevent chunked transfer encoding
-        ));
+        ]);
     }
 
     /**
@@ -199,7 +199,7 @@ class SymfonyCache implements CacheAdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function set(array $keys, $data, $ttl = 84600, array $contextualKeys = array())
+    public function set(array $keys, $data, $ttl = 84600, array $contextualKeys = [])
     {
         throw new UnsupportedException('Symfony cache set() method does not exists');
     }
@@ -229,17 +229,14 @@ class SymfonyCache implements CacheAdapterInterface
      */
     protected function getUrl($type)
     {
-        return $this->router->generate('sonata_cache_symfony', array(
+        return $this->router->generate('sonata_cache_symfony', [
             'token' => $this->token,
             'type' => $type,
-        ));
+        ]);
     }
 
     /**
-     * Clears code cache with:.
-     *
-     * PHP < 5.5.0: APC
-     * PHP >= 5.5.0: PHP OPcache
+     * Clears code cache with PHP OPcache.
      */
     protected function clearPHPCodeCache()
     {
@@ -247,10 +244,8 @@ class SymfonyCache implements CacheAdapterInterface
             return;
         }
 
-        if (version_compare(PHP_VERSION, '5.5.0', '>=') && function_exists('opcache_reset')) {
+        if (function_exists('opcache_reset')) {
             opcache_reset();
-        } elseif (function_exists('apc_fetch')) {
-            apc_clear_cache();
         }
     }
 }
