@@ -11,6 +11,7 @@
 
 namespace Sonata\CacheBundle\Tests\Adapter;
 
+use phpmock\MockBuilder;
 use PHPUnit\Framework\TestCase;
 use Sonata\CacheBundle\Adapter\SymfonyCache;
 use Symfony\Component\Filesystem\Filesystem;
@@ -150,8 +151,6 @@ class SymfonyCacheTest extends TestCase
      */
     public function testFlushWithIPv4()
     {
-        $mockBuilderClass = $this->getMockBuilderClass();
-
         $cache = new SymfonyCache(
             $this->router,
             $this->filesystem,
@@ -173,7 +172,7 @@ class SymfonyCacheTest extends TestCase
 
         $mocks = [];
 
-        $builder = new $mockBuilderClass();
+        $builder = new MockBuilder();
         $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
             ->setName('socket_create')
             ->setFunction(function () use ($that) {
@@ -185,7 +184,7 @@ class SymfonyCacheTest extends TestCase
         $mocks[] = $mock;
 
         foreach (['socket_set_option', 'socket_connect', 'socket_write', 'socket_read'] as $function) {
-            $builder = new $mockBuilderClass();
+            $builder = new MockBuilder();
             $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
                 ->setName($function)
                 ->setFunction(function () {
@@ -208,8 +207,6 @@ class SymfonyCacheTest extends TestCase
      */
     public function testFlushWithIPv6()
     {
-        $mockBuilderClass = $this->getMockBuilderClass();
-
         $cache = new SymfonyCache(
             $this->router,
             $this->filesystem,
@@ -231,7 +228,7 @@ class SymfonyCacheTest extends TestCase
 
         $mocks = [];
 
-        $builder = new $mockBuilderClass();
+        $builder = new MockBuilder();
         $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
             ->setName('socket_create')
             ->setFunction(function () use ($that) {
@@ -243,7 +240,7 @@ class SymfonyCacheTest extends TestCase
         $mocks[] = $mock;
 
         foreach (['socket_set_option', 'socket_connect', 'socket_write', 'socket_read'] as $function) {
-            $builder = new $mockBuilderClass();
+            $builder = new MockBuilder();
             $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
                 ->setName($function)
                 ->setFunction(function () {
@@ -259,22 +256,5 @@ class SymfonyCacheTest extends TestCase
         foreach ($mocks as $mock) {
             $mock->disable();
         }
-    }
-
-    /**
-     * Gets the mock builder class according to the lib version (ie the PHP version).
-     * NEXT_MAJOR: while dropping old versions of php, restrict the library to version ^1.0 and simplify this.
-     *
-     * @return string
-     */
-    private function getMockBuilderClass()
-    {
-        if (class_exists('phpmock\MockBuilder')) {
-            return 'phpmock\MockBuilder';
-        } elseif (class_exists('malkusch\phpmock\MockBuilder')) {
-            return 'malkusch\phpmock\MockBuilder';
-        }
-
-        $this->fail('Unable to find the MockBuilder class to mock built-in PHP functions');
     }
 }
