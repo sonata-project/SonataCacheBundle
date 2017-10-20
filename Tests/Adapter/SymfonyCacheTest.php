@@ -167,16 +167,13 @@ class SymfonyCacheTest extends TestCase
             ]
         );
 
-        // NEXT_MAJOR: while dropping old versions of php, remove this and simplify the closure below
-        $that = $this;
-
         $mocks = [];
 
         $builder = new MockBuilder();
         $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
             ->setName('socket_create')
-            ->setFunction(function () use ($that) {
-                $that->assertSame([AF_INET, SOCK_STREAM, SOL_TCP], func_get_args());
+            ->setFunction(function () {
+                $this->assertSame([AF_INET, SOCK_STREAM, SOL_TCP], func_get_args());
             })
             ->build();
         $mock->enable();
@@ -223,16 +220,13 @@ class SymfonyCacheTest extends TestCase
             ]
         );
 
-        // NEXT_MAJOR: while dropping old versions of php, remove this and simplify the closure below
-        $that = $this;
-
         $mocks = [];
 
         $builder = new MockBuilder();
         $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
             ->setName('socket_create')
-            ->setFunction(function () use ($that) {
-                $that->assertSame([AF_INET6, SOCK_STREAM, SOL_TCP], func_get_args());
+            ->setFunction(function () {
+                $this->assertSame([AF_INET6, SOCK_STREAM, SOL_TCP], func_get_args());
             })
             ->build();
         $mock->enable();
