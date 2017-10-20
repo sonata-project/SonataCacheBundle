@@ -11,11 +11,11 @@
 
 namespace Sonata\CacheBundle\Tests\Adapter;
 
+use phpmock\MockBuilder;
 use PHPUnit\Framework\TestCase;
 use Sonata\CacheBundle\Adapter\SymfonyCache;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Routing\RouterInterface;
-use phpmock\MockBuilder;
 
 /**
  * Class SymfonyCacheTest.
