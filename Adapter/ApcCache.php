@@ -77,7 +77,7 @@ class ApcCache extends BaseApcCache
     /**
      * {@inheritdoc}
      */
-    protected function getUrl(): string
+    protected function getUrl(): ?string
     {
         return $this->router->generate('sonata_cache_apc', ['token' => $this->token]);
     }

@@ -21,7 +21,7 @@ abstract class BaseCacheCommand extends ContainerAwareCommand
      *
      * @return CacheManagerInterface
      */
-    public function getManager()
+    public function getManager(): CacheManagerInterface
     {
         return $this->getContainer()->get('sonata.cache.manager');
     }

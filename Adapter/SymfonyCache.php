@@ -168,7 +168,7 @@ class SymfonyCache implements CacheAdapterInterface
      * @throws AccessDeniedHttpException if token is invalid
      * @throws \RuntimeException         if specified type is not in allowed types list
      */
-    public function cacheAction($token, $type)
+    public function cacheAction(string $token, string $type): Response
     {
         if ($this->token != $token) {
             throw new AccessDeniedHttpException('Invalid token');
@@ -236,7 +236,7 @@ class SymfonyCache implements CacheAdapterInterface
      *
      * @return string
      */
-    protected function getUrl($type)
+    protected function getUrl(string $type): ?string
     {
         return $this->router->generate('sonata_cache_symfony', [
             'token' => $this->token,
