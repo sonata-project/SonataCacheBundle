@@ -67,7 +67,7 @@ class VarnishCache implements CacheAdapterInterface
      * @param string                           $purgeInstruction The purge instruction (purge in Varnish 2, ban in Varnish 3)
      * @param null|ControllerResolverInterface $resolver         A controller resolver instance
      */
-    public function __construct($token, array $servers, RouterInterface $router, string $purgeInstruction, ControllerResolverInterface $resolver = null)
+    public function __construct($token, array $servers, RouterInterface $router, string $purgeInstruction, ?ControllerResolverInterface $resolver = null)
     {
         $this->token = $token;
         $this->servers = $servers;
@@ -178,7 +178,7 @@ class VarnishCache implements CacheAdapterInterface
      *
      * @return bool
      */
-    protected function runCommand($command, $expression)
+    protected function runCommand(string $command, string $expression): bool
     {
         $return = true;
 
@@ -206,7 +206,7 @@ class VarnishCache implements CacheAdapterInterface
      *
      * @return string
      */
-    protected function getUrl(array $keys)
+    protected function getUrl(array $keys): ?string
     {
         $parameters = [
             'token' => $this->computeHash($keys),
@@ -223,7 +223,7 @@ class VarnishCache implements CacheAdapterInterface
      *
      * @return string
      */
-    protected function computeHash(array $keys)
+    protected function computeHash(array $keys): string
     {
         ksort($keys);
 
@@ -237,7 +237,7 @@ class VarnishCache implements CacheAdapterInterface
      *
      * @return string
      */
-    protected function normalize($key)
+    protected function normalize(string $key): string
     {
         return sprintf('x-sonata-cache-%s', str_replace(['_', '\\'], '-', strtolower($key)));
     }

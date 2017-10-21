@@ -26,7 +26,7 @@ class DoctrinePHPCRODMListenerContainerAware implements EventSubscriber
      * @param ContainerInterface $container
      * @param $service
      */
-    public function __construct(ContainerInterface $container, $service)
+    public function __construct(ContainerInterface $container, string $service)
     {
         $this->container = $container;
         $this->service = $service;
@@ -35,7 +35,7 @@ class DoctrinePHPCRODMListenerContainerAware implements EventSubscriber
     /**
      * @return array
      */
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             Event::preRemove,

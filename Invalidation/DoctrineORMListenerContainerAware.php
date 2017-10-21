@@ -26,7 +26,7 @@ class DoctrineORMListenerContainerAware implements EventSubscriber
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @param $service
      */
-    public function __construct(ContainerInterface $container, $service)
+    public function __construct(ContainerInterface $container, string $service)
     {
         $this->container = $container;
         $this->service = $service;

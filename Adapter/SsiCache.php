@@ -135,7 +135,7 @@ class SsiCache implements CacheAdapterInterface
      *
      * @return string
      */
-    protected function getUrl(array $keys)
+    protected function getUrl(array $keys): ?string
     {
         $parameters = [
             'token' => $this->computeHash($keys),
@@ -150,7 +150,7 @@ class SsiCache implements CacheAdapterInterface
      *
      * @return string
      */
-    protected function computeHash(array $keys)
+    protected function computeHash(array $keys): string
     {
         ksort($keys);
 
