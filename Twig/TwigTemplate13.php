@@ -25,7 +25,7 @@ abstract class TwigTemplate13 extends \Twig_Template
      *
      * @param \Sonata\Cache\Invalidation\Recorder $recorder
      */
-    public static function attachRecorder(Recorder $recorder)
+    public static function attachRecorder(Recorder $recorder): void
     {
         self::$recorder = $recorder;
     }

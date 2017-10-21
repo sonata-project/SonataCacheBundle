@@ -23,7 +23,7 @@ class ConfigurationTest extends TestCase
     /**
      * Asserts APC has default timeout values.
      */
-    public function testApcDefaultTimeout()
+    public function testApcDefaultTimeout(): void
     {
         $configs = [[
             'caches' => [
@@ -49,7 +49,7 @@ class ConfigurationTest extends TestCase
     /**
      * Asserts APC timeout has custom values.
      */
-    public function testApcCustomTimeout()
+    public function testApcCustomTimeout(): void
     {
         $expected = [
             'RCV' => ['sec' => 10, 'usec' => 0],
@@ -75,7 +75,7 @@ class ConfigurationTest extends TestCase
     /**
      * Asserts Symfony has default timeout values.
      */
-    public function testSymfonyDefaultTimeout()
+    public function testSymfonyDefaultTimeout(): void
     {
         $configs = [[
             'caches' => [
@@ -101,7 +101,7 @@ class ConfigurationTest extends TestCase
     /**
      * Asserts Symfony timeout has custom values.
      */
-    public function testSymfonyCustomTimeout()
+    public function testSymfonyCustomTimeout(): void
     {
         $expected = [
             'RCV' => ['sec' => 10, 'usec' => 0],

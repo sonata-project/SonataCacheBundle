@@ -46,7 +46,7 @@ class DoctrinePHPCRODMListenerContainerAware implements EventSubscriber
     /**
      * @param $args
      */
-    public function preRemove(LifecycleEventArgs $args)
+    public function preRemove(LifecycleEventArgs $args): void
     {
         $this->load();
 
@@ -56,14 +56,14 @@ class DoctrinePHPCRODMListenerContainerAware implements EventSubscriber
     /**
      * @param LifecycleEventArgs $args
      */
-    public function preUpdate(LifecycleEventArgs $args)
+    public function preUpdate(LifecycleEventArgs $args): void
     {
         $this->load();
 
         $this->listener->preUpdate($args);
     }
 
-    private function load()
+    private function load(): void
     {
         if ($this->listener) {
             return;

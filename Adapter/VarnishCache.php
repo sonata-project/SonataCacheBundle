@@ -67,7 +67,7 @@ class VarnishCache implements CacheAdapterInterface
      * @param string                           $purgeInstruction The purge instruction (purge in Varnish 2, ban in Varnish 3)
      * @param null|ControllerResolverInterface $resolver         A controller resolver instance
      */
-    public function __construct($token, array $servers, RouterInterface $router, $purgeInstruction, ControllerResolverInterface $resolver = null)
+    public function __construct($token, array $servers, RouterInterface $router, string $purgeInstruction, ControllerResolverInterface $resolver = null)
     {
         $this->token = $token;
         $this->servers = $servers;

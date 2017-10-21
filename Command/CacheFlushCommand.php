@@ -20,7 +20,7 @@ class CacheFlushCommand extends BaseCacheCommand
     /**
      * {@inheritdoc}
      */
-    public function configure()
+    public function configure(): void
     {
         $this->setName('sonata:cache:flush');
         $this->setDescription('Flush information');
@@ -32,7 +32,7 @@ class CacheFlushCommand extends BaseCacheCommand
     /**
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): void
     {
         $keys = @json_decode($input->getOption('keys'), true);
 

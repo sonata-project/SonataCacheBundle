@@ -39,7 +39,7 @@ class SsiCache implements CacheAdapterInterface
      * @param RouterInterface             $router
      * @param ControllerResolverInterface $resolver
      */
-    public function __construct($token, RouterInterface $router, ControllerResolverInterface $resolver = null)
+    public function __construct(string $token, RouterInterface $router, ControllerResolverInterface $resolver = null)
     {
         $this->token = $token;
         $this->router = $router;

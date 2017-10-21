@@ -73,7 +73,7 @@ class SymfonyCache implements CacheAdapterInterface
      * @param array           $servers             An array of servers
      * @param array           $timeouts            An array of timeout options
      */
-    public function __construct(RouterInterface $router, Filesystem $filesystem, $cacheDir, $token, $phpCodeCacheEnabled, array $types, array $servers, array $timeouts)
+    public function __construct(RouterInterface $router, Filesystem $filesystem, string $cacheDir, string $token, bool $phpCodeCacheEnabled, array $types, array $servers, array $timeouts)
     {
         $this->router = $router;
         $this->filesystem = $filesystem;
@@ -239,7 +239,7 @@ class SymfonyCache implements CacheAdapterInterface
     /**
      * Clears code cache with PHP OPcache.
      */
-    protected function clearPHPCodeCache()
+    protected function clearPHPCodeCache(): void
     {
         if (!$this->phpCodeCacheEnabled) {
             return;

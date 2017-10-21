@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SsiCacheTest extends TestCase
 {
-    public function testInitCache()
+    public function testInitCache(): void
     {
         $router = $this->createMock('Symfony\Component\Routing\RouterInterface');
         $router->expects($this->any())->method('generate')->will($this->returnValue('/cache/esi/TOKEN?controller=asdsad'));
@@ -46,7 +46,7 @@ class SsiCacheTest extends TestCase
     /**
      * @expectedException \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      */
-    public function testActionInvalidToken()
+    public function testActionInvalidToken(): void
     {
         $router = $this->createMock('Symfony\Component\Routing\RouterInterface');
         $router->expects($this->any())->method('generate')->will($this->returnValue('http://sonata-project.orf/cache/esi/TOKEN?controller=asdsad'));
@@ -61,7 +61,7 @@ class SsiCacheTest extends TestCase
         $cache->cacheAction($request);
     }
 
-    public function testValidToken()
+    public function testValidToken(): void
     {
         $router = $this->createMock('Symfony\Component\Routing\RouterInterface');
 

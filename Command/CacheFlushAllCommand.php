@@ -20,7 +20,7 @@ class CacheFlushAllCommand extends BaseCacheCommand
     /**
      * {@inheritdoc}
      */
-    public function configure()
+    public function configure(): void
     {
         $this->setName('sonata:cache:flush-all');
         $this->setDescription('Flush all information set in cache managers');
@@ -31,7 +31,7 @@ class CacheFlushAllCommand extends BaseCacheCommand
     /**
      * {@inheritdoc}
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): void
     {
         $output->writeln('<info>clearing cache information</info>');
 

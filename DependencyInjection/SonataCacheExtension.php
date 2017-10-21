@@ -32,7 +32,7 @@ class SonataCacheExtension extends Extension
      * @param array            $configs   An array of configuration settings
      * @param ContainerBuilder $container A ContainerBuilder instance
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $processor = new Processor();
         $configuration = new Configuration();
@@ -72,7 +72,7 @@ class SonataCacheExtension extends Extension
      * @param ContainerBuilder $container
      * @param array            $config
      */
-    public function configureInvalidation(ContainerBuilder $container, $config)
+    public function configureInvalidation(ContainerBuilder $container, array $config): void
     {
         $cacheManager = $container->getDefinition('sonata.cache.manager');
 
@@ -90,7 +90,7 @@ class SonataCacheExtension extends Extension
      * @param ContainerBuilder $container
      * @param array            $config
      */
-    public function configureORM(ContainerBuilder $container, $config)
+    public function configureORM(ContainerBuilder $container, array $config): void
     {
         $cacheManager = $container->getDefinition('sonata.cache.orm.event_subscriber');
 
@@ -104,7 +104,7 @@ class SonataCacheExtension extends Extension
      * @param ContainerBuilder $container
      * @param array            $config
      */
-    public function configurePHPCRODM(ContainerBuilder $container, $config)
+    public function configurePHPCRODM(ContainerBuilder $container, array $config): void
     {
         $cacheManager = $container->getDefinition('sonata.cache.phpcr_odm.event_subscriber');
 
@@ -120,7 +120,7 @@ class SonataCacheExtension extends Extension
      *
      * @throws \RuntimeException if the Mongo or Memcached library is not installed
      */
-    public function configureCache(ContainerBuilder $container, $config)
+    public function configureCache(ContainerBuilder $container, array $config): void
     {
         if ($config['default_cache']) {
             $container->setAlias('sonata.cache', $config['default_cache']);
@@ -225,7 +225,7 @@ class SonataCacheExtension extends Extension
      *
      * @throws \RuntimeException if the Mongo or Memcached library is not installed
      */
-    public function configureCounter(ContainerBuilder $container, $config)
+    public function configureCounter(ContainerBuilder $container, array $config): void
     {
         if ($config['default_counter']) {
             $container->setAlias('sonata.counter', $config['default_counter']);
@@ -295,7 +295,7 @@ class SonataCacheExtension extends Extension
      *
      * @return array
      */
-    public function configureServers(array $servers)
+    public function configureServers(array $servers): array
     {
         return array_map(
             function ($item) {
@@ -309,7 +309,7 @@ class SonataCacheExtension extends Extension
         );
     }
 
-    protected function checkMemcached()
+    protected function checkMemcached(): void
     {
         if (!class_exists('\Memcached', true)) {
             throw new \RuntimeException(<<<'HELP'
@@ -322,7 +322,7 @@ HELP
         }
     }
 
-    protected function checkApc()
+    protected function checkApc(): void
     {
         if (!function_exists('apc_fetch')) {
             throw new \RuntimeException(<<<'HELP'
@@ -335,7 +335,7 @@ HELP
         }
     }
 
-    protected function checkMongo()
+    protected function checkMongo(): void
     {
         if (!class_exists('\Mongo', true)) {
             throw new \RuntimeException(<<<'HELP'
@@ -348,7 +348,7 @@ HELP
         }
     }
 
-    protected function checkPRedis()
+    protected function checkPRedis(): void
     {
         if (!class_exists('\Predis\Client', true)) {
             throw new \RuntimeException(<<<HELP

@@ -17,14 +17,14 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class SonataCacheBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 
         $container->addCompilerPass(new CacheCompilerPass());
     }
 
-    public function boot()
+    public function boot(): void
     {
         $baseTemplateClass = $this->container->get('twig')->getBaseTemplateClass();
 
