@@ -26,7 +26,7 @@ class ApcCacheTest extends TestCase
      */
     private $cache;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!function_exists('apcu_store')) {
             $this->markTestSkipped('APC is not installed');
@@ -41,7 +41,7 @@ class ApcCacheTest extends TestCase
         $this->cache = new ApcCache($this->router, 'token', 'prefix_', [], []);
     }
 
-    public function testInitCache()
+    public function testInitCache(): void
     {
         $this->assertTrue($this->cache->flush([]));
         $this->assertTrue($this->cache->flushAll());
@@ -59,7 +59,7 @@ class ApcCacheTest extends TestCase
         $this->assertInstanceOf('Sonata\Cache\CacheElement', $cacheElement);
     }
 
-    public function testGetUrl()
+    public function testGetUrl(): void
     {
         $this->router
             ->expects($this->once())

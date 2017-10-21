@@ -37,7 +37,7 @@ class ApcCache extends BaseApcCache
      * @param array           $servers An array of servers
      * @param array           $timeout An array of timeout options
      */
-    public function __construct(RouterInterface $router, $token, $prefix, array $servers, array $timeout = [])
+    public function __construct(RouterInterface $router, string $token, string $prefix, array $servers, array $timeout = [])
     {
         parent::__construct('', $prefix, $servers, $timeout);
 
@@ -54,7 +54,7 @@ class ApcCache extends BaseApcCache
      *
      * @throws AccessDeniedHttpException
      */
-    public function cacheAction($token)
+    public function cacheAction(string $token): Response
     {
         if ($this->token == $token) {
             if (function_exists('opcache_reset')) {
@@ -77,7 +77,7 @@ class ApcCache extends BaseApcCache
     /**
      * {@inheritdoc}
      */
-    protected function getUrl()
+    protected function getUrl(): string
     {
         return $this->router->generate('sonata_cache_apc', ['token' => $this->token]);
     }

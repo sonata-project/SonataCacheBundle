@@ -42,7 +42,7 @@ class SymfonyCacheTest extends TestCase
     /**
      * Sets up cache adapter.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->router = $this->createMock('Symfony\Component\Routing\RouterInterface');
         $this->filesystem = $this->createMock('Symfony\Component\Filesystem\Filesystem');
@@ -62,7 +62,7 @@ class SymfonyCacheTest extends TestCase
     /**
      * Tests cache initialization.
      */
-    public function testInitCache()
+    public function testInitCache(): void
     {
         $this->assertTrue($this->cache->flush([]));
         $this->assertTrue($this->cache->flushAll());
@@ -80,7 +80,7 @@ class SymfonyCacheTest extends TestCase
     /**
      * Tests cacheAction() method.
      */
-    public function testCacheAction()
+    public function testCacheAction(): void
     {
         // Given
         $this->filesystem->expects($this->once())->method('exists')->will($this->returnValue(true));
@@ -102,7 +102,7 @@ class SymfonyCacheTest extends TestCase
     /**
      * Tests cacheAction() method with an invalid token.
      */
-    public function testCacheActionWithInvalidToken()
+    public function testCacheActionWithInvalidToken(): void
     {
         // Given
         // When - Then expect exception
@@ -114,7 +114,7 @@ class SymfonyCacheTest extends TestCase
     /**
      * Tests cacheAction() method with an invalid cache type.
      */
-    public function testCacheActionWithInvalidType()
+    public function testCacheActionWithInvalidType(): void
     {
         // Given
         // When - Then expect exception
@@ -126,7 +126,7 @@ class SymfonyCacheTest extends TestCase
     /**
      * Asserts the flush method throws an exception if the IP version of the server cannot be detected.
      */
-    public function testFlushThrowsExceptionWithWrongIP()
+    public function testFlushThrowsExceptionWithWrongIP(): void
     {
         $cache = new SymfonyCache(
             $this->router,
@@ -149,7 +149,7 @@ class SymfonyCacheTest extends TestCase
     /**
      * Tests the flush method with IPv4.
      */
-    public function testFlushWithIPv4()
+    public function testFlushWithIPv4(): void
     {
         $cache = new SymfonyCache(
             $this->router,
@@ -172,7 +172,7 @@ class SymfonyCacheTest extends TestCase
         $builder = new MockBuilder();
         $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
             ->setName('socket_create')
-            ->setFunction(function () {
+            ->setFunction(function (): void {
                 $this->assertSame([AF_INET, SOCK_STREAM, SOL_TCP], func_get_args());
             })
             ->build();
@@ -184,7 +184,7 @@ class SymfonyCacheTest extends TestCase
             $builder = new MockBuilder();
             $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
                 ->setName($function)
-                ->setFunction(function () {
+                ->setFunction(function (): void {
                 })
                 ->build();
             $mock->enable();
@@ -202,7 +202,7 @@ class SymfonyCacheTest extends TestCase
     /**
      * Tests the flush method with IPv6.
      */
-    public function testFlushWithIPv6()
+    public function testFlushWithIPv6(): void
     {
         $cache = new SymfonyCache(
             $this->router,
@@ -225,7 +225,7 @@ class SymfonyCacheTest extends TestCase
         $builder = new MockBuilder();
         $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
             ->setName('socket_create')
-            ->setFunction(function () {
+            ->setFunction(function (): void {
                 $this->assertSame([AF_INET6, SOCK_STREAM, SOL_TCP], func_get_args());
             })
             ->build();
@@ -237,7 +237,7 @@ class SymfonyCacheTest extends TestCase
             $builder = new MockBuilder();
             $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
                 ->setName($function)
-                ->setFunction(function () {
+                ->setFunction(function (): void {
                 })
                 ->build();
             $mock->enable();
