@@ -12,3 +12,9 @@ See also the [diff](https://github.com/sonata-project/SonataCacheBundle/compare/
 
 Now that only PHP 7 is supported, many signatures have changed: type hinting
 was added for the parameters or the return value.
+
+## Twig older than 2.4.0 support dropped
+
+Twig 1 is no longer supported. As a result,
+`Sonata\CacheBundle\Twig\TwigTemplate14` was renamed to
+`Sonata\CacheBundle\Twig\TwigTemplate` to avoid confusion.
