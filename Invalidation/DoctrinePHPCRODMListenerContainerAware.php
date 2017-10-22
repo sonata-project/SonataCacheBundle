@@ -23,6 +23,11 @@ class DoctrinePHPCRODMListenerContainerAware implements EventSubscriber
     protected $service;
 
     /**
+     * @param ContainerInterface
+     */
+    protected $container;
+
+    /**
      * @param ContainerInterface $container
      * @param $service
      */
