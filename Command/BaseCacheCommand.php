@@ -11,6 +11,7 @@
 
 namespace Sonata\CacheBundle\Command;
 
+use Sonata\Cache\CacheManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 abstract class BaseCacheCommand extends ContainerAwareCommand
@@ -18,7 +19,7 @@ abstract class BaseCacheCommand extends ContainerAwareCommand
     /**
      * Gets the cache manager service.
      *
-     * @return \Sonata\CacheBundle\Cache\CacheManagerInterface
+     * @return CacheManagerInterface
      */
     public function getManager()
     {
