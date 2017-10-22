@@ -31,6 +31,7 @@
         "php-mock/php-mock": "^2.0",
         "predis/predis": "^1.0",
         "sllh/php-cs-fixer-styleci-bridge": "^2.0",
+        "symfony/dependency-injection": "^2.8 || ^3.2",
         "symfony/framework-bundle": "^2.8 || ^3.2",
         "symfony/phpunit-bridge": "^3.3"
     },
