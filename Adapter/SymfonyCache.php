@@ -42,7 +42,7 @@ class SymfonyCache implements CacheAdapterInterface
     protected $token;
 
     /**
-     * @var string
+     * @var string[]
      */
     protected $types;
 
