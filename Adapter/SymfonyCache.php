@@ -62,6 +62,11 @@ class SymfonyCache implements CacheAdapterInterface
     protected $timeouts;
 
     /**
+     * @var Filesystem
+     */
+    protected $filesystem;
+
+    /**
      * Constructor.
      *
      * @param RouterInterface $router              A router instance
