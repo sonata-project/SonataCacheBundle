@@ -154,6 +154,11 @@ class VarnishCache implements CacheAdapterInterface
         $subRequest = Request::create('', 'get', $parameters, $request->cookies->all(), [], $request->server->all());
 
         $controller = $this->resolver->getController($subRequest);
+        if (!$controller) {
+            throw new \UnexpectedValueException(
+                'Could not find a controller for this subrequest'
+            );
+        }
 
         $subRequest->attributes->add(['_controller' => $parameters['controller']]);
         $subRequest->attributes->add($parameters['parameters']);
