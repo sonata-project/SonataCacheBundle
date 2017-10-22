@@ -146,7 +146,10 @@ class SymfonyCache implements CacheAdapterInterface
                 if ($result) {
                     $result = substr($content, -2) == 'ok';
                 } else {
-                    return $content;
+                    throw new \UnexpectedValueException(sprintf(
+                        'Server answered with "%s"',
+                        $content
+                    ));
                 }
             }
         }
