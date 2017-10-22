@@ -39,7 +39,7 @@ class ApcCache extends BaseApcCache
      */
     public function __construct(RouterInterface $router, $token, $prefix, array $servers, array $timeout = [])
     {
-        parent::__construct(null, $prefix, $servers, $timeout);
+        parent::__construct('', $prefix, $servers, $timeout);
 
         $this->router = $router;
         $this->token = $token;
