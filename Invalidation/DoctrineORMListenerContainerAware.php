@@ -23,6 +23,11 @@ class DoctrineORMListenerContainerAware implements EventSubscriber
     protected $service;
 
     /**
+     * @param ContainerInterface
+     */
+    protected $container;
+
+    /**
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @param $service
      */
