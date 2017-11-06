@@ -32,7 +32,7 @@ class ApcCacheTest extends TestCase
             $this->markTestSkipped('APC is not installed');
         }
 
-        if (ini_get('apcu.enable_cli') == 0) {
+        if (0 == ini_get('apcu.enable_cli')) {
             $this->markTestSkipped('APC is not enabled in cli, please add apcu.enable_cli=On into the apcu.ini file');
         }
 

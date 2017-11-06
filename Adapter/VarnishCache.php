@@ -82,8 +82,8 @@ class VarnishCache implements CacheAdapterInterface
     public function flushAll(): bool
     {
         return $this->runCommand(
-            $this->purgeInstruction == 'ban' ? 'ban.url' : 'purge',
-            $this->purgeInstruction == 'ban' ? '.*' : 'req.url ~ .*'
+            'ban' == $this->purgeInstruction ? 'ban.url' : 'purge',
+            'ban' == $this->purgeInstruction ? '.*' : 'req.url ~ .*'
         );
     }
 
@@ -194,7 +194,7 @@ class VarnishCache implements CacheAdapterInterface
                 $server
             ));
 
-            if ($process->run() == 0) {
+            if (0 == $process->run()) {
                 continue;
             }
 
