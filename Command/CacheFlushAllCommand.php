@@ -42,7 +42,7 @@ class CacheFlushAllCommand extends BaseCacheCommand
 
             $output->write(sprintf(' > %s : starting .... ', $name));
 
-            if ($cache->flushAll() === true) {
+            if (true === $cache->flushAll()) {
                 $output->writeln('<info>OK</info>');
             } else {
                 $output->writeln('<error>FAILED!</error>');
