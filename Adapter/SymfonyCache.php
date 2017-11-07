@@ -149,7 +149,7 @@ class SymfonyCache implements CacheAdapterInterface
                 } while (!empty($buffer));
 
                 if ($result) {
-                    $result = substr($content, -2) == 'ok';
+                    $result = 'ok' == substr($content, -2);
                 } else {
                     return $content;
                 }
