@@ -51,7 +51,7 @@ class SonataCacheExtension extends Extension
         }
 
         $usePhpcrOdm = 'auto' == $config['cache_invalidation']['phpcr_odm_listener'] ?
-            class_exists('Doctrine\\PHPCR\\ODM\\Version') :
+            class_exists('Doctrine\\ODM\\PHPCR\\Version') :
             $config['cache_invalidation']['phpcr_odm_listener'];
         if ($usePhpcrOdm) {
             $loader->load('phpcr_odm.xml');
@@ -92,12 +92,9 @@ class SonataCacheExtension extends Extension
      */
     public function configureORM(ContainerBuilder $container, $config)
     {
-        $cacheManager = $container->getDefinition('sonata.cache.orm.event_subscriber');
-
-        $connections = array_keys($container->getParameter('doctrine.connections'));
-        foreach ($connections as $conn) {
-            $cacheManager->addTag('doctrine.event_subscriber', ['connection' => $conn]);
-        }
+        $container->getDefinition('sonata.cache.orm.event_subscriber')
+            ->addTag('doctrine.event_subscriber')
+        ;
     }
 
     /**
@@ -106,12 +103,9 @@ class SonataCacheExtension extends Extension
      */
     public function configurePHPCRODM(ContainerBuilder $container, $config)
     {
-        $cacheManager = $container->getDefinition('sonata.cache.phpcr_odm.event_subscriber');
-
-        $sessions = array_keys($container->getParameter('doctrine_phpcr.odm.sessions'));
-        foreach ($sessions as $session) {
-            $cacheManager->addTag('doctrine_phpcr.event_subscriber', ['session' => $session]);
-        }
+        $container->getDefinition('sonata.cache.phpcr_odm.event_subscriber')
+            ->addTag('doctrine_phpcr.event_subscriber')
+        ;
     }
 
     /**
