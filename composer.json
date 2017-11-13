@@ -43,13 +43,10 @@
         "predis/predis": "Install redis php"
     },
     "autoload": {
-        "psr-4": { "Sonata\\CacheBundle\\": "" },
-        "exclude-from-classmap": [
-            "Tests/"
-        ]
+        "psr-4": { "Sonata\\CacheBundle\\": "src/" }
     },
     "autoload-dev": {
-        "psr-4": { "Sonata\\CacheBundle\\Tests\\": "Tests/" }
+        "psr-4": { "Sonata\\CacheBundle\\Tests\\": "tests/" }
     },
     "extra": {
         "branch-alias": {
