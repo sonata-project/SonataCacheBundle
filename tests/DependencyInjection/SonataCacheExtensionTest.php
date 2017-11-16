@@ -15,6 +15,11 @@ use PHPUnit\Framework\TestCase;
 use Sonata\CacheBundle\DependencyInjection\SonataCacheExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
+/**
+ * Functional test for SonataCacheExtension.
+ *
+ * @author Fabien Bourigault <bourigaultfabien@gmail.com>
+ */
 class SonataCacheExtensionTest extends TestCase
 {
     public function testUseCacheInvalidationDoctrineListeners()
