@@ -18,6 +18,8 @@ UPGRADE 2.x
 | `Sonata\CacheBundle\Adapter\MongoCache` | `Sonata\Cache\Adapter\Cache\MongoCache` |
 | `Sonata\CacheBundle\Adapter\NoopCache` | `Sonata\Cache\Adapter\Cache\NoopCache` |
 | `Sonata\CacheBundle\Adapter\PRedisCache` | `Sonata\Cache\Adapter\Cache\PRedisCache` |
+| `Sonata\CacheBundle\Twig\TwigTemplate13` | none |
+| `Sonata\CacheBundle\Twig\TwigTemplate14` | none |
 
 ### Tests
 

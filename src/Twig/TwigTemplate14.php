@@ -13,6 +13,9 @@ namespace Sonata\CacheBundle\Twig;
 
 use Sonata\Cache\Invalidation\Recorder;
 
+/**
+ * @deprecated TwigTemplate14 is deprecated since 2.x and will be removed in 3.0.
+ */
 abstract class TwigTemplate14 extends \Twig_Template
 {
     /**
