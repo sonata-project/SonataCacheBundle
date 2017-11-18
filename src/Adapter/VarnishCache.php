@@ -15,6 +15,7 @@ use Sonata\Cache\CacheAdapterInterface;
 use Sonata\Cache\CacheElement;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Process\Process;
@@ -58,6 +59,11 @@ class VarnishCache implements CacheAdapterInterface
     protected $resolver;
 
     /**
+     * @var ArgumentResolverInterface
+     */
+    private $argumentResolver;
+
+    /**
      * Constructor.
      *
      * @param string                           $token            A token
@@ -65,14 +71,30 @@ class VarnishCache implements CacheAdapterInterface
      * @param RouterInterface                  $router           A router instance
      * @param string                           $purgeInstruction The purge instruction (purge in Varnish 2, ban in Varnish 3)
      * @param null|ControllerResolverInterface $resolver         A controller resolver instance
+     * @param null|ArgumentResolverInterface   $argumentResolver
      */
-    public function __construct($token, array $servers, RouterInterface $router, $purgeInstruction, ControllerResolverInterface $resolver = null)
-    {
+    public function __construct(
+        $token,
+        array $servers,
+        RouterInterface $router,
+        $purgeInstruction,
+        ControllerResolverInterface $resolver = null,
+        ArgumentResolverInterface $argumentResolver = null
+    ) {
+        if (interface_exists(ArgumentResolverInterface::class) && !$argumentResolver) {
+            @trigger_error(sprintf(
+                'Not providing a "%s" instance to "%s" is deprecated since 3.x and will not be possible in 4.0',
+                ArgumentResolverInterface::class,
+                __METHOD__
+            ), E_USER_DEPRECATED);
+        }
+
         $this->token = $token;
         $this->servers = $servers;
         $this->router = $router;
         $this->purgeInstruction = $purgeInstruction;
         $this->resolver = $resolver;
+        $this->argumentResolver = $argumentResolver;
     }
 
     /**
@@ -157,7 +179,9 @@ class VarnishCache implements CacheAdapterInterface
         $subRequest->attributes->add(['_controller' => $parameters['controller']]);
         $subRequest->attributes->add($parameters['parameters']);
 
-        $arguments = $this->resolver->getArguments($subRequest, $controller);
+        $arguments = $this->argumentResolver ?
+            $this->argumentResolver->getArguments($subRequest, $controller) :
+            $this->resolver->getArguments($subRequest, $controller);
 
         // call controller
         return call_user_func_array($controller, $arguments);

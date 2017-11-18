@@ -15,6 +15,7 @@ use Sonata\Cache\CacheAdapterInterface;
 use Sonata\Cache\CacheElement;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -34,15 +35,32 @@ class SsiCache implements CacheAdapterInterface
     protected $token;
 
     /**
-     * @param string                      $token
-     * @param RouterInterface             $router
-     * @param ControllerResolverInterface $resolver
+     * @var ArgumentsResolverInterface
      */
-    public function __construct($token, RouterInterface $router, ControllerResolverInterface $resolver = null)
+    private $argumentResolver;
+
+    /**
+     * NEXT_MAJOR: make $argumentResolver mandatory when dropping sf < 3.1.
+     *
+     * @param string                           $token
+     * @param RouterInterface                  $router
+     * @param null|ControllerResolverInterface $resolver
+     * @param null|ArgumentsResolverInterface  $argumentResolver
+     */
+    public function __construct($token, RouterInterface $router, ControllerResolverInterface $resolver = null, ArgumentResolverInterface $argumentResolver = null)
     {
+        if (interface_exists(ArgumentResolverInterface::class) && !$argumentResolver) {
+            @trigger_error(sprintf(
+                'Not providing a "%s" instance to "%s" is deprecated since 3.x and will not be possible in 4.0',
+                ArgumentResolverInterface::class,
+                __METHOD__
+            ), E_USER_DEPRECATED);
+        }
+
         $this->token = $token;
         $this->router = $router;
         $this->resolver = $resolver;
+        $this->argumentResolver = $argumentResolver;
     }
 
     /**
@@ -115,7 +133,9 @@ class SsiCache implements CacheAdapterInterface
         $subRequest->attributes->add(['_controller' => $parameters['controller']]);
         $subRequest->attributes->add($parameters['parameters']);
 
-        $arguments = $this->resolver->getArguments($subRequest, $controller);
+        $arguments = $this->argumentResolver ?
+            $this->argumentResolver->getArguments($subRequest, $controller) :
+            $this->resolver->getArguments($subRequest, $controller);
 
         // call controller
         return call_user_func_array($controller, $arguments);
