@@ -67,7 +67,7 @@ class ApcCache extends BaseApcCache
 
             return new Response('ok', 200, [
                 'Cache-Control' => 'no-cache, must-revalidate',
-                'Content-Length' => 2, // to prevent chunked transfer encoding.
+                'Content-Length' => 2, // to prevent chunked transfer encoding
             ]);
         }
 
