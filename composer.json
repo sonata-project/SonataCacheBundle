@@ -35,7 +35,7 @@
         "php-mock/php-mock": "^1.0",
         "predis/predis": "^0.8 || ^1.0",
         "sllh/php-cs-fixer-styleci-bridge": "^2.0",
-        "symfony/phpunit-bridge": "^3.3"
+        "symfony/phpunit-bridge": "^3.3.12"
     },
     "suggest": {
         "doctrine/doctrine-bundle": "ORM support",

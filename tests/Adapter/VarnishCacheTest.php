@@ -12,35 +12,69 @@
 namespace Sonata\CacheBundle\Tests\Adapter\Cache;
 
 use PHPUnit\Framework\TestCase;
+use Sonata\Cache\CacheElement;
 use Sonata\CacheBundle\Adapter\VarnishCache;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
+use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class VarnishCacheTest extends TestCase
 {
+    private $router;
+    private $controllerResolver;
+    private $argumentResolver;
+    private $cache;
+
+    protected function setUp()
+    {
+        $this->router = $this->createMock(RouterInterface::class);
+        $this->controllerResolver = $this->createMock(ControllerResolverInterface::class);
+        if (interface_exists(ArgumentResolverInterface::class)) {
+            $this->argumentResolver = $this->createMock(ArgumentResolverInterface::class);
+        }
+        $this->cache = new VarnishCache(
+            'token',
+            [],
+            $this->router,
+            'ban',
+            $this->controllerResolver,
+            interface_exists(ArgumentResolverInterface::class) ?
+            $this->argumentResolver :
+            null
+        );
+    }
+
     public function testInitCache()
     {
-        $router = $this->createMock('Symfony\Component\Routing\RouterInterface');
-        $router->expects($this->any())->method('generate')->will($this->returnValue('https://sonata-project.org/cache/esi/TOKEN?controller=asdsad'));
+        $this->router->expects($this->any())
+            ->method('generate')
+            ->will($this->returnValue(
+                'https://sonata-project.org/cache/esi/TOKEN?controller=asdsad'
+            ));
 
-        $resolver = $this->createMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
+        $this->assertTrue($this->cache->flush([]));
+        $this->assertTrue($this->cache->flushAll());
 
-        $cache = new VarnishCache('token', [], $router, 'ban', $resolver);
+        $cacheElement = $this->cache->set(['id' => 7], 'data');
 
-        $this->assertTrue($cache->flush([]));
-        $this->assertTrue($cache->flushAll());
+        $this->assertInstanceOf(CacheElement::class, $cacheElement);
 
-        $cacheElement = $cache->set(['id' => 7], 'data');
+        $this->assertTrue($this->cache->has(['id' => 7]));
 
-        $this->assertInstanceOf('Sonata\Cache\CacheElement', $cacheElement);
+        $cacheElement = $this->cache->get([
+            'id' => 7,
+            'controller' => 'foo.service::runAction',
+            'parameters' => [],
+        ]);
 
-        $this->assertTrue($cache->has(['id' => 7]));
+        $this->assertInstanceOf(CacheElement::class, $cacheElement);
 
-        $cacheElement = $cache->get(['id' => 7, 'controller' => 'foo.service::runAction', 'parameters' => []]);
-
-        $this->assertInstanceOf('Sonata\Cache\CacheElement', $cacheElement);
-
-        $this->assertEquals('<esi:include src="https://sonata-project.org/cache/esi/TOKEN?controller=asdsad"/>', $cacheElement->getData()->getContent());
+        $this->assertEquals(
+            '<esi:include src="https://sonata-project.org/cache/esi/TOKEN?controller=asdsad"/>',
+            $cacheElement->getData()->getContent()
+        );
     }
 
     /**
@@ -48,28 +82,33 @@ class VarnishCacheTest extends TestCase
      */
     public function testActionInvalidToken()
     {
-        $router = $this->createMock('Symfony\Component\Routing\RouterInterface');
-        $router->expects($this->any())->method('generate')->will($this->returnValue('http://sonata-project.orf/cache/esi/TOKEN?controller=asdsad'));
-
-        $resolver = $this->createMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
+        $this->router->expects($this->any())
+            ->method('generate')
+            ->will($this->returnValue(
+                'http://sonata-project.orf/cache/esi/TOKEN?controller=asdsad'
+            ));
 
         $request = Request::create('cache/esi/TOKEN?controller=asdsad', 'get', [
             'token' => 'wrong',
         ]);
 
-        $cache = new VarnishCache('token', [], $router, 'ban', $resolver);
-        $cache->cacheAction($request);
+        $this->cache->cacheAction($request);
     }
 
     public function testValidToken()
     {
-        $router = $this->createMock('Symfony\Component\Routing\RouterInterface');
+        $this->controllerResolver->expects($this->any())
+            ->method('getController')
+            ->will($this->returnValue(function () {
+                return new Response();
+            }));
+        $resolver = interface_exists(ArgumentResolverInterface::class) ?
+            $this->argumentResolver :
+            $this->controllerResolver;
 
-        $resolver = $this->createMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
-        $resolver->expects($this->any())->method('getController')->will($this->returnValue(function () {
-            return new Response();
-        }));
-        $resolver->expects($this->any())->method('getArguments')->will($this->returnValue([]));
+        $resolver->expects($this->any())
+            ->method('getArguments')
+            ->will($this->returnValue([]));
 
         $request = Request::create('cache/esi/TOKEN', 'get', [
             'token' => '44befdbd93f304ea693023aa6587729bed76a206ecdacfd9bbd9b43fcf2e1664',
@@ -79,8 +118,7 @@ class VarnishCacheTest extends TestCase
             ],
         ]);
 
-        $cache = new VarnishCache('token', [], $router, 'ban', $resolver);
-        $cache->cacheAction($request);
+        $this->cache->cacheAction($request);
     }
 
     public function testRunCommand()
@@ -93,8 +131,10 @@ class VarnishCacheTest extends TestCase
                 sprintf("echo \"varnishadm -T 10.4.1.62:6082 -S /etc/varnish/secret {{ COMMAND }} '{{ EXPRESSION }}'\" >> %s", $tmpFile),
                 sprintf("echo \"varnishadm -T 10.4.1.66:6082 -S /etc/varnish/secret {{ COMMAND }} '{{ EXPRESSION }}'\" >> %s", $tmpFile),
             ],
-            $this->createMock('Symfony\Component\Routing\RouterInterface'),
-            'ban'
+            $this->router,
+            'ban',
+            $this->controllerResolver,
+            $this->argumentResolver
         );
 
         $method = new \ReflectionMethod($cache, 'runCommand');
@@ -110,5 +150,20 @@ CMD
         , file_get_contents($tmpFile));
 
         unlink($tmpFile);
+    }
+
+    /**
+     * @group legacy
+     * @expectedDeprecation Not providing a "Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface" instance to "Sonata\CacheBundle\Adapter\VarnishCache::__construct" is deprecated since 3.x and will not be possible in 4.0
+     */
+    public function testConstructorLegacy()
+    {
+        if (!interface_exists(ArgumentResolverInterface::class)) {
+            $this->markTestSkipped(
+                'Running Symfony < 3.1'
+            );
+        }
+
+        new VarnishCache('token', [], $this->router, 'ban');
     }
 }

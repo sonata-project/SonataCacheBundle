@@ -21,6 +21,10 @@ UPGRADE 2.x
 | `Sonata\CacheBundle\Twig\TwigTemplate13` | none |
 | `Sonata\CacheBundle\Twig\TwigTemplate14` | none |
 
+Both `Sonata\CacheBundle\Adapter\SsiCache` and
+`Sonata\CacheBundle\Adapter\VarnishCache` now require you provide their
+constructor with an `ArgumentResolverInterface` instance.
+
 ### Tests
 
 All files under the ``Tests`` directory are now correctly handled as internal test classes. 
