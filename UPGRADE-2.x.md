@@ -1,6 +1,9 @@
 UPGRADE 2.x
 ===========
 
+UPGRADE FROM 2.3 to 2.4
+=======================
+
 ### Deprecated
 
 | deprecated class | recommended class |
@@ -20,6 +23,10 @@ UPGRADE 2.x
 | `Sonata\CacheBundle\Adapter\PRedisCache` | `Sonata\Cache\Adapter\Cache\PRedisCache` |
 | `Sonata\CacheBundle\Twig\TwigTemplate13` | none |
 | `Sonata\CacheBundle\Twig\TwigTemplate14` | none |
+
+Both `Sonata\CacheBundle\Adapter\SsiCache` and
+`Sonata\CacheBundle\Adapter\VarnishCache` now require you provide their
+constructor with an `ArgumentResolverInterface` instance.
 
 ### Tests
 

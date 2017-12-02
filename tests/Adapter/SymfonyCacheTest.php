@@ -55,7 +55,10 @@ class SymfonyCacheTest extends TestCase
             false,
             ['all', 'translations'],
             [],
-            []
+            [
+                'RCV' => ['sec' => 2, 'usec' => 0],
+                'SND' => ['sec' => 2, 'usec' => 0],
+            ]
         );
     }
 
@@ -138,7 +141,10 @@ class SymfonyCacheTest extends TestCase
             [
                 ['ip' => 'wrong ip'],
             ],
-            []
+            [
+                'RCV' => ['sec' => 2, 'usec' => 0],
+                'SND' => ['sec' => 2, 'usec' => 0],
+            ]
         );
 
         $this->setExpectedException('\InvalidArgumentException', '"wrong ip" is not a valid ip address');
