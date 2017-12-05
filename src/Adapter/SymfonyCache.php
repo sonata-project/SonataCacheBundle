@@ -165,10 +165,10 @@ class SymfonyCache implements CacheAdapterInterface
      * @param string $token A Sonata symfony cache token
      * @param string $type  A cache type to invalidate (doctrine, translations, twig, ...)
      *
-     * @return Response
-     *
      * @throws AccessDeniedHttpException if token is invalid
      * @throws \RuntimeException         if specified type is not in allowed types list
+     *
+     * @return Response
      */
     public function cacheAction($token, $type)
     {
