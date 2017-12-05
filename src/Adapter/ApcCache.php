@@ -50,9 +50,9 @@ class ApcCache extends BaseApcCache
      *
      * @param string $token A configured token
      *
-     * @return Response
-     *
      * @throws AccessDeniedHttpException
+     *
+     * @return Response
      */
     public function cacheAction($token)
     {

@@ -76,11 +76,10 @@ class SsiCacheTest extends TestCase
         );
     }
 
-    /**
-     * @expectedException \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
-     */
     public function testActionInvalidToken()
     {
+        $this->expectException(\Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException::class);
+
         $this->router->expects($this->any())
             ->method('generate')
             ->will($this->returnValue(
