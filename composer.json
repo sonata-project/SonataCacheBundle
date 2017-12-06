@@ -34,7 +34,6 @@
         "jackalope/jackalope-doctrine-dbal": "^1.0",
         "php-mock/php-mock": "^1.0",
         "predis/predis": "^0.8 || ^1.0",
-        "sllh/php-cs-fixer-styleci-bridge": "^2.0",
         "symfony/phpunit-bridge": "^3.3.12 || ^4.0"
     },
     "suggest": {
