@@ -163,10 +163,10 @@ class SymfonyCache implements CacheAdapterInterface
      * @param string $token A Sonata symfony cache token
      * @param string $type  A cache type to invalidate (doctrine, translations, twig, ...)
      *
-     * @return Response
-     *
      * @throws AccessDeniedHttpException if token is invalid
      * @throws \RuntimeException         if specified type is not in allowed types list
+     *
+     * @return Response
      */
     public function cacheAction(string $token, string $type): Response
     {
@@ -202,7 +202,7 @@ class SymfonyCache implements CacheAdapterInterface
      */
     public function has(array $keys): bool
     {
-        throw new UnsupportedException('Symfony cache has() method does not exist');
+        throw new UnsupportedException('Symfony cache has() method does not exists');
     }
 
     /**
@@ -210,7 +210,7 @@ class SymfonyCache implements CacheAdapterInterface
      */
     public function set(array $keys, $data, int $ttl = 84600, array $contextualKeys = []): CacheElementInterface
     {
-        throw new UnsupportedException('Symfony cache set() method does not exist');
+        throw new UnsupportedException('Symfony cache set() method does not exists');
     }
 
     /**
@@ -218,7 +218,7 @@ class SymfonyCache implements CacheAdapterInterface
      */
     public function get(array $keys): CacheElementInterface
     {
-        throw new UnsupportedException('Symfony cache get() method does not exist');
+        throw new UnsupportedException('Symfony cache get() method does not exists');
     }
 
     /**
