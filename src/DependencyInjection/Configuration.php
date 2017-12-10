@@ -59,7 +59,7 @@ class Configuration implements ConfigurationInterface
                 ->children()
                     ->arrayNode('esi')
                         ->children()
-                            ->scalarNode('token')->defaultValue(hash('sha256', uniqid(mt_rand(), true)))->end()
+                            ->scalarNode('token')->defaultValue(hash('sha256', uniqid((string) mt_rand(), true)))->end()
                             ->scalarNode('version')->defaultValue(2)->end()
                             ->arrayNode('servers')
                                 ->prototype('scalar')->end()
@@ -69,7 +69,7 @@ class Configuration implements ConfigurationInterface
 
                     ->arrayNode('ssi')
                         ->children()
-                            ->scalarNode('token')->defaultValue(hash('sha256', uniqid(mt_rand(), true)))->end()
+                            ->scalarNode('token')->defaultValue(hash('sha256', uniqid((string) mt_rand(), true)))->end()
                         ->end()
                     ->end()
 
