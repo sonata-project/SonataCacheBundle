@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -22,7 +24,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class SonataCacheExtensionTest extends TestCase
 {
-    public function testUseCacheInvalidationDoctrineListeners()
+    public function testUseCacheInvalidationDoctrineListeners(): void
     {
         $container = new ContainerBuilder();
         $extension = new SonataCacheExtension();
