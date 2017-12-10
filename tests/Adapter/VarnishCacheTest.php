@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the Sonata Project package.
  *
@@ -27,7 +29,7 @@ class VarnishCacheTest extends TestCase
     private $argumentResolver;
     private $cache;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->router = $this->createMock(RouterInterface::class);
         $this->controllerResolver = $this->createMock(ControllerResolverInterface::class);
@@ -46,7 +48,7 @@ class VarnishCacheTest extends TestCase
         );
     }
 
-    public function testInitCache()
+    public function testInitCache(): void
     {
         $this->router->expects($this->any())
             ->method('generate')
@@ -155,7 +157,7 @@ CMD
      * @group legacy
      * @expectedDeprecation Not providing a "Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface" instance to "Sonata\CacheBundle\Adapter\VarnishCache::__construct" is deprecated since 3.x and will not be possible in 4.0
      */
-    public function testConstructorLegacy()
+    public function testConstructorLegacy(): void
     {
         if (!interface_exists(ArgumentResolverInterface::class)) {
             $this->markTestSkipped(
