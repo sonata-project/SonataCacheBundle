@@ -11,9 +11,24 @@ To begin, add the dependent bundles to the `vendor` directory buy running this c
 
 .. code-block:: bash
 
-    php composer.phar require sonata-project/cache-bundle
+    composer require sonata-project/cache-bundle
 
-Now, add the new Bundle to the kernel:
+Now, add the new Bundle to ``bundles.php`` file:
+
+.. code-block:: php
+
+    <?php
+
+    // config/bundles.php
+
+    return [
+        //...
+        Sonata\CacheBundle\SonataCacheBundle::class => ['all' => true],
+    ];
+
+.. note::
+    If you are not using Symfony Flex, you should enable bundles in your
+    ``AppKernel.php``.
 
 .. code-block:: php
 
@@ -37,7 +52,7 @@ To use the ``CacheBundle``, add the following lines to your application configur
 
 .. code-block:: yaml
 
-    # app/config/config.yml
+    # config/packages/sonata.yaml
     sonata_cache:
         caches:
             esi:
@@ -83,6 +98,10 @@ To use the ``CacheBundle``, add the following lines to your application configur
                     RCV: { sec: 2, usec: 0 }
                     SND: { sec: 2, usec: 0 }
 
+.. note::
+    If you are not using Symfony Flex, this configuration should be added
+    to ``app/config/config.yml``.
+
 For APC and Symfony caches, you can specify a basic parameter for servers definition (useful to clear cache for staging area behind this kind of protection)
 
 .. code-block:: yaml
@@ -97,7 +116,10 @@ At the end of your routing file, add the following lines:
 
 .. code-block:: yaml
 
-    # app/config/routing.yml
+    # config/routes.yaml
     sonata_cache_cache:
         resource: '@SonataCacheBundle/Resources/config/routing/cache.xml'
         prefix: /
+
+.. note::
+    If you are not using Symfony Flex, routes should be added to ``app/config/routing.yml``.
