@@ -47,6 +47,9 @@
         "doctrine/phpcr-odm": "PHPCR ODM support",
         "predis/predis": "Install redis php"
     },
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "2.x-dev"
