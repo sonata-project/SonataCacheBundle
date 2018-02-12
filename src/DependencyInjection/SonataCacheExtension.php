@@ -43,6 +43,7 @@ class SonataCacheExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('cache.xml');
         $loader->load('counter.xml');
+        $loader->load('command.xml');
 
         $useOrm = 'auto' == $config['cache_invalidation']['orm_listener'] ?
             class_exists('Doctrine\\ORM\\Version') :
