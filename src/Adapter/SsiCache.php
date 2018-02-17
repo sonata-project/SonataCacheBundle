@@ -44,14 +44,13 @@ class SsiCache implements CacheAdapterInterface
 
     /**
      * NEXT_MAJOR: make $argumentResolver mandatory when dropping sf < 3.1.
-     *
-     * @param string                           $token
-     * @param RouterInterface                  $router
-     * @param null|ControllerResolverInterface $resolver
-     * @param null|ArgumentsResolverInterface  $argumentResolver
      */
-    public function __construct($token, RouterInterface $router, ControllerResolverInterface $resolver = null, ArgumentResolverInterface $argumentResolver = null)
-    {
+    public function __construct(
+        string $token,
+        RouterInterface $router,
+        ?ControllerResolverInterface $resolver = null,
+        ?ArgumentResolverInterface $argumentResolver = null
+    ) {
         if (interface_exists(ArgumentResolverInterface::class) && !$argumentResolver) {
             @trigger_error(sprintf(
                 'Not providing a "%s" instance to "%s" is deprecated since 3.x and will not be possible in 4.0',
@@ -66,32 +65,23 @@ class SsiCache implements CacheAdapterInterface
         $this->argumentResolver = $argumentResolver;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function flushAll(): bool
     {
         return true; // nothing to flush
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function flush(array $keys = []): bool
     {
         return true; // still nothing to flush ...
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function has(array $keys): bool
     {
         return true;
     }
 
     /**
-     * {@inheritdoc}
+     * @throws \RuntimeException
      */
     public function get(array $keys): CacheElementInterface
     {
@@ -108,16 +98,17 @@ class SsiCache implements CacheAdapterInterface
         return new CacheElement($keys, new Response($content));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function set(array $keys, $data, int $ttl = CacheElement::DAY, array $contextualKeys = []): CacheElementInterface
-    {
+    public function set(
+        array $keys,
+        $data,
+        int $ttl = CacheElement::DAY,
+        array $contextualKeys = []
+    ): CacheElementInterface {
         return new CacheElement($keys, $data, $ttl, $contextualKeys);
     }
 
     /**
-     * @param Request $request
+     * @throws AccessDeniedHttpException
      *
      * @return mixed
      */
@@ -140,23 +131,14 @@ class SsiCache implements CacheAdapterInterface
             $this->argumentResolver->getArguments($subRequest, $controller) :
             $this->resolver->getArguments($subRequest, $controller);
 
-        // call controller
-        return call_user_func_array($controller, $arguments);
+        return \call_user_func_array($controller, $arguments);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isContextual(): bool
     {
         return true;
     }
 
-    /**
-     * @param array $keys
-     *
-     * @return string
-     */
     protected function getUrl(array $keys): ?string
     {
         $parameters = [
@@ -167,11 +149,6 @@ class SsiCache implements CacheAdapterInterface
         return $this->router->generate('sonata_cache_ssi', $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
     }
 
-    /**
-     * @param array $keys
-     *
-     * @return string
-     */
     protected function computeHash(array $keys): string
     {
         ksort($keys);

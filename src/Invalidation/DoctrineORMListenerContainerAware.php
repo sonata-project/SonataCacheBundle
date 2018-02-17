@@ -24,25 +24,15 @@ class DoctrineORMListenerContainerAware implements EventSubscriber
 
     protected $service;
 
-    /**
-     * @param ContainerInterface
-     */
     protected $container;
 
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-     * @param $service
-     */
     public function __construct(ContainerInterface $container, string $service)
     {
         $this->container = $container;
         $this->service = $service;
     }
 
-    /**
-     * @return array
-     */
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             Events::preRemove,
@@ -50,9 +40,6 @@ class DoctrineORMListenerContainerAware implements EventSubscriber
         ];
     }
 
-    /**
-     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
-     */
     public function preRemove(LifecycleEventArgs $args): void
     {
         $this->load();
@@ -60,9 +47,6 @@ class DoctrineORMListenerContainerAware implements EventSubscriber
         $this->listener->preRemove($args);
     }
 
-    /**
-     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
-     */
     public function preUpdate(LifecycleEventArgs $args): void
     {
         $this->load();

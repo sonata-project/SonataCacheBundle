@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\RouterInterface;
 
 class VarnishCacheTest extends TestCase
@@ -81,7 +82,7 @@ class VarnishCacheTest extends TestCase
 
     public function testActionInvalidToken(): void
     {
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException::class);
+        $this->expectException(AccessDeniedHttpException::class);
 
         $this->router->expects($this->any())
             ->method('generate')

@@ -68,20 +68,16 @@ class SymfonyCache implements CacheAdapterInterface
      */
     protected $filesystem;
 
-    /**
-     * Constructor.
-     *
-     * @param RouterInterface $router              A router instance
-     * @param Filesystem      $filesystem          A Symfony Filesystem component instance
-     * @param string          $cacheDir            A Symfony cache directory
-     * @param string          $token               A token to clear the related cache
-     * @param bool            $phpCodeCacheEnabled If true, will clear OPcache code cache
-     * @param array           $types               A cache types array
-     * @param array           $servers             An array of servers
-     * @param array           $timeouts            An array of timeout options
-     */
-    public function __construct(RouterInterface $router, Filesystem $filesystem, string $cacheDir, string $token, bool $phpCodeCacheEnabled, array $types, array $servers, array $timeouts)
-    {
+    public function __construct(
+        RouterInterface $router,
+        Filesystem $filesystem,
+        string $cacheDir,
+        string $token,
+        bool $phpCodeCacheEnabled,
+        array $types,
+        array $servers,
+        array $timeouts
+    ) {
         $this->router = $router;
         $this->filesystem = $filesystem;
         $this->cacheDir = $cacheDir;
@@ -92,18 +88,14 @@ class SymfonyCache implements CacheAdapterInterface
         $this->timeouts = $timeouts;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function flushAll(): bool
     {
         return $this->flush(['all']);
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @throws \InvalidArgumentException
+     * @throws \UnexpectedValueException
      */
     public function flush(array $keys = ['all']): bool
     {
@@ -146,7 +138,7 @@ class SymfonyCache implements CacheAdapterInterface
                 } while (!empty($buffer));
 
                 if ($result) {
-                    $result = 'ok' == substr($content, -2);
+                    $result = 'ok' === substr($content, -2);
                 } else {
                     throw new \UnexpectedValueException(sprintf(
                         'Server answered with "%s"',
@@ -160,20 +152,13 @@ class SymfonyCache implements CacheAdapterInterface
     }
 
     /**
-     * Symfony cache action.
-     *
-     * @param string $token A Sonata symfony cache token
-     * @param string $type  A cache type to invalidate (doctrine, translations, twig, ...)
-     *
-     * @throws AccessDeniedHttpException if token is invalid
-     * @throws \RuntimeException         if specified type is not in allowed types list
-     *
-     * @return Response
+     * @throws AccessDeniedHttpException
+     * @throws \RuntimeException
      */
     public function cacheAction(string $token, string $type): Response
     {
         if ($this->token != $token) {
-            throw new AccessDeniedHttpException('Invalid token');
+            throw new AccessDeniedHttpException('Invalid token.');
         }
 
         if (!in_array($type, $this->types)) {
@@ -182,7 +167,7 @@ class SymfonyCache implements CacheAdapterInterface
             );
         }
 
-        $path = 'all' == $type ? $this->cacheDir : sprintf('%s/%s', $this->cacheDir, $type);
+        $path = 'all' === $type ? $this->cacheDir : sprintf('%s/%s', $this->cacheDir, $type);
 
         if ($this->filesystem->exists($path)) {
             $movedPath = $path.'_old_'.uniqid();
@@ -200,44 +185,34 @@ class SymfonyCache implements CacheAdapterInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @throws UnsupportedException
      */
     public function has(array $keys): bool
     {
-        throw new UnsupportedException('Symfony cache has() method does not exists');
+        throw new UnsupportedException('SymfonyCache has() method does not exist.');
     }
 
     /**
-     * {@inheritdoc}
+     * @throws UnsupportedException
      */
     public function set(array $keys, $data, int $ttl = 84600, array $contextualKeys = []): CacheElementInterface
     {
-        throw new UnsupportedException('Symfony cache set() method does not exists');
+        throw new UnsupportedException('SymfonyCache set() method does not exist.');
     }
 
     /**
-     * {@inheritdoc}
+     * @throws UnsupportedException
      */
     public function get(array $keys): CacheElementInterface
     {
-        throw new UnsupportedException('Symfony cache get() method does not exists');
+        throw new UnsupportedException('SymfonyCache get() method does not exist.');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isContextual(): bool
     {
         return false;
     }
 
-    /**
-     * Returns URL with given token used for cache invalidation.
-     *
-     * @param string $type
-     *
-     * @return string
-     */
     protected function getUrl(string $type): ?string
     {
         return $this->router->generate('sonata_cache_symfony', [
@@ -246,16 +221,13 @@ class SymfonyCache implements CacheAdapterInterface
         ]);
     }
 
-    /**
-     * Clears code cache with PHP OPcache.
-     */
     protected function clearPHPCodeCache(): void
     {
         if (!$this->phpCodeCacheEnabled) {
             return;
         }
 
-        if (function_exists('opcache_reset')) {
+        if (\function_exists('opcache_reset')) {
             opcache_reset();
         }
     }

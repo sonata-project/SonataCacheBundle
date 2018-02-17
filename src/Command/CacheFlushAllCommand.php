@@ -19,26 +19,25 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CacheFlushAllCommand extends BaseCacheCommand
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configure(): void
     {
         $this->setName('sonata:cache:flush-all');
         $this->setDescription('Flush all information set in cache managers');
 
-        $this->addOption('cache', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Flush elements stored in given cache');
+        $this->addOption(
+            'cache',
+            null,
+            InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+            'Flush elements stored in given cache'
+        );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function execute(InputInterface $input, OutputInterface $output): void
     {
-        $output->writeln('<info>clearing cache information</info>');
+        $output->writeln('<info>Clearing cache information.</info>');
 
         foreach ($this->getManager()->getCacheServices() as $name => $cache) {
-            if ($input->getOption('cache') && !in_array($name, $input->getOption('cache'))) {
+            if ($input->getOption('cache') && !\in_array($name, $input->getOption('cache'))) {
                 continue;
             }
 
@@ -51,6 +50,6 @@ class CacheFlushAllCommand extends BaseCacheCommand
             }
         }
 
-        $output->writeln('<info>done!</info>');
+        $output->writeln('<info>Done!</info>');
     }
 }

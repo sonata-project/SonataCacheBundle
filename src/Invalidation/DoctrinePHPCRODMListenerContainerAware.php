@@ -24,24 +24,14 @@ class DoctrinePHPCRODMListenerContainerAware implements EventSubscriber
 
     protected $service;
 
-    /**
-     * @param ContainerInterface
-     */
     protected $container;
 
-    /**
-     * @param ContainerInterface $container
-     * @param $service
-     */
     public function __construct(ContainerInterface $container, string $service)
     {
         $this->container = $container;
         $this->service = $service;
     }
 
-    /**
-     * @return array
-     */
     public function getSubscribedEvents(): array
     {
         return [
@@ -50,9 +40,6 @@ class DoctrinePHPCRODMListenerContainerAware implements EventSubscriber
         ];
     }
 
-    /**
-     * @param $args
-     */
     public function preRemove(LifecycleEventArgs $args): void
     {
         $this->load();
@@ -60,9 +47,6 @@ class DoctrinePHPCRODMListenerContainerAware implements EventSubscriber
         $this->listener->preRemove($args);
     }
 
-    /**
-     * @param LifecycleEventArgs $args
-     */
     public function preUpdate(LifecycleEventArgs $args): void
     {
         $this->load();

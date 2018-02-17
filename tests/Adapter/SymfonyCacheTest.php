@@ -15,13 +15,14 @@ namespace Sonata\CacheBundle\Tests\Adapter;
 
 use phpmock\MockBuilder;
 use PHPUnit\Framework\TestCase;
+use Sonata\Cache\Exception\UnsupportedException;
 use Sonata\CacheBundle\Adapter\SymfonyCache;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * Class SymfonyCacheTest.
- *
  * @author Vincent Composieux <vincent.composieux@gmail.com>
  */
 class SymfonyCacheTest extends TestCase
@@ -31,14 +32,8 @@ class SymfonyCacheTest extends TestCase
      */
     protected $cache;
 
-    /**
-     * @var RouterInterface
-     */
     protected $router;
 
-    /**
-     * @var Filesystem
-     */
     protected $filesystem;
 
     /**
@@ -46,8 +41,8 @@ class SymfonyCacheTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->router = $this->createMock('Symfony\Component\Routing\RouterInterface');
-        $this->filesystem = $this->createMock('Symfony\Component\Filesystem\Filesystem');
+        $this->router = $this->createMock(RouterInterface::class);
+        $this->filesystem = $this->createMock(Filesystem::class);
 
         $this->cache = new SymfonyCache(
             $this->router,
@@ -64,30 +59,24 @@ class SymfonyCacheTest extends TestCase
         );
     }
 
-    /**
-     * Tests cache initialization.
-     */
     public function testInitCache(): void
     {
         $this->assertTrue($this->cache->flush([]));
         $this->assertTrue($this->cache->flushAll());
 
-        $this->expectException('Sonata\Cache\Exception\UnsupportedException');
-        $this->expectExceptionMessage('Symfony cache set() method does not exists');
+        $this->expectException(UnsupportedException::class);
+        $this->expectExceptionMessage('SymfonyCache set() method does not exist.');
         $this->cache->set(['id' => 5], 'data');
 
-        $this->expectException('Sonata\Cache\Exception\UnsupportedException');
-        $this->expectExceptionMessage('Symfony cache get() method does not exists');
+        $this->expectException(UnsupportedException::class);
+        $this->expectExceptionMessage('SymfonyCache get() method does not exist.');
         $this->cache->get(['id' => 5]);
 
-        $this->expectException('Sonata\Cache\Exception\UnsupportedException');
-        $this->expectExceptionMessage('Symfony cache has() method does not exists');
+        $this->expectException(UnsupportedException::class);
+        $this->expectExceptionMessage('SymfonyCache has() method does not exist.');
         $this->cache->has(['id' => 5]);
     }
 
-    /**
-     * Tests cacheAction() method.
-     */
     public function testCacheAction(): void
     {
         // Given
@@ -98,7 +87,7 @@ class SymfonyCacheTest extends TestCase
         $response = $this->cache->cacheAction('token', 'translations');
 
         // Then
-        $this->assertInstanceOf('Symfony\Component\HttpFoundation\Response', $response);
+        $this->assertInstanceOf(Response::class, $response);
 
         $this->assertEquals(200, $response->getStatusCode(), 'Response should be 200');
         $this->assertEquals('ok', $response->getContent(), 'Response should return "OK"');
@@ -107,34 +96,25 @@ class SymfonyCacheTest extends TestCase
         $this->assertEquals('must-revalidate, no-cache, private', $response->headers->get('Cache-Control'));
     }
 
-    /**
-     * Tests cacheAction() method with an invalid token.
-     */
     public function testCacheActionWithInvalidToken(): void
     {
         // Given
         // When - Then expect exception
-        $this->expectException('Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException');
+        $this->expectException(AccessDeniedHttpException::class);
 
         $this->cache->cacheAction('invalid-token', 'type');
     }
 
-    /**
-     * Tests cacheAction() method with an invalid cache type.
-     */
     public function testCacheActionWithInvalidType(): void
     {
         // Given
         // When - Then expect exception
-        $this->expectException('\RuntimeException');
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Type "invalid-type" is not defined, allowed types are: "all, translations"');
 
         $this->cache->cacheAction('token', 'invalid-type');
     }
 
-    /**
-     * Asserts the flush method throws an exception if the IP version of the server cannot be detected.
-     */
     public function testFlushThrowsExceptionWithWrongIP(): void
     {
         $cache = new SymfonyCache(
@@ -153,15 +133,12 @@ class SymfonyCacheTest extends TestCase
             ]
         );
 
-        $this->expectException('\InvalidArgumentException');
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('"wrong ip" is not a valid ip address');
 
         $cache->flush();
     }
 
-    /**
-     * Tests the flush method with IPv4.
-     */
     public function testFlushWithIPv4(): void
     {
         $cache = new SymfonyCache(
