@@ -26,14 +26,16 @@ class SonataCacheBundle extends Bundle
 
     public function boot()
     {
-        $baseTemplateClass = $this->container->get('twig')->getBaseTemplateClass();
+        if ($this->container->has('twig')) {
+            $baseTemplateClass = $this->container->get('twig')->getBaseTemplateClass();
 
-        if (empty($baseTemplateClass)) {
-            return;
-        }
+            if (empty($baseTemplateClass)) {
+                return;
+            }
 
-        if (method_exists($baseTemplateClass, 'attachRecorder')) {
-            call_user_func([$baseTemplateClass, 'attachRecorder'], $this->container->get('sonata.cache.recorder'));
+            if (method_exists($baseTemplateClass, 'attachRecorder')) {
+                call_user_func([$baseTemplateClass, 'attachRecorder'], $this->container->get('sonata.cache.recorder'));
+            }
         }
     }
 }
