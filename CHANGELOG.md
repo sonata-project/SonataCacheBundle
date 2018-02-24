@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.1](https://github.com/sonata-project/SonataCacheBundle/compare/2.4.0...2.4.1) - 2018-02-23
+### Changed
+- made service public
+
+### Fixed
+- Symfony 4.0 for `symfony/config`
+- Commands not working on symfony4
+
 ## [2.4.0](https://github.com/sonata-project/SonataCacheBundle/compare/2.3.1...2.4.0) - 2017-11-30
 ### Added
 - Added password configuration option under Predis cache configuration.
