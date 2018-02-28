@@ -30,6 +30,12 @@ class ApcCache extends BaseApcCache
      */
     protected $token;
 
+    /**
+     * @param string   $token   A token to clear the related cache
+     * @param string   $prefix  A prefix to avoid clash between instances
+     * @param string[] $servers An array of servers
+     * @param array    $timeout An array of timeout options
+     */
     public function __construct(
         RouterInterface $router,
         string $token,
@@ -49,7 +55,7 @@ class ApcCache extends BaseApcCache
     public function cacheAction(string $token): Response
     {
         if ($this->token === $token) {
-            if (\function_exists('opcache_reset')) {
+            if (function_exists('opcache_reset')) {
                 opcache_reset();
             }
 

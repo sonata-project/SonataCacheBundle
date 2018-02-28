@@ -45,18 +45,18 @@ class CacheFlushCommand extends BaseCacheCommand
     {
         $keys = @json_decode($input->getOption('keys'), true);
 
-        if (!\is_array($keys)) {
+        if (!is_array($keys)) {
             throw new \RuntimeException('The provided keys cannot be decoded, please provide a valid json string.');
         }
 
         foreach ($this->getManager()->getCacheServices() as $name => $cache) {
-            if ($input->getOption('cache') && !\in_array($name, $input->getOption('cache'))) {
+            if ($input->getOption('cache') && !in_array($name, $input->getOption('cache'))) {
                 continue;
             }
 
             $output->write(sprintf(' > %s : starting .... ', $name));
             $cache->flush($keys);
-            $output->writeln('OK');
+            $output->writeln('Ok');
         }
 
         $output->writeln('<info>Done!</info>');

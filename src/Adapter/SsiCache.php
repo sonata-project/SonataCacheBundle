@@ -42,23 +42,12 @@ class SsiCache implements CacheAdapterInterface
      */
     private $argumentResolver;
 
-    /**
-     * NEXT_MAJOR: make $argumentResolver mandatory when dropping sf < 3.1.
-     */
     public function __construct(
         string $token,
         RouterInterface $router,
-        ?ControllerResolverInterface $resolver = null,
-        ?ArgumentResolverInterface $argumentResolver = null
+        ControllerResolverInterface $resolver,
+        ArgumentResolverInterface $argumentResolver
     ) {
-        if (interface_exists(ArgumentResolverInterface::class) && !$argumentResolver) {
-            @trigger_error(sprintf(
-                'Not providing a "%s" instance to "%s" is deprecated since 3.x and will not be possible in 4.0',
-                ArgumentResolverInterface::class,
-                __METHOD__
-            ), E_USER_DEPRECATED);
-        }
-
         $this->token = $token;
         $this->router = $router;
         $this->resolver = $resolver;
@@ -127,11 +116,9 @@ class SsiCache implements CacheAdapterInterface
         $subRequest->attributes->add(['_controller' => $parameters['controller']]);
         $subRequest->attributes->add($parameters['parameters']);
 
-        $arguments = $this->argumentResolver ?
-            $this->argumentResolver->getArguments($subRequest, $controller) :
-            $this->resolver->getArguments($subRequest, $controller);
+        $arguments = $this->argumentResolver->getArguments($subRequest, $controller);
 
-        return \call_user_func_array($controller, $arguments);
+        return call_user_func_array($controller, $arguments);
     }
 
     public function isContextual(): bool
