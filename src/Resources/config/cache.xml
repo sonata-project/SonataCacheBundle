@@ -62,7 +62,7 @@
             <argument type="collection"/>
             <argument/>
         </service>
-        <service id="sonata.cache.invalidation.simple" class="Sonata\CacheBundle\Invalidation\SimpleCacheInvalidation">
+        <service id="sonata.cache.invalidation.simple" class="Sonata\Cache\Invalidation\SimpleCacheInvalidation">
             <argument type="service" id="logger"/>
         </service>
     </services>
