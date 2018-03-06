@@ -19,27 +19,34 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CacheFlushCommand extends BaseCacheCommand
 {
-    /**
-     * {@inheritdoc}
-     */
     public function configure(): void
     {
         $this->setName('sonata:cache:flush');
         $this->setDescription('Flush information');
 
-        $this->addOption('keys', null, InputOption::VALUE_REQUIRED, 'Flush all elements matching the providing keys (json format)');
-        $this->addOption('cache', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Flush elements stored in given cache');
+        $this->addOption(
+            'keys',
+            null,
+            InputOption::VALUE_REQUIRED,
+            'Flush all elements matching the providing keys (json format)'
+        );
+        $this->addOption(
+            'cache',
+            null,
+            InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+            'Flush elements stored in given cache'
+        );
     }
 
     /**
-     * {@inheritdoc}
+     * @throws \RuntimeException
      */
     public function execute(InputInterface $input, OutputInterface $output): void
     {
         $keys = @json_decode($input->getOption('keys'), true);
 
         if (!is_array($keys)) {
-            throw new \RuntimeException('The provided keys cannot be decoded, please provide a valid json string');
+            throw new \RuntimeException('The provided keys cannot be decoded, please provide a valid json string.');
         }
 
         foreach ($this->getManager()->getCacheServices() as $name => $cache) {
@@ -49,9 +56,9 @@ class CacheFlushCommand extends BaseCacheCommand
 
             $output->write(sprintf(' > %s : starting .... ', $name));
             $cache->flush($keys);
-            $output->writeln('OK');
+            $output->writeln('Ok');
         }
 
-        $output->writeln('<info>done!</info>');
+        $output->writeln('<info>Done!</info>');
     }
 }

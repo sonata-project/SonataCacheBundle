@@ -17,14 +17,8 @@ use PHPUnit\Framework\TestCase;
 use Sonata\CacheBundle\DependencyInjection\Configuration;
 use Symfony\Component\Config\Definition\Processor;
 
-/**
- * Tests the Configuration class.
- */
 class ConfigurationTest extends TestCase
 {
-    /**
-     * Asserts APC has default timeout values.
-     */
     public function testApcDefaultTimeout(): void
     {
         $configs = [[
@@ -48,9 +42,6 @@ class ConfigurationTest extends TestCase
         );
     }
 
-    /**
-     * Asserts APC timeout has custom values.
-     */
     public function testApcCustomTimeout(): void
     {
         $expected = [
@@ -74,9 +65,6 @@ class ConfigurationTest extends TestCase
         $this->assertSame($expected, $config['caches']['apc']['timeout']);
     }
 
-    /**
-     * Asserts Symfony has default timeout values.
-     */
     public function testSymfonyDefaultTimeout(): void
     {
         $configs = [[
@@ -100,9 +88,6 @@ class ConfigurationTest extends TestCase
         );
     }
 
-    /**
-     * Asserts Symfony timeout has custom values.
-     */
     public function testSymfonyCustomTimeout(): void
     {
         $expected = [
@@ -126,14 +111,7 @@ class ConfigurationTest extends TestCase
         $this->assertSame($expected, $config['caches']['symfony']['timeout']);
     }
 
-    /**
-     * Processes an array of configurations and returns a compiled version.
-     *
-     * @param array $configs An array of raw configurations
-     *
-     * @return array A normalized array
-     */
-    protected function process(array $configs)
+    protected function process(array $configs): array
     {
         $processor = new Processor();
 

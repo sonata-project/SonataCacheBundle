@@ -14,13 +14,12 @@ declare(strict_types=1);
 namespace Sonata\CacheBundle\Tests\Adapter;
 
 use PHPUnit\Framework\TestCase;
+use Sonata\Cache\CacheElement;
 use Sonata\CacheBundle\Adapter\ApcCache;
+use Symfony\Component\Routing\RouterInterface;
 
 class ApcCacheTest extends TestCase
 {
-    /**
-     * @var \Symfony\Component\Routing\RouterInterface
-     */
     private $router;
 
     /**
@@ -38,7 +37,7 @@ class ApcCacheTest extends TestCase
             $this->markTestSkipped('APC is not enabled in cli, please add apcu.enable_cli=On into the apcu.ini file');
         }
 
-        $this->router = $this->createMock('Symfony\Component\Routing\RouterInterface');
+        $this->router = $this->createMock(RouterInterface::class);
 
         $this->cache = new ApcCache($this->router, 'token', 'prefix_', [], []);
     }
@@ -50,7 +49,7 @@ class ApcCacheTest extends TestCase
 
         $cacheElement = $this->cache->set(['id' => 7], 'data');
 
-        $this->assertInstanceOf('Sonata\Cache\CacheElement', $cacheElement);
+        $this->assertInstanceOf(CacheElement::class, $cacheElement);
 
         $this->assertTrue($this->cache->has(['id' => 7]));
 
@@ -58,7 +57,7 @@ class ApcCacheTest extends TestCase
 
         $cacheElement = $this->cache->get(['id' => 7]);
 
-        $this->assertInstanceOf('Sonata\Cache\CacheElement', $cacheElement);
+        $this->assertInstanceOf(CacheElement::class, $cacheElement);
     }
 
     public function testGetUrl(): void

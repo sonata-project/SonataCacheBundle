@@ -8,6 +8,11 @@ Please read [the 2.x upgrade guide](./UPGRADE-2.x.md) for more information.
 
 See also the [diff](https://github.com/sonata-project/SonataCacheBundle/compare/2.x...3.0.0)
 
+Both `Sonata\CacheBundle\Adapter\SsiCache` and
+`Sonata\CacheBundle\Adapter\VarnishCache` now require you provide their
+constructor with an `ControllerResolverInterface` and
+`ArgumentResolverInterface` instance.
+
 ## Type hinting
 
 Now that only PHP 7 is supported, many signatures have changed: type hinting

@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\RouterInterface;
 
 class VarnishCacheTest extends TestCase
@@ -33,18 +34,15 @@ class VarnishCacheTest extends TestCase
     {
         $this->router = $this->createMock(RouterInterface::class);
         $this->controllerResolver = $this->createMock(ControllerResolverInterface::class);
-        if (interface_exists(ArgumentResolverInterface::class)) {
-            $this->argumentResolver = $this->createMock(ArgumentResolverInterface::class);
-        }
+        $this->argumentResolver = $this->createMock(ArgumentResolverInterface::class);
+
         $this->cache = new VarnishCache(
             'token',
             [],
             $this->router,
             'ban',
             $this->controllerResolver,
-            interface_exists(ArgumentResolverInterface::class) ?
-            $this->argumentResolver :
-            null
+            $this->argumentResolver
         );
     }
 
@@ -81,7 +79,7 @@ class VarnishCacheTest extends TestCase
 
     public function testActionInvalidToken(): void
     {
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException::class);
+        $this->expectException(AccessDeniedHttpException::class);
 
         $this->router->expects($this->any())
             ->method('generate')
@@ -103,11 +101,8 @@ class VarnishCacheTest extends TestCase
             ->will($this->returnValue(function () {
                 return new Response();
             }));
-        $resolver = interface_exists(ArgumentResolverInterface::class) ?
-            $this->argumentResolver :
-            $this->controllerResolver;
 
-        $resolver->expects($this->any())
+        $this->argumentResolver->expects($this->any())
             ->method('getArguments')
             ->will($this->returnValue([]));
 
@@ -151,20 +146,5 @@ CMD
         , file_get_contents($tmpFile));
 
         unlink($tmpFile);
-    }
-
-    /**
-     * @group legacy
-     * @expectedDeprecation Not providing a "Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface" instance to "Sonata\CacheBundle\Adapter\VarnishCache::__construct" is deprecated since 3.x and will not be possible in 4.0
-     */
-    public function testConstructorLegacy(): void
-    {
-        if (!interface_exists(ArgumentResolverInterface::class)) {
-            $this->markTestSkipped(
-                'Running Symfony < 3.1'
-            );
-        }
-
-        new VarnishCache('token', [], $this->router, 'ban');
     }
 }

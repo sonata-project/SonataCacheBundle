@@ -67,31 +67,16 @@ class VarnishCache implements CacheAdapterInterface
     private $argumentResolver;
 
     /**
-     * Constructor.
-     *
-     * @param string                           $token            A token
-     * @param array                            $servers          An array of servers
-     * @param RouterInterface                  $router           A router instance
-     * @param string                           $purgeInstruction The purge instruction (purge in Varnish 2, ban in Varnish 3)
-     * @param null|ControllerResolverInterface $resolver         A controller resolver instance
-     * @param null|ArgumentResolverInterface   $argumentResolver
+     * @param string $purgeInstruction The purge instruction (purge in Varnish 2, ban in Varnish 3)
      */
     public function __construct(
         string $token,
         array $servers,
         RouterInterface $router,
         string $purgeInstruction,
-        ControllerResolverInterface $resolver = null,
-        ArgumentResolverInterface $argumentResolver = null
+        ControllerResolverInterface $resolver,
+        ArgumentResolverInterface $argumentResolver
     ) {
-        if (interface_exists(ArgumentResolverInterface::class) && !$argumentResolver) {
-            @trigger_error(sprintf(
-                'Not providing a "%s" instance to "%s" is deprecated since 3.x and will not be possible in 4.0',
-                ArgumentResolverInterface::class,
-                __METHOD__
-            ), E_USER_DEPRECATED);
-        }
-
         $this->token = $token;
         $this->servers = $servers;
         $this->router = $router;
@@ -100,20 +85,14 @@ class VarnishCache implements CacheAdapterInterface
         $this->argumentResolver = $argumentResolver;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function flushAll(): bool
     {
         return $this->runCommand(
-            'ban' == $this->purgeInstruction ? 'ban.url' : 'purge',
-            'ban' == $this->purgeInstruction ? '.*' : 'req.url ~ .*'
+            'ban' === $this->purgeInstruction ? 'ban.url' : 'purge',
+            'ban' === $this->purgeInstruction ? '.*' : 'req.url ~ .*'
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function flush(array $keys = []): bool
     {
         $parameters = [];
@@ -126,16 +105,13 @@ class VarnishCache implements CacheAdapterInterface
         return $this->runCommand($this->purgeInstruction, $purge);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function has(array $keys): bool
     {
         return true;
     }
 
     /**
-     * {@inheritdoc}
+     * @throws \RuntimeException
      */
     public function get(array $keys): CacheElementInterface
     {
@@ -152,18 +128,18 @@ class VarnishCache implements CacheAdapterInterface
         return new CacheElement($keys, new Response($content));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function set(array $keys, $data, int $ttl = CacheElement::DAY, array $contextualKeys = []): CacheElementInterface
-    {
+    public function set(
+        array $keys,
+        $data,
+        int $ttl = CacheElement::DAY,
+        array $contextualKeys = []
+    ): CacheElementInterface {
         return new CacheElement($keys, $data, $ttl, $contextualKeys);
     }
 
     /**
-     * Cache action.
-     *
-     * @param Request $request
+     * @throws AccessDeniedHttpException
+     * @throws \UnexpectedValueException
      *
      * @return mixed
      */
@@ -180,35 +156,23 @@ class VarnishCache implements CacheAdapterInterface
         $controller = $this->resolver->getController($subRequest);
         if (!$controller) {
             throw new \UnexpectedValueException(
-                'Could not find a controller for this subrequest'
+                'Could not find a controller for this subrequest.'
             );
         }
 
         $subRequest->attributes->add(['_controller' => $parameters['controller']]);
         $subRequest->attributes->add($parameters['parameters']);
 
-        $arguments = $this->argumentResolver ?
-            $this->argumentResolver->getArguments($subRequest, $controller) :
-            $this->resolver->getArguments($subRequest, $controller);
+        $arguments = $this->argumentResolver->getArguments($subRequest, $controller);
 
-        // call controller
         return call_user_func_array($controller, $arguments);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isContextual(): bool
     {
         return true;
     }
 
-    /**
-     * @param string $command
-     * @param string $expression
-     *
-     * @return bool
-     */
     protected function runCommand(string $command, string $expression): bool
     {
         $return = true;
@@ -220,7 +184,7 @@ class VarnishCache implements CacheAdapterInterface
                 $server
             ));
 
-            if (0 == $process->run()) {
+            if (0 === $process->run()) {
                 continue;
             }
 
@@ -230,13 +194,6 @@ class VarnishCache implements CacheAdapterInterface
         return $return;
     }
 
-    /**
-     * Gets the URL by the given keys.
-     *
-     * @param array $keys
-     *
-     * @return string
-     */
     protected function getUrl(array $keys): ?string
     {
         $parameters = [
@@ -247,13 +204,6 @@ class VarnishCache implements CacheAdapterInterface
         return $this->router->generate('sonata_cache_esi', $parameters, UrlGeneratorInterface::ABSOLUTE_PATH);
     }
 
-    /**
-     * Computes the given keys.
-     *
-     * @param array $keys
-     *
-     * @return string
-     */
     protected function computeHash(array $keys): string
     {
         ksort($keys);
@@ -261,13 +211,6 @@ class VarnishCache implements CacheAdapterInterface
         return hash('sha256', $this->token.serialize($keys));
     }
 
-    /**
-     * Normalizes the given key.
-     *
-     * @param string $key
-     *
-     * @return string
-     */
     protected function normalize(string $key): string
     {
         return sprintf('x-sonata-cache-%s', str_replace(['_', '\\'], '-', strtolower($key)));

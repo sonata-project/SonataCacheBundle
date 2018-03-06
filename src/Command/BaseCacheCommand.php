@@ -18,11 +18,6 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 abstract class BaseCacheCommand extends ContainerAwareCommand
 {
-    /**
-     * Gets the cache manager service.
-     *
-     * @return CacheManagerInterface
-     */
     public function getManager(): CacheManagerInterface
     {
         return $this->getContainer()->get('sonata.cache.manager');
