@@ -23,19 +23,4 @@ class SonataCacheBundle extends Bundle
 
         $container->addCompilerPass(new CacheCompilerPass());
     }
-
-    public function boot()
-    {
-        if ($this->container->has('twig')) {
-            $baseTemplateClass = $this->container->get('twig')->getBaseTemplateClass();
-
-            if (empty($baseTemplateClass)) {
-                return;
-            }
-
-            if (method_exists($baseTemplateClass, 'attachRecorder')) {
-                call_user_func([$baseTemplateClass, 'attachRecorder'], $this->container->get('sonata.cache.recorder'));
-            }
-        }
-    }
 }
