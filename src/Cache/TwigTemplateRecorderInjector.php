@@ -24,7 +24,7 @@ use Twig_Extension;
  */
 final class TwigTemplateRecorderInjector extends Twig_Extension
 {
-    public function __construct (Twig_Environment $twig, Recorder $recorder)
+    public function __construct(Twig_Environment $twig, Recorder $recorder)
     {
         $baseTemplateClass = $twig->getBaseTemplateClass();
 
