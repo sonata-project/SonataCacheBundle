@@ -39,7 +39,7 @@
         "symfony/console": "^2.8 || ^3.2 || ^4.0",
         "symfony/framework-bundle": "^2.8 || ^3.2 || ^4.0",
         "symfony/phpunit-bridge": "^4.0",
-        "twig/twig": "^2.4"
+        "twig/twig": "^2.4 | ^1.35"
     },
     "suggest": {
         "ext-apcu": "Caching with ext/apcu",
