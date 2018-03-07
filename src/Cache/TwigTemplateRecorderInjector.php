@@ -14,26 +14,42 @@ namespace Sonata\CacheBundle\Cache;
 use Sonata\Cache\Invalidation\Recorder;
 use Twig_Environment;
 use Twig_Extension;
+use Twig_Extension_InitRuntimeInterface;
 
 /**
  * @internal
  *
- * Ugly hack to run this code on twig initialization
- *
  * NEXT_MAJOR: remove
  */
-final class TwigTemplateRecorderInjector extends Twig_Extension
+final class TwigTemplateRecorderInjector extends Twig_Extension implements Twig_Extension_InitRuntimeInterface
 {
-    public function __construct(Twig_Environment $twig, Recorder $recorder)
+    /**
+     * @var Recorder
+     */
+    private $recorder;
+
+    public function __construct(Recorder $recorder)
     {
-        $baseTemplateClass = $twig->getBaseTemplateClass();
+        $this->recorder = $recorder;
+    }
+
+    /**
+     * Initializes the runtime environment.
+     *
+     * This is where you can load some file that contains filter functions for instance.
+     *
+     * @param Twig_Environment $environment The current Twig_Environment instance
+     */
+    public function initRuntime(Twig_Environment $environment)
+    {
+        $baseTemplateClass = $environment->getBaseTemplateClass();
 
         if (empty($baseTemplateClass)) {
             return;
         }
 
         if (method_exists($baseTemplateClass, 'attachRecorder')) {
-            call_user_func([$baseTemplateClass, 'attachRecorder'], $recorder);
+            call_user_func([$baseTemplateClass, 'attachRecorder'], $this->recorder);
         }
     }
 }

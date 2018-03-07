@@ -67,10 +67,8 @@
         </service>
         <service id="sonata.cache.twig_template_recorder_injector" public="false"
                  class="Sonata\CacheBundle\Cache\TwigTemplateRecorderInjector">
-            <argument type="service" id="twig"/>
+            <tag name="twig.extension"/>
             <argument type="service" id="sonata.cache.recorder"/>
-
-            <tag name="twig.extension" />
         </service>
     </services>
 </container>
