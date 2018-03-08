@@ -65,8 +65,7 @@
         <service id="sonata.cache.invalidation.simple" class="Sonata\CacheBundle\Invalidation\SimpleCacheInvalidation">
             <argument type="service" id="logger"/>
         </service>
-        <service id="sonata.cache.twig_template_recorder_injector" public="false"
-                 class="Sonata\CacheBundle\Cache\TwigTemplateRecorderInjector">
+        <service id="sonata.cache.twig_template_recorder_injector" class="Sonata\CacheBundle\Cache\TwigTemplateRecorderInjector" public="false">
             <tag name="twig.extension"/>
             <argument type="service" id="sonata.cache.recorder"/>
         </service>
