@@ -12,16 +12,16 @@
 namespace Sonata\CacheBundle\Cache;
 
 use Sonata\Cache\Invalidation\Recorder;
-use Twig_Environment;
-use Twig_Extension;
-use Twig_Extension_InitRuntimeInterface;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\Extension\InitRuntimeInterface;
 
 /**
  * @internal
  *
  * NEXT_MAJOR: remove
  */
-final class TwigTemplateRecorderInjector extends Twig_Extension implements Twig_Extension_InitRuntimeInterface
+final class TwigTemplateRecorderInjector extends AbstractExtension implements InitRuntimeInterface
 {
     /**
      * @var Recorder
@@ -33,14 +33,7 @@ final class TwigTemplateRecorderInjector extends Twig_Extension implements Twig_
         $this->recorder = $recorder;
     }
 
-    /**
-     * Initializes the runtime environment.
-     *
-     * This is where you can load some file that contains filter functions for instance.
-     *
-     * @param Twig_Environment $environment The current Twig_Environment instance
-     */
-    public function initRuntime(Twig_Environment $environment)
+    public function initRuntime(Environment $environment)
     {
         $baseTemplateClass = $environment->getBaseTemplateClass();
 
