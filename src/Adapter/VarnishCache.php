@@ -83,7 +83,7 @@ class VarnishCache implements CacheAdapterInterface
     ) {
         if (interface_exists(ArgumentResolverInterface::class) && !$argumentResolver) {
             @trigger_error(sprintf(
-                'Not providing a "%s" instance to "%s" is deprecated since 3.x and will not be possible in 4.0',
+                'Not providing a "%s" instance to "%s" is deprecated since 2.x and will not be possible in 3.0',
                 ArgumentResolverInterface::class,
                 __METHOD__
             ), E_USER_DEPRECATED);

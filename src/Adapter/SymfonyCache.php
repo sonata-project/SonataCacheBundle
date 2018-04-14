@@ -77,7 +77,7 @@ class SymfonyCache implements CacheAdapterInterface
     public function __construct(RouterInterface $router, Filesystem $filesystem, $cacheDir, $token, $phpCodeCacheEnabled, array $types, array $servers, array $timeouts = [])
     {
         if (!$timeouts) {
-            @trigger_error('The "timeouts" argument is available since 3.x and will become mandatory in 4.0, please provide it.', E_USER_DEPRECATED);
+            @trigger_error('The "timeouts" argument is available since 2.x and will become mandatory in 3.0, please provide it.', E_USER_DEPRECATED);
 
             $timeouts = [
                 'RCV' => ['sec' => 2, 'usec' => 0],
