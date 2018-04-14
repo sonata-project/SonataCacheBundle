@@ -153,7 +153,7 @@ CMD
 
     /**
      * @group legacy
-     * @expectedDeprecation Not providing a "Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface" instance to "Sonata\CacheBundle\Adapter\VarnishCache::__construct" is deprecated since 3.x and will not be possible in 4.0
+     * @expectedDeprecation Not providing a "Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface" instance to "Sonata\CacheBundle\Adapter\VarnishCache::__construct" is deprecated since 2.x and will not be possible in 3.0
      */
     public function testConstructorLegacy()
     {
