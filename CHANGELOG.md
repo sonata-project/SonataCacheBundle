@@ -2,6 +2,29 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0](https://github.com/sonata-project/SonataCacheBundle/compare/2.4.2...3.0.0) - 2018-06-27
+
+### Added
+
+- support for sonata/cache 2
+
+### Removed
+
+- support for sonata/cache 1
+- support for Twig 1
+- PHP 5.3 through 5.5 support was removed
+- Symfony 2.2 through 2.7 support was removed
+- removed deprecated twig template classes
+- removed calling deprecated twig classes in bundle boot
+
+### Fixed
+
+- Fixed sonata.cache.invalidation.simple service definition typo
+
+### Changed
+
+- `Sonata\CacheBundle\Twig\TwigTemplate14` was renamed to `Sonata\CacheBundle\Twig\TwigTemplate`
+
 ## [2.4.2](https://github.com/sonata-project/SonataCacheBundle/compare/2.4.1...2.4.2) - 2018-03-12
 ### Fixed
 - Usage of twig service in SonataCacheBundle is optional now
