@@ -46,7 +46,7 @@ abstract class TwigTemplate13 extends \Twig_Template
     {
         $attribute = parent::getAttribute($object, $item, $arguments, $type, $isDefinedTest);
 
-        if (self::$recorder && is_object($object)) {
+        if (self::$recorder && \is_object($object)) {
             self::$recorder->add($object);
         }
 

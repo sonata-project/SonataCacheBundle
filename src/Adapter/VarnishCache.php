@@ -184,7 +184,7 @@ class VarnishCache implements CacheAdapterInterface
             $this->resolver->getArguments($subRequest, $controller);
 
         // call controller
-        return call_user_func_array($controller, $arguments);
+        return \call_user_func_array($controller, $arguments);
     }
 
     /**

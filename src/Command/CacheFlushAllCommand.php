@@ -36,7 +36,7 @@ class CacheFlushAllCommand extends BaseCacheCommand
         $output->writeln('<info>clearing cache information</info>');
 
         foreach ($this->getManager()->getCacheServices() as $name => $cache) {
-            if ($input->getOption('cache') && !in_array($name, $input->getOption('cache'))) {
+            if ($input->getOption('cache') && !\in_array($name, $input->getOption('cache'))) {
                 continue;
             }
 
