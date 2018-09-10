@@ -176,7 +176,7 @@ class SymfonyCache implements CacheAdapterInterface
             throw new AccessDeniedHttpException('Invalid token');
         }
 
-        if (!in_array($type, $this->types)) {
+        if (!\in_array($type, $this->types)) {
             throw new \RuntimeException(
                 sprintf('Type "%s" is not defined, allowed types are: "%s"', $type, implode(', ', $this->types))
             );
@@ -255,7 +255,7 @@ class SymfonyCache implements CacheAdapterInterface
             return;
         }
 
-        if (function_exists('opcache_reset')) {
+        if (\function_exists('opcache_reset')) {
             opcache_reset();
         }
     }

@@ -42,7 +42,7 @@ final class TwigTemplateRecorderInjector extends AbstractExtension implements In
         }
 
         if (method_exists($baseTemplateClass, 'attachRecorder')) {
-            call_user_func([$baseTemplateClass, 'attachRecorder'], $this->recorder);
+            \call_user_func([$baseTemplateClass, 'attachRecorder'], $this->recorder);
         }
     }
 }
