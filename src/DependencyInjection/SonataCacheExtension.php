@@ -303,7 +303,7 @@ HELP
 
     protected function checkApc(): void
     {
-        if (!function_exists('apc_fetch')) {
+        if (!\function_exists('apc_fetch')) {
             throw new \RuntimeException(<<<'HELP'
 The `sonata.cache.apc` service is configured, however the apc_* functions are not available.
 
