@@ -55,11 +55,11 @@ class ApcCache extends BaseApcCache
     public function cacheAction(string $token): Response
     {
         if ($this->token === $token) {
-            if (function_exists('opcache_reset')) {
+            if (\function_exists('opcache_reset')) {
                 opcache_reset();
             }
 
-            if (extension_loaded('apcu') && ini_get('apcu.enabled')) {
+            if (\extension_loaded('apcu') && ini_get('apcu.enabled')) {
                 apcu_clear_cache();
             }
 
