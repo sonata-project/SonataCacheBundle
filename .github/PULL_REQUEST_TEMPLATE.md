@@ -3,9 +3,9 @@
 <!--
     Show us you choose the right branch.
     Different branches are used for different things :
-    - 2.x is for everything backwards compatible, like patches, features and deprecation notices
+    - 3.x is for everything backwards compatible, like patches, features and deprecation notices
     - master is for deprecation removals and other changes that cannot be done without a BC-break
-    More details here: https://github.com/sonata-project/SonataCacheBundle/blob/2.x/CONTRIBUTING.md#the-base-branch
+    More details here: https://github.com/sonata-project/SonataCacheBundle/blob/3.x/CONTRIBUTING.md#the-base-branch
 -->
 I am targeting this branch, because {reason}.
 
@@ -21,6 +21,12 @@ Closes #{put_issue_number_here}
 <!-- MANDATORY
     Fill the changelog part inside the code block.
     Follow this schema: http://keepachangelog.com/
+-->
+
+<!-- 
+    If you are updating something that doesn't require
+    a release, you can delete whole Changelog section.
+    (eg. update to docs, tests)
 -->
 
 <!-- REMOVE EMPTY SECTIONS -->
@@ -39,17 +45,17 @@ Closes #{put_issue_number_here}
 ### Security
 ```
 
-## To do
-
 <!--
-    If this is a work in progress, COMPLETE and ADD needed tasks.
+    If this is a work in progress, uncomment this section.
     You can add as many tasks as you want.
-    If some are not relevant, just REMOVE them.
+    If some are not relevant, just remove them.
+    
+    ## To do
+    
+    - [ ] Update the tests
+    - [ ] Update the documentation
+    - [ ] Add an upgrade note
 -->
-
-- [ ] Update the tests
-- [ ] Update the documentation
-- [ ] Add an upgrade note
 
 ## Subject
 

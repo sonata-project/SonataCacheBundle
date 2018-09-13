@@ -118,7 +118,7 @@ class SsiCache implements CacheAdapterInterface
 
         $arguments = $this->argumentResolver->getArguments($subRequest, $controller);
 
-        return call_user_func_array($controller, $arguments);
+        return \call_user_func_array($controller, $arguments);
     }
 
     public function isContextual(): bool
