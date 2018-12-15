@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.1](https://github.com/sonata-project/SonataCacheBundle/compare/3.0.0...3.0.1) - 2018-12-15
+
+### Fixed
+- Wrong namespace for `sonata.cache.phpcr_odm.event_subscriber.default` config
+- `sonata.cache.phpcr_odm.event_subscriber.default`is now `public`
+- definition pointing to a non existent class
+
 ## [3.0.0](https://github.com/sonata-project/SonataCacheBundle/compare/2.4.2...3.0.0) - 2018-06-27
 
 ### Added
