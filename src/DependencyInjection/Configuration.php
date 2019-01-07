@@ -23,7 +23,7 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('sonata_cache');
 
         // Keep compatibility with symfony/config < 4.2
-        if (!\method_exists($treeBuilder, 'getRootNode')) {
+        if (!method_exists($treeBuilder, 'getRootNode')) {
             $node = $treeBuilder->root('sonata_cache')->children();
         } else {
             $node = $treeBuilder->getRootNode()->children();
