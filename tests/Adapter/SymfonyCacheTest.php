@@ -89,11 +89,11 @@ class SymfonyCacheTest extends TestCase
         // Then
         $this->assertInstanceOf(Response::class, $response);
 
-        $this->assertEquals(200, $response->getStatusCode(), 'Response should be 200');
-        $this->assertEquals('ok', $response->getContent(), 'Response should return "OK"');
+        $this->assertSame(200, $response->getStatusCode(), 'Response should be 200');
+        $this->assertSame('ok', $response->getContent(), 'Response should return "OK"');
 
-        $this->assertEquals(2, $response->headers->get('Content-Length'));
-        $this->assertEquals('must-revalidate, no-cache, private', $response->headers->get('Cache-Control'));
+        $this->assertSame(2, $response->headers->get('Content-Length'));
+        $this->assertSame('must-revalidate, no-cache, private', $response->headers->get('Cache-Control'));
     }
 
     public function testCacheActionWithInvalidToken(): void
