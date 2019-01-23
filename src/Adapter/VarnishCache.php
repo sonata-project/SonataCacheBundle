@@ -147,7 +147,7 @@ class VarnishCache implements CacheAdapterInterface
     {
         $parameters = $request->get('parameters', []);
 
-        if ($request->get('token') != $this->computeHash($parameters)) {
+        if ($request->get('token') !== $this->computeHash($parameters)) {
             throw new AccessDeniedHttpException('Invalid token');
         }
 

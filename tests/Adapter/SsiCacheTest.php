@@ -67,7 +67,7 @@ class SsiCacheTest extends TestCase
 
         $this->assertInstanceOf(CacheElement::class, $cacheElement);
 
-        $this->assertEquals(
+        $this->assertSame(
             '<!--# include virtual="/cache/esi/TOKEN?controller=asdsad" -->',
             $cacheElement->getData()->getContent()
         );

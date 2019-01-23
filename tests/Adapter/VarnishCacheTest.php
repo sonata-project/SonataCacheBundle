@@ -71,7 +71,7 @@ class VarnishCacheTest extends TestCase
 
         $this->assertInstanceOf(CacheElement::class, $cacheElement);
 
-        $this->assertEquals(
+        $this->assertSame(
             '<esi:include src="https://sonata-project.org/cache/esi/TOKEN?controller=asdsad"/>',
             $cacheElement->getData()->getContent()
         );
