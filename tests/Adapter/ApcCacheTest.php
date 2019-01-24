@@ -33,7 +33,7 @@ class ApcCacheTest extends TestCase
             $this->markTestSkipped('APC is not installed');
         }
 
-        if (0 == ini_get('apcu.enable_cli')) {
+        if (0 === ini_get('apcu.enable_cli')) {
             $this->markTestSkipped('APC is not enabled in cli, please add apcu.enable_cli=On into the apcu.ini file');
         }
 
@@ -71,6 +71,6 @@ class ApcCacheTest extends TestCase
         $method = new \ReflectionMethod($this->cache, 'getUrl');
         $method->setAccessible(true);
 
-        $this->assertEquals('/sonata/cache/apc/token', $method->invoke($this->cache));
+        $this->assertSame('/sonata/cache/apc/token', $method->invoke($this->cache));
     }
 }

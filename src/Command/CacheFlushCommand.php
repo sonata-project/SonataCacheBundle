@@ -50,7 +50,7 @@ class CacheFlushCommand extends BaseCacheCommand
         }
 
         foreach ($this->getManager()->getCacheServices() as $name => $cache) {
-            if ($input->getOption('cache') && !\in_array($name, $input->getOption('cache'))) {
+            if ($input->getOption('cache') && !\in_array($name, $input->getOption('cache'), true)) {
                 continue;
             }
 

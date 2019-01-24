@@ -157,11 +157,11 @@ class SymfonyCache implements CacheAdapterInterface
      */
     public function cacheAction(string $token, string $type): Response
     {
-        if ($this->token != $token) {
+        if ($this->token !== $token) {
             throw new AccessDeniedHttpException('Invalid token.');
         }
 
-        if (!\in_array($type, $this->types)) {
+        if (!\in_array($type, $this->types, true)) {
             throw new \RuntimeException(
                 sprintf('Type "%s" is not defined, allowed types are: "%s"', $type, implode(', ', $this->types))
             );
