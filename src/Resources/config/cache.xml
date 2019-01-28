@@ -66,5 +66,15 @@
         <service id="sonata.cache.invalidation.simple" class="Sonata\Cache\Invalidation\SimpleCacheInvalidation">
             <argument type="service" id="logger"/>
         </service>
+        <service id="sonata.cache.command.flush" class="Sonata\CacheBundle\Command\CacheFlushCommand">
+            <argument type="constant">null</argument>
+            <argument type="service" id="sonata.cache.manager"/>
+            <tag name="console.command"/>
+        </service>
+        <service id="sonata.cache.command.flushall" class="Sonata\CacheBundle\Command\CacheFlushAllCommand">
+            <argument type="constant">null</argument>
+            <argument type="service" id="sonata.cache.manager"/>
+            <tag name="console.command"/>
+        </service>
     </services>
 </container>
