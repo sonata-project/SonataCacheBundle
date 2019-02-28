@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
+        <service id="Sonata\Cache\CacheManagerInterface" alias="sonata.cache.manager"/>
         <service id="sonata.cache.manager" class="Sonata\Cache\CacheManager">
             <argument/>
             <argument/>
@@ -64,6 +65,16 @@
         </service>
         <service id="sonata.cache.invalidation.simple" class="Sonata\Cache\Invalidation\SimpleCacheInvalidation">
             <argument type="service" id="logger"/>
+        </service>
+        <service id="sonata.cache.command.flush" class="Sonata\CacheBundle\Command\CacheFlushCommand">
+            <argument type="constant">null</argument>
+            <argument type="service" id="sonata.cache.manager"/>
+            <tag name="console.command"/>
+        </service>
+        <service id="sonata.cache.command.flushall" class="Sonata\CacheBundle\Command\CacheFlushAllCommand">
+            <argument type="constant">null</argument>
+            <argument type="service" id="sonata.cache.manager"/>
+            <tag name="console.command"/>
         </service>
     </services>
 </container>
