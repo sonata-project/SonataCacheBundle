@@ -94,7 +94,7 @@ class SsiCacheTest extends TestCase
     {
         $this->controllerResolver->expects($this->any())
             ->method('getController')
-            ->will($this->returnValue(function () {
+            ->will($this->returnValue(static function () {
                 return new Response();
             }));
 
