@@ -174,7 +174,7 @@ class SymfonyCacheTest extends TestCase
             $builder = new MockBuilder();
             $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
                 ->setName($function)
-                ->setFunction(function (): void {
+                ->setFunction(static function (): void {
                 })
                 ->build();
             $mock->enable();
@@ -227,7 +227,7 @@ class SymfonyCacheTest extends TestCase
             $builder = new MockBuilder();
             $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
                 ->setName($function)
-                ->setFunction(function (): void {
+                ->setFunction(static function (): void {
                 })
                 ->build();
             $mock->enable();

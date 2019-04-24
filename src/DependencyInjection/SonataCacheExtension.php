@@ -277,7 +277,7 @@ class SonataCacheExtension extends Extension
     public function configureServers(array $servers): array
     {
         return array_map(
-            function ($item) {
+            static function ($item) {
                 if ($item['basic']) {
                     $item['basic'] = base64_encode($item['basic']);
                 }
