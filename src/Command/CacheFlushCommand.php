@@ -16,6 +16,7 @@ namespace Sonata\CacheBundle\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class CacheFlushCommand extends BaseCacheCommand
 {
@@ -57,6 +58,11 @@ class CacheFlushCommand extends BaseCacheCommand
             $output->write(sprintf(' > %s : starting .... ', $name));
             $cache->flush($keys);
             $output->writeln('Ok');
+        }
+
+        if ($input->getOption('cache') && \in_array('sonata.cache.symfony', $input->getOption('cache'), true)) {
+            // The current event dispatcher is stale, let's not use it anymore
+            $this->getApplication()->setDispatcher(new EventDispatcher());
         }
 
         $output->writeln('<info>Done!</info>');

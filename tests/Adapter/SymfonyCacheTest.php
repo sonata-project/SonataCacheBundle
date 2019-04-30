@@ -17,6 +17,8 @@ use phpmock\MockBuilder;
 use PHPUnit\Framework\TestCase;
 use Sonata\Cache\Exception\UnsupportedException;
 use Sonata\CacheBundle\Adapter\SymfonyCache;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -36,6 +38,8 @@ class SymfonyCacheTest extends TestCase
 
     protected $filesystem;
 
+    protected $eventDispatcher;
+
     /**
      * Sets up cache adapter.
      */
@@ -43,10 +47,12 @@ class SymfonyCacheTest extends TestCase
     {
         $this->router = $this->createMock(RouterInterface::class);
         $this->filesystem = $this->createMock(Filesystem::class);
+        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
 
         $this->cache = new SymfonyCache(
             $this->router,
             $this->filesystem,
+            $this->eventDispatcher,
             '/cache/dir',
             'token',
             false,
@@ -79,9 +85,28 @@ class SymfonyCacheTest extends TestCase
 
     public function testCacheAction(): void
     {
+        $eventSubscriber = $this->createMock(EventSubscriberInterface::class);
+        $listener = new \stdClass();
+        $listeners = ['console.terminate' => [
+            [
+                $eventSubscriber,
+                'onCommandTerminate',
+            ],
+            [
+                $listener,
+                'onTerminate',
+            ],
+        ]];
+
         // Given
         $this->filesystem->expects($this->once())->method('exists')->will($this->returnValue(true));
         $this->filesystem->expects($this->once())->method('remove');
+        $this->eventDispatcher->expects($this->once())->method('getListeners')->willReturn($listeners);
+        $this->eventDispatcher->expects($this->once())->method('removeSubscriber')->with($eventSubscriber);
+        $this->eventDispatcher->expects($this->once())->method('removeListener')->with('console.terminate', [
+            $listener,
+            'onTerminate',
+        ]);
 
         // When
         $response = $this->cache->cacheAction('token', 'translations');
@@ -120,6 +145,7 @@ class SymfonyCacheTest extends TestCase
         $cache = new SymfonyCache(
             $this->router,
             $this->filesystem,
+            $this->eventDispatcher,
             '/cache/dir',
             'token',
             false,
@@ -144,6 +170,7 @@ class SymfonyCacheTest extends TestCase
         $cache = new SymfonyCache(
             $this->router,
             $this->filesystem,
+            $this->eventDispatcher,
             '/cache/dir',
             'token',
             false,
@@ -197,6 +224,7 @@ class SymfonyCacheTest extends TestCase
         $cache = new SymfonyCache(
             $this->router,
             $this->filesystem,
+            $this->eventDispatcher,
             '/cache/dir',
             'token',
             false,

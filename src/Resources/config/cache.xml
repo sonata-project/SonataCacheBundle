@@ -54,8 +54,10 @@
         </service>
         <service id="sonata.cache.symfony" class="Sonata\CacheBundle\Adapter\SymfonyCache">
             <tag name="sonata.cache"/>
+            <tag name="controller.service_arguments"/>
             <argument type="service" id="router"/>
             <argument type="service" id="filesystem"/>
+            <argument type="service" id="event_dispatcher"/>
             <argument type="string">%kernel.cache_dir%</argument>
             <argument/>
             <argument/>

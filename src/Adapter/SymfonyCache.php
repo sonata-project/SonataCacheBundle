@@ -16,6 +16,8 @@ namespace Sonata\CacheBundle\Adapter;
 use Sonata\Cache\CacheAdapterInterface;
 use Sonata\Cache\CacheElementInterface;
 use Sonata\Cache\Exception\UnsupportedException;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -68,9 +70,15 @@ class SymfonyCache implements CacheAdapterInterface
      */
     protected $filesystem;
 
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
     public function __construct(
         RouterInterface $router,
         Filesystem $filesystem,
+        EventDispatcherInterface $eventDispatcher,
         string $cacheDir,
         string $token,
         bool $phpCodeCacheEnabled,
@@ -80,6 +88,7 @@ class SymfonyCache implements CacheAdapterInterface
     ) {
         $this->router = $router;
         $this->filesystem = $filesystem;
+        $this->eventDispatcher = $eventDispatcher;
         $this->cacheDir = $cacheDir;
         $this->token = $token;
         $this->types = $types;
@@ -168,6 +177,15 @@ class SymfonyCache implements CacheAdapterInterface
         }
 
         $path = 'all' === $type ? $this->cacheDir : sprintf('%s/%s', $this->cacheDir, $type);
+
+        // clean up event dispatcher just before clearing the cache to prevent further events execution
+        foreach ($this->eventDispatcher->getListeners() as $eventName => $eventListenerList) {
+            foreach ($eventListenerList as $listener) {
+                $listener[0] instanceof EventSubscriberInterface ?
+                    $this->eventDispatcher->removeSubscriber($listener[0]) :
+                    $this->eventDispatcher->removeListener($eventName, [$listener[0], $listener[1]]);
+            }
+        }
 
         if ($this->filesystem->exists($path)) {
             $movedPath = $path.'_old_'.uniqid();

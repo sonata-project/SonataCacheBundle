@@ -16,6 +16,7 @@ namespace Sonata\CacheBundle\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class CacheFlushAllCommand extends BaseCacheCommand
 {
@@ -49,6 +50,9 @@ class CacheFlushAllCommand extends BaseCacheCommand
                 $output->writeln('<error>Failed!</error>');
             }
         }
+
+        // The current event dispatcher is stale, let's not use it anymore
+        $this->getApplication()->setDispatcher(new EventDispatcher());
 
         $output->writeln('<info>Done!</info>');
     }
