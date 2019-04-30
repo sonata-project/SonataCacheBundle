@@ -16,6 +16,8 @@ namespace Sonata\CacheBundle\Adapter;
 use Sonata\Cache\CacheAdapterInterface;
 use Sonata\Cache\CacheElementInterface;
 use Sonata\Cache\Exception\UnsupportedException;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -68,6 +70,11 @@ class SymfonyCache implements CacheAdapterInterface
      */
     protected $filesystem;
 
+    /**
+     * @var EventDispatcherInterface|null
+     */
+    private $eventDispatcher;
+
     public function __construct(
         RouterInterface $router,
         Filesystem $filesystem,
@@ -76,7 +83,8 @@ class SymfonyCache implements CacheAdapterInterface
         bool $phpCodeCacheEnabled,
         array $types,
         array $servers,
-        array $timeouts
+        array $timeouts,
+        EventDispatcherInterface $eventDispatcher = null
     ) {
         $this->router = $router;
         $this->filesystem = $filesystem;
@@ -86,6 +94,7 @@ class SymfonyCache implements CacheAdapterInterface
         $this->phpCodeCacheEnabled = $phpCodeCacheEnabled;
         $this->servers = $servers;
         $this->timeouts = $timeouts;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function flushAll(): bool
@@ -168,6 +177,28 @@ class SymfonyCache implements CacheAdapterInterface
         }
 
         $path = 'all' === $type ? $this->cacheDir : sprintf('%s/%s', $this->cacheDir, $type);
+
+        /*
+         * NEXT_MAJOR: Remove this if condition and else block.
+         * clean up event dispatcher just before clearing the cache to prevent further events execution
+         */
+        if (null !== $this->eventDispatcher) {
+            foreach ($this->eventDispatcher->getListeners() as $eventName => $eventListenerList) {
+                foreach ($eventListenerList as $listener) {
+                    $listener[0] instanceof EventSubscriberInterface ?
+                        $this->eventDispatcher->removeSubscriber($listener[0]) :
+                        $this->eventDispatcher->removeListener($eventName, [$listener[0], $listener[1]]);
+                }
+            }
+        } else {
+            @trigger_error(sprintf(<<<'MESSAGE'
+Passing no 9th argument to %s is deprecated since version sonata-project/cache-bundle 3.x and will be mandatory in 4.0.
+Pass Symfony\Component\EventDispatcher\EventDispatcherInterface as 9th argument.
+MESSAGE
+                , __CLASS__),
+                E_USER_DEPRECATED
+            );
+        }
 
         if ($this->filesystem->exists($path)) {
             $movedPath = $path.'_old_'.uniqid();
