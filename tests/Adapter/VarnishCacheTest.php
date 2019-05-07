@@ -50,9 +50,9 @@ class VarnishCacheTest extends TestCase
     {
         $this->router->expects($this->any())
             ->method('generate')
-            ->will($this->returnValue(
+            ->willReturn(
                 'https://sonata-project.org/cache/esi/TOKEN?controller=asdsad'
-            ));
+            );
 
         $this->assertTrue($this->cache->flush([]));
         $this->assertTrue($this->cache->flushAll());
@@ -83,9 +83,9 @@ class VarnishCacheTest extends TestCase
 
         $this->router->expects($this->any())
             ->method('generate')
-            ->will($this->returnValue(
+            ->willReturn(
                 'http://sonata-project.orf/cache/esi/TOKEN?controller=asdsad'
-            ));
+            );
 
         $request = Request::create('cache/esi/TOKEN?controller=asdsad', 'get', [
             'token' => 'wrong',
@@ -98,13 +98,13 @@ class VarnishCacheTest extends TestCase
     {
         $this->controllerResolver->expects($this->any())
             ->method('getController')
-            ->will($this->returnValue(static function () {
+            ->willReturn(static function () {
                 return new Response();
-            }));
+            });
 
         $this->argumentResolver->expects($this->any())
             ->method('getArguments')
-            ->will($this->returnValue([]));
+            ->willReturn([]);
 
         $request = Request::create('cache/esi/TOKEN', 'get', [
             'token' => '44befdbd93f304ea693023aa6587729bed76a206ecdacfd9bbd9b43fcf2e1664',

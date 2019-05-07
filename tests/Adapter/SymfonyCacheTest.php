@@ -80,7 +80,7 @@ class SymfonyCacheTest extends TestCase
     public function testCacheAction(): void
     {
         // Given
-        $this->filesystem->expects($this->once())->method('exists')->will($this->returnValue(true));
+        $this->filesystem->expects($this->once())->method('exists')->willReturn(true);
         $this->filesystem->expects($this->once())->method('remove');
 
         // When
