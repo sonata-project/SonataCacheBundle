@@ -66,7 +66,7 @@ class ApcCacheTest extends TestCase
             ->expects($this->once())
             ->method('generate')
             ->with($this->equalTo('sonata_cache_apc'), $this->equalTo(['token' => 'token']))
-            ->will($this->returnValue('/sonata/cache/apc/token'));
+            ->willReturn('/sonata/cache/apc/token');
 
         $method = new \ReflectionMethod($this->cache, 'getUrl');
         $method->setAccessible(true);
