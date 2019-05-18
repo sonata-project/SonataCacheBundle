@@ -17,6 +17,8 @@ use phpmock\MockBuilder;
 use PHPUnit\Framework\TestCase;
 use Sonata\Cache\Exception\UnsupportedException;
 use Sonata\CacheBundle\Adapter\SymfonyCache;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -36,6 +38,8 @@ class SymfonyCacheTest extends TestCase
 
     protected $filesystem;
 
+    private $eventDispatcher;
+
     /**
      * Sets up cache adapter.
      */
@@ -43,6 +47,7 @@ class SymfonyCacheTest extends TestCase
     {
         $this->router = $this->createMock(RouterInterface::class);
         $this->filesystem = $this->createMock(Filesystem::class);
+        $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
 
         $this->cache = new SymfonyCache(
             $this->router,
@@ -55,7 +60,8 @@ class SymfonyCacheTest extends TestCase
             [
                 'RCV' => ['sec' => 2, 'usec' => 0],
                 'SND' => ['sec' => 2, 'usec' => 0],
-            ]
+            ],
+            $this->eventDispatcher
         );
     }
 
@@ -79,9 +85,28 @@ class SymfonyCacheTest extends TestCase
 
     public function testCacheAction(): void
     {
+        $eventSubscriber = $this->createMock(EventSubscriberInterface::class);
+        $listener = new \stdClass();
+        $listeners = ['console.terminate' => [
+            [
+                $eventSubscriber,
+                'onCommandTerminate',
+            ],
+            [
+                $listener,
+                'onTerminate',
+            ],
+        ]];
+
         // Given
         $this->filesystem->expects($this->once())->method('exists')->willReturn(true);
         $this->filesystem->expects($this->once())->method('remove');
+        $this->eventDispatcher->expects($this->once())->method('getListeners')->willReturn($listeners);
+        $this->eventDispatcher->expects($this->once())->method('removeSubscriber')->with($eventSubscriber);
+        $this->eventDispatcher->expects($this->once())->method('removeListener')->with('console.terminate', [
+            $listener,
+            'onTerminate',
+        ]);
 
         // When
         $response = $this->cache->cacheAction('token', 'translations');
@@ -130,7 +155,8 @@ class SymfonyCacheTest extends TestCase
             [
                 'RCV' => ['sec' => 2, 'usec' => 0],
                 'SND' => ['sec' => 2, 'usec' => 0],
-            ]
+            ],
+            $this->eventDispatcher
         );
 
         $this->expectException(\InvalidArgumentException::class);
@@ -154,7 +180,8 @@ class SymfonyCacheTest extends TestCase
             [
                 'RCV' => ['sec' => 2, 'usec' => 0],
                 'SND' => ['sec' => 2, 'usec' => 0],
-            ]
+            ],
+            $this->eventDispatcher
         );
 
         $mocks = [];
@@ -207,7 +234,8 @@ class SymfonyCacheTest extends TestCase
             [
                 'RCV' => ['sec' => 2, 'usec' => 0],
                 'SND' => ['sec' => 2, 'usec' => 0],
-            ]
+            ],
+            $this->eventDispatcher
         );
 
         $mocks = [];
@@ -240,5 +268,26 @@ class SymfonyCacheTest extends TestCase
         foreach ($mocks as $mock) {
             $mock->disable();
         }
+    }
+
+    /**
+     * @group legacy
+     * @expectedDeprecation Passing no 9th argument to Sonata\CacheBundle\Adapter\SymfonyCache is deprecated since version sonata-project/cache-bundle 3.x and will be mandatory in 4.0.
+     * Pass Symfony\Component\EventDispatcher\EventDispatcherInterface as 9th argument.
+     */
+    public function testCacheActionWithoutEventDispatcher(): void
+    {
+        $cache = new SymfonyCache(
+            $this->router,
+            $this->filesystem,
+            '/cache/dir',
+            'token',
+            false,
+            ['all', 'translations'],
+            [],
+            []
+        );
+
+        $cache->cacheAction('token', 'translations');
     }
 }
