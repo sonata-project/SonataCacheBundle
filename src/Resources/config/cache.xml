@@ -45,12 +45,14 @@
             <argument type="service" id="router"/>
             <argument/>
             <argument type="service" id="controller_resolver"/>
+            <argument type="service" id="argument_resolver"/>
         </service>
         <service id="sonata.cache.ssi" class="Sonata\CacheBundle\Adapter\SsiCache">
             <tag name="sonata.cache"/>
             <argument/>
             <argument type="service" id="router"/>
             <argument type="service" id="controller_resolver"/>
+            <argument type="service" id="argument_resolver"/>
         </service>
         <service id="sonata.cache.symfony" class="Sonata\CacheBundle\Adapter\SymfonyCache">
             <tag name="sonata.cache"/>
