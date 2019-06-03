@@ -2,6 +2,18 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.1.0](https://github.com/sonata-project/SonataCacheBundle/compare/3.0.1...3.1.0) - 2019-06-03
+
+### Fixed
+- missing argument for SSI and ESI cache
+- Fix return code of flush command for symfony cache
+- crash when running `sonata:cache:flush-all` or `sonata:cache:flush`
+- Fix deprecation for symfony/config 4.2+
+
+### Deprecated
+- not providing a cache manager to commands extending
+  `Sonata\CacheBundle\Command\BaseCacheCommand`
+
 ## [3.0.1](https://github.com/sonata-project/SonataCacheBundle/compare/3.0.0...3.0.1) - 2018-12-15
 
 ### Fixed
