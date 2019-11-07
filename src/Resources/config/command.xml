@@ -4,8 +4,10 @@
         <service id="Sonata\CacheBundle\Command\CacheFlushAllCommand" class="Sonata\CacheBundle\Command\CacheFlushAllCommand" public="true" autowire="true">
             <tag name="console.command"/>
         </service>
+        <service id="sonata.cache.command.flushall" alias="Sonata\CacheBundle\Command\CacheFlushAllCommand"/>
         <service id="Sonata\CacheBundle\Command\CacheFlushCommand" class="Sonata\CacheBundle\Command\CacheFlushCommand" public="true" autowire="true">
             <tag name="console.command"/>
         </service>
+        <service id="sonata.cache.command.flush" alias="Sonata\CacheBundle\Command\CacheFlushCommand"/>
     </services>
 </container>
