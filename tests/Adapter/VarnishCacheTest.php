@@ -94,6 +94,9 @@ class VarnishCacheTest extends TestCase
         $this->cache->cacheAction($request);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testValidToken(): void
     {
         $this->controllerResolver->expects($this->any())
