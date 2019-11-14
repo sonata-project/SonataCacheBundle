@@ -117,7 +117,7 @@ class SymfonyCacheTest extends TestCase
         $this->assertSame(200, $response->getStatusCode(), 'Response should be 200');
         $this->assertSame('ok', $response->getContent(), 'Response should return "OK"');
 
-        $this->assertSame(2, $response->headers->get('Content-Length'));
+        $this->assertSame('2', $response->headers->get('Content-Length'));
         $this->assertSame('must-revalidate, no-cache, private', $response->headers->get('Cache-Control'));
     }
 
