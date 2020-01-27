@@ -55,5 +55,7 @@ class CacheFlushAllCommand extends BaseCacheCommand
         $this->getApplication()->setDispatcher(new EventDispatcher());
 
         $output->writeln('<info>Done!</info>');
+
+        return 0;
     }
 }

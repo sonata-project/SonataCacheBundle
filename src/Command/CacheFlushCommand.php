@@ -66,5 +66,7 @@ class CacheFlushCommand extends BaseCacheCommand
         }
 
         $output->writeln('<info>Done!</info>');
+
+        return 0;
     }
 }
