@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.2.0](https://github.com/sonata-project/SonataCacheBundle/compare/3.1.0...3.2.0) - 2020-01-28
+### Added
+- Added symfony 5 components in composer.json
+
+## Removed
+- Removed support for symfony 3
+
 ## [3.1.0](https://github.com/sonata-project/SonataCacheBundle/compare/3.0.1...3.1.0) - 2019-06-03
 
 ### Fixed
