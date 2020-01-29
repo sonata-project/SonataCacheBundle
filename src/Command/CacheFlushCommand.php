@@ -42,7 +42,7 @@ class CacheFlushCommand extends BaseCacheCommand
     /**
      * @throws \RuntimeException
      */
-    public function execute(InputInterface $input, OutputInterface $output): void
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $keys = @json_decode($input->getOption('keys'), true);
 
@@ -66,5 +66,7 @@ class CacheFlushCommand extends BaseCacheCommand
         }
 
         $output->writeln('<info>Done!</info>');
+
+        return 0;
     }
 }

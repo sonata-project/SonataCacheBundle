@@ -33,7 +33,7 @@ class CacheFlushAllCommand extends BaseCacheCommand
         );
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): void
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('<info>Clearing cache information.</info>');
 
@@ -55,5 +55,7 @@ class CacheFlushAllCommand extends BaseCacheCommand
         $this->getApplication()->setDispatcher(new EventDispatcher());
 
         $output->writeln('<info>Done!</info>');
+
+        return 0;
     }
 }
