@@ -191,7 +191,8 @@ class Configuration implements ConfigurationInterface
                                         ->addDefaultsIfNotSet()
                                         ->children()
                                             ->integerNode('sec')
-                                                ->info(<<<'INFO'
+                                                ->info(
+                                                    <<<'INFO'
 Timeout value specifying the amount of seconds that an output function
 blocks because flow control prevents data from being sent
 INFO
@@ -199,7 +200,8 @@ INFO
                                                 ->defaultValue(2)
                                             ->end()
                                             ->integerNode('usec')
-                                                ->info(<<<'INFO'
+                                                ->info(
+                                                    <<<'INFO'
 Timeout value specifying the amount of microseconds that an output function
 blocks because flow control prevents data from being sent
 INFO
