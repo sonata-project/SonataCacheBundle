@@ -291,7 +291,8 @@ class SonataCacheExtension extends Extension
     protected function checkMemcached(): void
     {
         if (!class_exists('\Memcached', true)) {
-            throw new \RuntimeException(<<<'HELP'
+            throw new \RuntimeException(
+                <<<'HELP'
 The `sonata.cache.memcached` service is configured, however the Memcached class is not available.
 
 To resolve this issue, please install the related library : http://php.net/manual/en/book.memcached.php
@@ -304,7 +305,8 @@ HELP
     protected function checkApc(): void
     {
         if (!\function_exists('apc_fetch')) {
-            throw new \RuntimeException(<<<'HELP'
+            throw new \RuntimeException(
+                <<<'HELP'
 The `sonata.cache.apc` service is configured, however the apc_* functions are not available.
 
 To resolve this issue, please install the related library : http://php.net/manual/en/book.apc.php
@@ -317,7 +319,8 @@ HELP
     protected function checkMongo(): void
     {
         if (!class_exists('\Mongo', true)) {
-            throw new \RuntimeException(<<<'HELP'
+            throw new \RuntimeException(
+                <<<'HELP'
 The `sonata.cache.mongo` service is configured, however the Mongo class is not available.
 
 To resolve this issue, please install the related library : http://php.net/manual/en/book.mongo.php
@@ -330,7 +333,8 @@ HELP
     protected function checkPRedis(): void
     {
         if (!class_exists('\Predis\Client', true)) {
-            throw new \RuntimeException(<<<HELP
+            throw new \RuntimeException(
+                <<<HELP
 The `sonata.cache.predis` service is configured, however the Predis\Client class is not available.
 
 Please add the lib in your composer.json file: "predis/predis": "~0.8".
