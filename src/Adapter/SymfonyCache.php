@@ -191,7 +191,8 @@ class SymfonyCache implements CacheAdapterInterface
                 }
             }
         } else {
-            @trigger_error(sprintf(<<<'MESSAGE'
+            @trigger_error(
+                sprintf(<<<'MESSAGE'
 Passing no 9th argument to %s is deprecated since version sonata-project/cache-bundle 3.x and will be mandatory in 4.0.
 Pass Symfony\Component\EventDispatcher\EventDispatcherInterface as 9th argument.
 MESSAGE
