@@ -13,9 +13,7 @@ To begin, add the dependent bundles to the `vendor` directory buy running this c
 
     composer require sonata-project/cache-bundle
 
-Now, add the new Bundle to ``bundles.php`` file:
-
-.. code-block:: php
+Now, add the new Bundle to ``bundles.php`` file::
 
     // config/bundles.php
 
