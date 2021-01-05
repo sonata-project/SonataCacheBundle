@@ -41,7 +41,7 @@
         "symfony/phpunit-bridge": "^4.1"
     },
     "suggest": {
-        "ext-apcu": "Caching with ext/apcu",
+        "ext-apc": "Caching with ext/apc",
         "ext-memcached": "Caching with ext/memcached",
         "doctrine/doctrine-bundle": "ORM support",
         "doctrine/orm": "ORM support",

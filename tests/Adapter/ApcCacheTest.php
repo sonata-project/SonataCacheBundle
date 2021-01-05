@@ -29,11 +29,11 @@ class ApcCacheTest extends TestCase
 
     protected function setUp(): void
     {
-        if (!\function_exists('apcu_store')) {
+        if (!\function_exists('apc_store')) {
             $this->markTestSkipped('APC is not installed');
         }
 
-        if (0 === ini_get('apcu.enable_cli')) {
+        if (0 === ini_get('apc.enable_cli')) {
             $this->markTestSkipped('APC is not enabled in cli, please add apcu.enable_cli=On into the apcu.ini file');
         }
 
