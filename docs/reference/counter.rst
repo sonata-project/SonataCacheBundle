@@ -31,16 +31,14 @@ Usage
 
 .. code-block:: php
 
-    <?php
-
     use Sonata\CacheBundle\Adapter\Counter\PRedisCounter;
     use Sonata\CacheBundle\Counter\Counter;
 
-    $adapter = PRedisCounter(array(
+    $adapter = PRedisCounter([
         'host'     => '127.0.0.1',
         'port'     => 6379,
         'database' => 42
-    ));
+    ]);
 
 
     $counter = $adapter->increment("mystats");
