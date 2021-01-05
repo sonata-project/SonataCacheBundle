@@ -30,16 +30,16 @@ Let's say you are rendering a blog post that can have many authors and be relate
 
 So with the ``SonataCacheBundle``, you will have:
 
-- ``keys=array('post_id' => 1, 'action' => 'view')``: because it is the main information in your example
+- ``keys=['post_id' => 1, 'action' => 'view']``: because it is the main information in your example
 - ``data=raw html``: the html rendered by the view
-- ``contextualKeys: array('post_id' => 1, 'author_ids' => array(1, 2, ...), 'image_id' => 2, 'action' => 'view')``: the contextual keys can contain any information, so we include all information.
+- ``contextualKeys: ['post_id' => 1, 'author_ids' => [1, 2, ...], 'image_id' => 2, 'action' => 'view']``: the contextual keys can contain any information, so we include all information.
 
 Now, let's see how this cache element will be used with 2 backends, `memcached` and `mongodb` (capped collection):
 
  - The `memcached` adapter will generate a hash from the ``keys`` value, and will not used the ``contextualKeys`` information as there is no way to use those values with memcached.
  - The `mongodb` adapter will store the value as is, mongodb supports array! also the ``contextualKeys`` will be stored.
 
-Now, let's try to remove a cache element. This has to be done using the ``flush`` method. The method accepts an array as key to the element to remove (remember, keys are arrays not strings). If you call the function with ``array('post_id' => 1, 'action' => 'view')`` the method will
+Now, let's try to remove a cache element. This has to be done using the ``flush`` method. The method accepts an array as key to the element to remove (remember, keys are arrays not strings). If you call the function with ``['post_id' => 1, 'action' => 'view']`` the method will
 delete the previous cache entry.
 
 This will work on all adapters as the array is the main key of the ``CacheElement``. Let's see how to push this a bit further with the mongodb adapter.
@@ -48,13 +48,11 @@ You might want to remove all cache entries when the blog post is saved or when t
 
 .. code-block:: php
 
-    <?php
-
     // this will flush all entries in the mongodb collection matching this criteria
-    $adapter->flush(array('post_id' => 1));
+    $adapter->flush(['post_id' => 1]);
 
     // this will flush all entries included the post cache as the image_id is part of the contextualKeys element
-    $adapter->flush(array('image_id' => 1));
+    $adapter->flush(['image_id' => 1]);
 
 As you can see, the `memcached` driver is quite limited as you can retrieve an element but you cannot do much with invalidation.
 

@@ -17,8 +17,6 @@ Now, add the new Bundle to ``bundles.php`` file:
 
 .. code-block:: php
 
-    <?php
-
     // config/bundles.php
 
     return [
@@ -32,16 +30,14 @@ Now, add the new Bundle to ``bundles.php`` file:
 
 .. code-block:: php
 
-    <?php
-
     // app/AppKernel.php
 
     public function registerbundles()
     {
-        return array(
+        return [
             // Vendor specifics bundles
             new Sonata\CacheBundle\SonataCacheBundle(),
-        );
+        ];
     }
 
 
