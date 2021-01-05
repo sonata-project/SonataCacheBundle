@@ -46,7 +46,7 @@ This will work on all adapters as the array is the main key of the ``CacheElemen
 
 You might want to remove all cache entries when the blog post is saved or when the related image is updated. This can actually be done quite easily. Just call ``flush``:
 
-.. code-block:: php
+.. code-block::
 
     // this will flush all entries in the mongodb collection matching this criteria
     $adapter->flush(['post_id' => 1]);
