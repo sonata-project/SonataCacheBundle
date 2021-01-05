@@ -44,9 +44,7 @@ delete the previous cache entry.
 
 This will work on all adapters as the array is the main key of the ``CacheElement``. Let's see how to push this a bit further with the mongodb adapter.
 
-You might want to remove all cache entries when the blog post is saved or when the related image is updated. This can actually be done quite easily. Just call ``flush``:
-
-.. code-block::
+You might want to remove all cache entries when the blog post is saved or when the related image is updated. This can actually be done quite easily. Just call ``flush``::
 
     // this will flush all entries in the mongodb collection matching this criteria
     $adapter->flush(['post_id' => 1]);
@@ -54,5 +52,5 @@ You might want to remove all cache entries when the blog post is saved or when t
     // this will flush all entries included the post cache as the image_id is part of the contextualKeys element
     $adapter->flush(['image_id' => 1]);
 
-As you can see, the `memcached` driver is quite limited as you can retrieve an element but you cannot do much with invalidation.
+As you can see, the ``memcached`` driver is quite limited as you can retrieve an element but you cannot do much with invalidation.
 
