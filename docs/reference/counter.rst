@@ -57,7 +57,8 @@ To use the counter feature, add the following lines to your application configur
 
 .. code-block:: yaml
 
-    # app/config/config.yml
+    # config/packages/sonata.yaml
+
     sonata_cache:
         default_counter: sonata.cache.counter.mongo
 
