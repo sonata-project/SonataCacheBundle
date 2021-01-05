@@ -27,7 +27,7 @@ class ApcCacheTest extends TestCase
      */
     private $cache;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         if (!\function_exists('apcu_store')) {
             $this->markTestSkipped('APC is not installed');

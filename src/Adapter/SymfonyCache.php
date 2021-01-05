@@ -84,7 +84,7 @@ class SymfonyCache implements CacheAdapterInterface
         array $types,
         array $servers,
         array $timeouts,
-        EventDispatcherInterface $eventDispatcher = null
+        ?EventDispatcherInterface $eventDispatcher = null
     ) {
         $this->router = $router;
         $this->filesystem = $filesystem;
