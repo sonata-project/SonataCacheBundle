@@ -38,10 +38,10 @@
         "predis/predis": "^1.0",
         "symfony/console": "^4.3 || ^5.0",
         "symfony/framework-bundle": "^4.3 || ^5.0",
-        "symfony/phpunit-bridge": "^4.1"
+        "symfony/phpunit-bridge": "^5.2"
     },
     "suggest": {
-        "ext-apcu": "Caching with ext/apcu",
+        "ext-apc": "Caching with ext/apc",
         "ext-memcached": "Caching with ext/memcached",
         "doctrine/doctrine-bundle": "ORM support",
         "doctrine/orm": "ORM support",
