@@ -114,9 +114,9 @@ class SymfonyCache implements CacheAdapterInterface
             foreach ($keys as $type) {
                 $ip = $server['ip'];
 
-                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+                if (filter_var($ip, \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV4)) {
                     $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-                } elseif (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+                } elseif (filter_var($ip, \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV6)) {
                     $socket = socket_create(AF_INET6, SOCK_STREAM, SOL_TCP);
                 } else {
                     throw new \InvalidArgumentException(sprintf('"%s" is not a valid ip address', $ip));
@@ -197,7 +197,7 @@ Passing no 9th argument to %s is deprecated since version sonata-project/cache-b
 Pass Symfony\Component\EventDispatcher\EventDispatcherInterface as 9th argument.
 MESSAGE
                 , __CLASS__),
-                E_USER_DEPRECATED
+                \E_USER_DEPRECATED
             );
         }
 
