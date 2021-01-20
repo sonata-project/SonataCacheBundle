@@ -35,7 +35,7 @@ abstract class BaseCacheCommand extends ContainerAwareCommand
             @trigger_error(sprintf(
                 'Not providing a cache manager to "%s" is deprecated since 3.x and will no longer be possible in 4.0',
                 static::class
-            ), E_USER_DEPRECATED);
+            ), \E_USER_DEPRECATED);
         }
         $this->cacheManager = $cacheManager;
     }
