@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.3.0](https://github.com/sonata-project/SonataCacheBundle/compare/3.2.1...3.3.0) - 2021-03-28
+### Added
+- [[#321](https://github.com/sonata-project/SonataCacheBundle/pull/321)] Add Symfony 5 support ([@VincentLanglet](https://github.com/VincentLanglet))
+- [[#309](https://github.com/sonata-project/SonataCacheBundle/pull/309)] Add support for PHP 8.x ([@Yozhef](https://github.com/Yozhef))
+
 ## [3.2.1](https://github.com/sonata-project/SonataCacheBundle/compare/3.2.0...3.2.1) - 2020-01-28
 ### Fixed
 - Changed return type declarations from `void` to `int` on the commands
