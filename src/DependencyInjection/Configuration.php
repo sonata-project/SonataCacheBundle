@@ -270,8 +270,7 @@ INFO
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
 
         return $treeBuilder;
     }
