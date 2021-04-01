@@ -178,7 +178,7 @@ class VarnishCache implements CacheAdapterInterface
         $return = true;
 
         foreach ($this->servers as $server) {
-            $process = new Process(str_replace(
+            $process = Process::fromShellCommandline(str_replace(
                 ['{{ COMMAND }}', '{{ EXPRESSION }}'],
                 [$command, $expression],
                 $server
