@@ -79,15 +79,13 @@ class SonataCacheExtension extends Extension
     public function configureORM(ContainerBuilder $container, array $config): void
     {
         $container->getDefinition('sonata.cache.orm.event_subscriber')
-            ->addTag('doctrine.event_subscriber')
-        ;
+            ->addTag('doctrine.event_subscriber');
     }
 
     public function configurePHPCRODM(ContainerBuilder $container, array $config): void
     {
         $container->getDefinition('sonata.cache.phpcr_odm.event_subscriber')
-            ->addTag('doctrine_phpcr.event_subscriber')
-        ;
+            ->addTag('doctrine_phpcr.event_subscriber');
     }
 
     /**
@@ -112,8 +110,7 @@ class SonataCacheExtension extends Extension
         if (isset($config['caches']['ssi'])) {
             $container
                 ->getDefinition('sonata.cache.ssi')
-                ->replaceArgument(0, $config['caches']['ssi']['token'])
-            ;
+                ->replaceArgument(0, $config['caches']['ssi']['token']);
         } else {
             $container->removeDefinition('sonata.cache.ssi');
         }
@@ -142,8 +139,7 @@ class SonataCacheExtension extends Extension
                 ->getDefinition('sonata.cache.mongo')
                 ->replaceArgument(0, $servers)
                 ->replaceArgument(1, $database)
-                ->replaceArgument(2, $config['caches']['mongo']['collection'])
-            ;
+                ->replaceArgument(2, $config['caches']['mongo']['collection']);
         } else {
             $container->removeDefinition('sonata.cache.mongo');
         }
@@ -154,8 +150,7 @@ class SonataCacheExtension extends Extension
             $container
                 ->getDefinition('sonata.cache.memcached')
                 ->replaceArgument(0, $config['caches']['memcached']['prefix'])
-                ->replaceArgument(1, $config['caches']['memcached']['servers'])
-            ;
+                ->replaceArgument(1, $config['caches']['memcached']['servers']);
         } else {
             $container->removeDefinition('sonata.cache.memcached');
         }
@@ -165,8 +160,7 @@ class SonataCacheExtension extends Extension
 
             $container
                 ->getDefinition('sonata.cache.predis')
-                ->replaceArgument(0, $config['caches']['predis']['servers'])
-            ;
+                ->replaceArgument(0, $config['caches']['predis']['servers']);
         } else {
             $container->removeDefinition('sonata.cache.predis');
         }
@@ -179,8 +173,7 @@ class SonataCacheExtension extends Extension
                 ->replaceArgument(1, $config['caches']['apc']['token'])
                 ->replaceArgument(2, $config['caches']['apc']['prefix'])
                 ->replaceArgument(3, $this->configureServers($config['caches']['apc']['servers']))
-                ->replaceArgument(4, $config['caches']['apc']['timeout'])
-            ;
+                ->replaceArgument(4, $config['caches']['apc']['timeout']);
         } else {
             $container->removeDefinition('sonata.cache.apc');
         }
@@ -192,8 +185,7 @@ class SonataCacheExtension extends Extension
                 ->replaceArgument(4, $config['caches']['symfony']['php_cache_enabled'])
                 ->replaceArgument(5, $config['caches']['symfony']['types'])
                 ->replaceArgument(6, $this->configureServers($config['caches']['symfony']['servers']))
-                ->replaceArgument(7, $config['caches']['symfony']['timeout'])
-            ;
+                ->replaceArgument(7, $config['caches']['symfony']['timeout']);
         } else {
             $container->removeDefinition('sonata.cache.symfony');
         }
@@ -230,8 +222,7 @@ class SonataCacheExtension extends Extension
                 ->getDefinition('sonata.cache.counter.mongo')
                 ->replaceArgument(0, $servers)
                 ->replaceArgument(1, $config['counters']['mongo']['database'])
-                ->replaceArgument(2, $config['counters']['mongo']['collection'])
-            ;
+                ->replaceArgument(2, $config['counters']['mongo']['collection']);
         } else {
             $container->removeDefinition('sonata.cache.counter.mongo');
         }
@@ -242,8 +233,7 @@ class SonataCacheExtension extends Extension
             $container
                 ->getDefinition('sonata.cache.counter.memcached')
                 ->replaceArgument(0, $config['counters']['memcached']['prefix'])
-                ->replaceArgument(1, $config['counters']['memcached']['servers'])
-            ;
+                ->replaceArgument(1, $config['counters']['memcached']['servers']);
         } else {
             $container->removeDefinition('sonata.cache.counter.memcached');
         }
@@ -253,8 +243,7 @@ class SonataCacheExtension extends Extension
 
             $container
                 ->getDefinition('sonata.cache.counter.predis')
-                ->replaceArgument(0, $config['counters']['predis']['servers'])
-            ;
+                ->replaceArgument(0, $config['counters']['predis']['servers']);
         } else {
             $container->removeDefinition('sonata.cache.counter.predis');
         }
@@ -264,8 +253,7 @@ class SonataCacheExtension extends Extension
 
             $container
                 ->getDefinition('sonata.cache.counter.apc')
-                ->replaceArgument(0, $config['counters']['apc']['prefix'])
-            ;
+                ->replaceArgument(0, $config['counters']['apc']['prefix']);
         } else {
             $container->removeDefinition('sonata.cache.counter.apc');
         }
