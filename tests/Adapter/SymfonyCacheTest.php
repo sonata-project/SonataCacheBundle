@@ -86,7 +86,11 @@ class SymfonyCacheTest extends TestCase
     public function testCacheAction(): void
     {
         $eventSubscriber = $this->createMock(EventSubscriberInterface::class);
-        $listener = new \stdClass();
+        $listener = new class() {
+            public function onTerminate()
+            {
+            }
+        };
         $listeners = ['console.terminate' => [
             [
                 $eventSubscriber,
