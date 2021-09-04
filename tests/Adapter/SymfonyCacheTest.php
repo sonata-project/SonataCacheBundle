@@ -67,8 +67,8 @@ class SymfonyCacheTest extends TestCase
 
     public function testInitCache(): void
     {
-        $this->assertTrue($this->cache->flush([]));
-        $this->assertTrue($this->cache->flushAll());
+        static::assertTrue($this->cache->flush([]));
+        static::assertTrue($this->cache->flushAll());
 
         $this->expectException(UnsupportedException::class);
         $this->expectExceptionMessage('SymfonyCache set() method does not exist.');
@@ -103,11 +103,11 @@ class SymfonyCacheTest extends TestCase
         ]];
 
         // Given
-        $this->filesystem->expects($this->once())->method('exists')->willReturn(true);
-        $this->filesystem->expects($this->once())->method('remove');
-        $this->eventDispatcher->expects($this->once())->method('getListeners')->willReturn($listeners);
-        $this->eventDispatcher->expects($this->once())->method('removeSubscriber')->with($eventSubscriber);
-        $this->eventDispatcher->expects($this->once())->method('removeListener')->with('console.terminate', [
+        $this->filesystem->expects(static::once())->method('exists')->willReturn(true);
+        $this->filesystem->expects(static::once())->method('remove');
+        $this->eventDispatcher->expects(static::once())->method('getListeners')->willReturn($listeners);
+        $this->eventDispatcher->expects(static::once())->method('removeSubscriber')->with($eventSubscriber);
+        $this->eventDispatcher->expects(static::once())->method('removeListener')->with('console.terminate', [
             $listener,
             'onTerminate',
         ]);
@@ -116,13 +116,13 @@ class SymfonyCacheTest extends TestCase
         $response = $this->cache->cacheAction('token', 'translations');
 
         // Then
-        $this->assertInstanceOf(Response::class, $response);
+        static::assertInstanceOf(Response::class, $response);
 
-        $this->assertSame(200, $response->getStatusCode(), 'Response should be 200');
-        $this->assertSame('ok', $response->getContent(), 'Response should return "OK"');
+        static::assertSame(200, $response->getStatusCode(), 'Response should be 200');
+        static::assertSame('ok', $response->getContent(), 'Response should return "OK"');
 
-        $this->assertSame('2', $response->headers->get('Content-Length'));
-        $this->assertSame('must-revalidate, no-cache, private', $response->headers->get('Cache-Control'));
+        static::assertSame('2', $response->headers->get('Content-Length'));
+        static::assertSame('must-revalidate, no-cache, private', $response->headers->get('Cache-Control'));
     }
 
     public function testCacheActionWithInvalidToken(): void
