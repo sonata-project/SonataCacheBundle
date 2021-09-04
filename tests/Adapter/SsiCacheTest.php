@@ -46,18 +46,18 @@ class SsiCacheTest extends TestCase
 
     public function testInitCache(): void
     {
-        $this->router->expects($this->any())
+        $this->router->expects(static::any())
             ->method('generate')
             ->willReturn('/cache/esi/TOKEN?controller=asdsad');
 
-        $this->assertTrue($this->cache->flush([]));
-        $this->assertTrue($this->cache->flushAll());
+        static::assertTrue($this->cache->flush([]));
+        static::assertTrue($this->cache->flushAll());
 
         $cacheElement = $this->cache->set(['id' => 7], 'data');
 
-        $this->assertInstanceOf(CacheElement::class, $cacheElement);
+        static::assertInstanceOf(CacheElement::class, $cacheElement);
 
-        $this->assertTrue($this->cache->has(['id' => 7]));
+        static::assertTrue($this->cache->has(['id' => 7]));
 
         $cacheElement = $this->cache->get([
             'id' => 7,
@@ -65,9 +65,9 @@ class SsiCacheTest extends TestCase
             'parameters' => [],
         ]);
 
-        $this->assertInstanceOf(CacheElement::class, $cacheElement);
+        static::assertInstanceOf(CacheElement::class, $cacheElement);
 
-        $this->assertSame(
+        static::assertSame(
             '<!--# include virtual="/cache/esi/TOKEN?controller=asdsad" -->',
             $cacheElement->getData()->getContent()
         );
@@ -77,7 +77,7 @@ class SsiCacheTest extends TestCase
     {
         $this->expectException(AccessDeniedHttpException::class);
 
-        $this->router->expects($this->any())
+        $this->router->expects(static::any())
             ->method('generate')
             ->willReturn(
                 'http://sonata-project.orf/cache/esi/TOKEN?controller=asdsad'
@@ -95,13 +95,13 @@ class SsiCacheTest extends TestCase
      */
     public function testValidToken(): void
     {
-        $this->controllerResolver->expects($this->any())
+        $this->controllerResolver->expects(static::any())
             ->method('getController')
             ->willReturn(static function () {
                 return new Response();
             });
 
-        $this->argumentResolver->expects($this->any())
+        $this->argumentResolver->expects(static::any())
             ->method('getArguments')
             ->willReturn([]);
 

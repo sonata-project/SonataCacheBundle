@@ -32,8 +32,8 @@ class ConfigurationTest extends TestCase
 
         $config = $this->process($configs);
 
-        $this->assertArrayHasKey('timeout', $config['caches']['apc']);
-        $this->assertSame(
+        static::assertArrayHasKey('timeout', $config['caches']['apc']);
+        static::assertSame(
             [
                 'RCV' => [],
                 'SND' => [],
@@ -61,8 +61,8 @@ class ConfigurationTest extends TestCase
 
         $config = $this->process($configs);
 
-        $this->assertArrayHasKey('timeout', $config['caches']['apc']);
-        $this->assertSame($expected, $config['caches']['apc']['timeout']);
+        static::assertArrayHasKey('timeout', $config['caches']['apc']);
+        static::assertSame($expected, $config['caches']['apc']['timeout']);
     }
 
     public function testSymfonyDefaultTimeout(): void
@@ -78,8 +78,8 @@ class ConfigurationTest extends TestCase
 
         $config = $this->process($configs);
 
-        $this->assertArrayHasKey('timeout', $config['caches']['symfony']);
-        $this->assertSame(
+        static::assertArrayHasKey('timeout', $config['caches']['symfony']);
+        static::assertSame(
             [
                 'RCV' => ['sec' => 2, 'usec' => 0],
                 'SND' => ['sec' => 2, 'usec' => 0],
@@ -107,8 +107,8 @@ class ConfigurationTest extends TestCase
 
         $config = $this->process($configs);
 
-        $this->assertArrayHasKey('timeout', $config['caches']['symfony']);
-        $this->assertSame($expected, $config['caches']['symfony']['timeout']);
+        static::assertArrayHasKey('timeout', $config['caches']['symfony']);
+        static::assertSame($expected, $config['caches']['symfony']['timeout']);
     }
 
     protected function process(array $configs): array

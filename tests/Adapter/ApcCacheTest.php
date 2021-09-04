@@ -30,11 +30,11 @@ class ApcCacheTest extends TestCase
     protected function setUp(): void
     {
         if (!\function_exists('apc_store')) {
-            $this->markTestSkipped('APC is not installed');
+            static::markTestSkipped('APC is not installed');
         }
 
         if (0 === ini_get('apc.enable_cli')) {
-            $this->markTestSkipped('APC is not enabled in cli, please add apcu.enable_cli=On into the apcu.ini file');
+            static::markTestSkipped('APC is not enabled in cli, please add apcu.enable_cli=On into the apcu.ini file');
         }
 
         $this->router = $this->createMock(RouterInterface::class);
@@ -44,33 +44,33 @@ class ApcCacheTest extends TestCase
 
     public function testInitCache(): void
     {
-        $this->assertTrue($this->cache->flush([]));
-        $this->assertTrue($this->cache->flushAll());
+        static::assertTrue($this->cache->flush([]));
+        static::assertTrue($this->cache->flushAll());
 
         $cacheElement = $this->cache->set(['id' => 7], 'data');
 
-        $this->assertInstanceOf(CacheElement::class, $cacheElement);
+        static::assertInstanceOf(CacheElement::class, $cacheElement);
 
-        $this->assertTrue($this->cache->has(['id' => 7]));
+        static::assertTrue($this->cache->has(['id' => 7]));
 
-        $this->assertFalse($this->cache->has(['id' => 8]));
+        static::assertFalse($this->cache->has(['id' => 8]));
 
         $cacheElement = $this->cache->get(['id' => 7]);
 
-        $this->assertInstanceOf(CacheElement::class, $cacheElement);
+        static::assertInstanceOf(CacheElement::class, $cacheElement);
     }
 
     public function testGetUrl(): void
     {
         $this->router
-            ->expects($this->once())
+            ->expects(static::once())
             ->method('generate')
-            ->with($this->equalTo('sonata_cache_apc'), $this->equalTo(['token' => 'token']))
+            ->with(static::equalTo('sonata_cache_apc'), static::equalTo(['token' => 'token']))
             ->willReturn('/sonata/cache/apc/token');
 
         $method = new \ReflectionMethod($this->cache, 'getUrl');
         $method->setAccessible(true);
 
-        $this->assertSame('/sonata/cache/apc/token', $method->invoke($this->cache));
+        static::assertSame('/sonata/cache/apc/token', $method->invoke($this->cache));
     }
 }

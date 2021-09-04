@@ -28,7 +28,7 @@ class SonataCacheExtensionTest extends TestCase
         $extension = new SonataCacheExtension();
         $extension->load([], $container);
 
-        $this->assertTrue($container->hasDefinition('sonata.cache.orm.event_subscriber'));
-        $this->assertTrue($container->hasDefinition('sonata.cache.phpcr_odm.event_subscriber'));
+        static::assertTrue($container->hasDefinition('sonata.cache.orm.event_subscriber'));
+        static::assertTrue($container->hasDefinition('sonata.cache.phpcr_odm.event_subscriber'));
     }
 }
