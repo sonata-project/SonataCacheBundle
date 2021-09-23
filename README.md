@@ -40,12 +40,10 @@ This package is available under the [MIT license](LICENSE).
 [test_stable_link]: https://github.com/sonata-project/SonataCacheBundle/actions?query=workflow:test+branch:3.x
 [test_unstable_badge]: https://github.com/sonata-project/SonataCacheBundle/workflows/Test/badge.svg?branch=4.x
 [test_unstable_link]: https://github.com/sonata-project/SonataCacheBundle/actions?query=workflow:test+branch:4.x
-
 [coverage_stable_badge]: https://codecov.io/gh/sonata-project/SonataCacheBundle/branch/3.x/graph/badge.svg
 [coverage_stable_link]: https://codecov.io/gh/sonata-project/SonataCacheBundle/branch/3.x
 [coverage_unstable_badge]: https://codecov.io/gh/sonata-project/SonataCacheBundle/branch/4.x/graph/badge.svg
 [coverage_unstable_link]: https://codecov.io/gh/sonata-project/SonataCacheBundle/branch/4.x
-
 [documentation_stable_badge]: https://readthedocs.org/projects/sonatacachebundle/badge/?version=3.x
 [documentation_stable_link]: https://docs.sonata-project.org/projects/SonataCacheBundle/en/3.x/?badge=3.x
 [documentation_unstable_badge]: https://readthedocs.org/projects/sonatacachebundle/badge/?version=4.x
