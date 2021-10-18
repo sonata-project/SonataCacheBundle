@@ -115,9 +115,9 @@ class SymfonyCache implements CacheAdapterInterface
                 $ip = $server['ip'];
 
                 if (filter_var($ip, \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV4)) {
-                    $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+                    $socket = socket_create(\AF_INET, \SOCK_STREAM, \SOL_TCP);
                 } elseif (filter_var($ip, \FILTER_VALIDATE_IP, \FILTER_FLAG_IPV6)) {
-                    $socket = socket_create(AF_INET6, SOCK_STREAM, SOL_TCP);
+                    $socket = socket_create(\AF_INET6, \SOCK_STREAM, \SOL_TCP);
                 } else {
                     throw new \InvalidArgumentException(sprintf('"%s" is not a valid ip address', $ip));
                 }
@@ -133,8 +133,8 @@ class SymfonyCache implements CacheAdapterInterface
                 $command .= "Connection: Close\r\n\r\n";
 
                 // setup the default timeout (avoid max execution time)
-                socket_set_option($socket, SOL_SOCKET, SO_SNDTIMEO, $this->timeouts['SND']);
-                socket_set_option($socket, SOL_SOCKET, SO_RCVTIMEO, $this->timeouts['RCV']);
+                socket_set_option($socket, \SOL_SOCKET, \SO_SNDTIMEO, $this->timeouts['SND']);
+                socket_set_option($socket, \SOL_SOCKET, \SO_RCVTIMEO, $this->timeouts['RCV']);
 
                 socket_connect($socket, $server['ip'], $server['port']);
                 socket_write($socket, $command);
