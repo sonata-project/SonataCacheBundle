@@ -194,7 +194,7 @@ class SymfonyCacheTest extends TestCase
         $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
             ->setName('socket_create')
             ->setFunction(function (): void {
-                $this->assertSame([AF_INET, SOCK_STREAM, SOL_TCP], \func_get_args());
+                $this->assertSame([\AF_INET, \SOCK_STREAM, \SOL_TCP], \func_get_args());
             })
             ->build();
         $mock->enable();
@@ -248,7 +248,7 @@ class SymfonyCacheTest extends TestCase
         $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
             ->setName('socket_create')
             ->setFunction(function (): void {
-                $this->assertSame([AF_INET6, SOCK_STREAM, SOL_TCP], \func_get_args());
+                $this->assertSame([\AF_INET6, \SOCK_STREAM, \SOL_TCP], \func_get_args());
             })
             ->build();
         $mock->enable();
