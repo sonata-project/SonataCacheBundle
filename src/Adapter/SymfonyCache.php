@@ -144,7 +144,7 @@ class SymfonyCache implements CacheAdapterInterface
                 do {
                     $buffer = socket_read($socket, 1024);
                     $content .= $buffer;
-                } while (!empty($buffer));
+                } while ('' !== $buffer && false !== $buffer);
 
                 if ($result) {
                     $result = 'ok' === substr($content, -2);
@@ -227,7 +227,7 @@ MESSAGE
     /**
      * @throws UnsupportedException
      */
-    public function set(array $keys, $data, int $ttl = 84600, array $contextualKeys = []): CacheElementInterface
+    public function set(array $keys, $value, int $ttl = 84600, array $contextualKeys = []): CacheElementInterface
     {
         throw new UnsupportedException('SymfonyCache set() method does not exist.');
     }

@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Sonata\CacheBundle\Invalidation;
 
 use Doctrine\Common\EventSubscriber;
-use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ODM\PHPCR\Event;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DoctrinePHPCRODMListenerContainerAware implements EventSubscriber
@@ -26,6 +26,9 @@ class DoctrinePHPCRODMListenerContainerAware implements EventSubscriber
 
     protected $container;
 
+    /**
+     * @psalm-suppress ContainerDependency
+     */
     public function __construct(ContainerInterface $container, string $service)
     {
         $this->container = $container;

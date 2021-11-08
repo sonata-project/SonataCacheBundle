@@ -72,7 +72,7 @@ class ApcCache extends BaseApcCache
         throw new AccessDeniedHttpException('Invalid token.');
     }
 
-    protected function getUrl(): ?string
+    protected function getUrl(): string
     {
         return $this->router->generate('sonata_cache_apc', ['token' => $this->token]);
     }
