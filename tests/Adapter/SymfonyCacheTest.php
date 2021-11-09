@@ -201,7 +201,18 @@ class SymfonyCacheTest extends TestCase
 
         $mocks[] = $mock;
 
-        foreach (['socket_set_option', 'socket_connect', 'socket_write', 'socket_read'] as $function) {
+        $builder = new MockBuilder();
+        $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
+            ->setName('socket_read')
+            ->setFunction(static function () {
+                return '';
+            })
+            ->build();
+        $mock->enable();
+
+        $mocks[] = $mock;
+
+        foreach (['socket_set_option', 'socket_connect', 'socket_write'] as $function) {
             $builder = new MockBuilder();
             $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
                 ->setName($function)
@@ -255,7 +266,18 @@ class SymfonyCacheTest extends TestCase
 
         $mocks[] = $mock;
 
-        foreach (['socket_set_option', 'socket_connect', 'socket_write', 'socket_read'] as $function) {
+        $builder = new MockBuilder();
+        $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
+            ->setName('socket_read')
+            ->setFunction(static function () {
+                return '';
+            })
+            ->build();
+        $mock->enable();
+
+        $mocks[] = $mock;
+
+        foreach (['socket_set_option', 'socket_connect', 'socket_write'] as $function) {
             $builder = new MockBuilder();
             $mock = $builder->setNamespace('Sonata\CacheBundle\Adapter')
                 ->setName($function)
