@@ -50,8 +50,10 @@ class CacheFlushCommand extends BaseCacheCommand
             throw new \RuntimeException('The provided keys cannot be decoded, please provide a valid json string.');
         }
 
+        $cacheOption = $input->getOption('cache');
+
         foreach ($this->getManager()->getCacheServices() as $name => $cache) {
-            if ($input->getOption('cache') && !\in_array($name, $input->getOption('cache'), true)) {
+            if ([] !== $cacheOption && !\in_array($name, $cacheOption, true)) {
                 continue;
             }
 
@@ -60,7 +62,7 @@ class CacheFlushCommand extends BaseCacheCommand
             $output->writeln('Ok');
         }
 
-        if ($input->getOption('cache') && \in_array('sonata.cache.symfony', $input->getOption('cache'), true)) {
+        if ([] !== $cacheOption && \in_array('sonata.cache.symfony', $cacheOption, true)) {
             // The current event dispatcher is stale, let's not use it anymore
             $this->getApplication()->setDispatcher(new EventDispatcher());
         }

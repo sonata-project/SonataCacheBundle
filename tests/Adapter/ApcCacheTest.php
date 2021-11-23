@@ -33,7 +33,7 @@ class ApcCacheTest extends TestCase
             static::markTestSkipped('APC is not installed');
         }
 
-        if (0 === ini_get('apc.enable_cli')) {
+        if ('On' !== ini_get('apc.enable_cli')) {
             static::markTestSkipped('APC is not enabled in cli, please add apcu.enable_cli=On into the apcu.ini file');
         }
 

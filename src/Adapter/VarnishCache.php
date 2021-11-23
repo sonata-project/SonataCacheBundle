@@ -130,11 +130,11 @@ class VarnishCache implements CacheAdapterInterface
 
     public function set(
         array $keys,
-        $data,
+        $value,
         int $ttl = CacheElement::DAY,
         array $contextualKeys = []
     ): CacheElementInterface {
-        return new CacheElement($keys, $data, $ttl, $contextualKeys);
+        return new CacheElement($keys, $value, $ttl, $contextualKeys);
     }
 
     /**

@@ -3,9 +3,11 @@
     <services>
         <service id="Sonata\CacheBundle\Command\CacheFlushAllCommand" class="Sonata\CacheBundle\Command\CacheFlushAllCommand" public="true">
             <tag name="console.command"/>
+            <argument type="service" id="sonata.cache.manager"/>
         </service>
         <service id="Sonata\CacheBundle\Command\CacheFlushCommand" class="Sonata\CacheBundle\Command\CacheFlushCommand" public="true">
             <tag name="console.command"/>
+            <argument type="service" id="sonata.cache.manager"/>
         </service>
     </services>
 </container>
