@@ -10,6 +10,7 @@ This bundle provides caching services
 
 [![Latest Stable Version](https://poser.pugx.org/sonata-project/cache-bundle/v/stable)](https://packagist.org/packages/sonata-project/cache-bundle)
 [![Latest Unstable Version](https://poser.pugx.org/sonata-project/cache-bundle/v/unstable)](https://packagist.org/packages/sonata-project/cache-bundle)
+[![Psalm Type Coverage][shepherd_stable_badge]][shepherd_stable_link]
 [![License](https://poser.pugx.org/sonata-project/cache-bundle/license)](https://packagist.org/packages/sonata-project/cache-bundle)
 
 [![Total Downloads](https://poser.pugx.org/sonata-project/cache-bundle/downloads)](https://packagist.org/packages/sonata-project/cache-bundle)
@@ -44,6 +45,8 @@ This package is available under the [MIT license](LICENSE).
 [coverage_stable_link]: https://codecov.io/gh/sonata-project/SonataCacheBundle/branch/3.x
 [coverage_unstable_badge]: https://codecov.io/gh/sonata-project/SonataCacheBundle/branch/4.x/graph/badge.svg
 [coverage_unstable_link]: https://codecov.io/gh/sonata-project/SonataCacheBundle/branch/4.x
+[shepherd_stable_badge]: https://shepherd.dev/github/sonata-project/SonataCacheBundle/coverage.svg
+[shepherd_stable_link]: https://shepherd.dev/github/sonata-project/SonataCacheBundle
 [documentation_stable_badge]: https://readthedocs.org/projects/sonatacachebundle/badge/?version=3.x
 [documentation_stable_link]: https://docs.sonata-project.org/projects/SonataCacheBundle/en/3.x/?badge=3.x
 [documentation_unstable_badge]: https://readthedocs.org/projects/sonatacachebundle/badge/?version=4.x
