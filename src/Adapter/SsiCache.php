@@ -100,6 +100,8 @@ class SsiCache implements CacheAdapterInterface
      * @throws AccessDeniedHttpException
      *
      * @return mixed
+     *
+     * @psalm-suppress InternalMethod
      */
     public function cacheAction(Request $request)
     {

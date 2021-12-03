@@ -142,6 +142,8 @@ class VarnishCache implements CacheAdapterInterface
      * @throws \UnexpectedValueException
      *
      * @return mixed
+     *
+     * @psalm-suppress InternalMethod
      */
     public function cacheAction(Request $request)
     {
