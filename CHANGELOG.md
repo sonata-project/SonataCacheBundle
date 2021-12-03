@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.3.1](https://github.com/sonata-project/SonataCacheBundle/compare/3.3.0...3.3.1) - 2021-12-03
+### Fixed
+- [[#384](https://github.com/sonata-project/SonataCacheBundle/pull/384)] Fixed command registration ([@jordisala1991](https://github.com/jordisala1991))
+- [[#384](https://github.com/sonata-project/SonataCacheBundle/pull/384)] Fixed inconsistent return types ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [3.3.0](https://github.com/sonata-project/SonataCacheBundle/compare/3.2.1...3.3.0) - 2021-03-28
 ### Added
 - [[#321](https://github.com/sonata-project/SonataCacheBundle/pull/321)] Add Symfony 5 support ([@VincentLanglet](https://github.com/VincentLanglet))
