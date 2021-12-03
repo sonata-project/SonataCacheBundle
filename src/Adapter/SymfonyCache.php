@@ -185,9 +185,9 @@ class SymfonyCache implements CacheAdapterInterface
         if (null !== $this->eventDispatcher) {
             foreach ($this->eventDispatcher->getListeners() as $eventName => $eventListenerList) {
                 foreach ($eventListenerList as $listener) {
-                    $listener[0] instanceof EventSubscriberInterface ?
+                    \is_array($listener) && $listener[0] instanceof EventSubscriberInterface ?
                         $this->eventDispatcher->removeSubscriber($listener[0]) :
-                        $this->eventDispatcher->removeListener($eventName, [$listener[0], $listener[1]]);
+                        $this->eventDispatcher->removeListener($eventName, $listener);
                 }
             }
         } else {
