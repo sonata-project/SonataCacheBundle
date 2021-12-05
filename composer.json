@@ -76,5 +76,6 @@
         "psr-4": {
             "Sonata\\CacheBundle\\Tests\\": "tests/"
         }
-    }
+    },
+    "abandoned": true
 }
