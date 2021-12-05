@@ -3,6 +3,7 @@
     "description": "This bundle provides caching services",
     "license": "MIT",
     "type": "symfony-bundle",
+    "abandoned": true,
     "keywords": [
         "cache block"
     ],
