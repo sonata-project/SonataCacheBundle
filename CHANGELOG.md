@@ -2,6 +2,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.4.0](https://github.com/sonata-project/SonataCacheBundle/compare/3.3.1...3.4.0) - 2021-12-09
+### Added
+- [[#385](https://github.com/sonata-project/SonataCacheBundle/pull/385)] Added support for Symfony 6. ([@jordisala1991](https://github.com/jordisala1991))
+
+### Fixed
+- [[#403](https://github.com/sonata-project/SonataCacheBundle/pull/403)] Dependency injection for commands ([@mremi](https://github.com/mremi))
+
+### Removed
+- [[#385](https://github.com/sonata-project/SonataCacheBundle/pull/385)] Removed support for Symfony 5.2. ([@jordisala1991](https://github.com/jordisala1991))
+- [[#385](https://github.com/sonata-project/SonataCacheBundle/pull/385)] Removed support for PHP < 7.3. ([@jordisala1991](https://github.com/jordisala1991))
+
 ## [3.3.1](https://github.com/sonata-project/SonataCacheBundle/compare/3.3.0...3.3.1) - 2021-12-04
 ### Fixed
 - [[#384](https://github.com/sonata-project/SonataCacheBundle/pull/384)] Fixed command registration ([@jordisala1991](https://github.com/jordisala1991))
